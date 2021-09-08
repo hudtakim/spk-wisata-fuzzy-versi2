@@ -111,23 +111,33 @@ if($_SESSION['legitUser'] != 'qwerty'){
 							<option value="non_fuzzy">Kriteria Non-Fuzzy</option>
 						</select>
                     </div>
+					<div class="mt-3"> Pilih jumlah sub-kriteria yang akan digunakan: <div>
+					<div class="col-auto my-1 input-group">
+						<select name="jumlah_sub" class="custom-select mr-sm-1" id="jumlah_subs" onChange="myFunction2()" required>
+							<option value="" hidden disabled></option>
+							<option value="2" selected>2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+						</select>
+                    </div>
                     <div class="mt-3"> Isikan nama kriteria dan sub-kriteria: <div>
 					<div class="col-auto my-1 input-group">
-                        <input type="text" name="nama"  placeholder="Nama Kriteria" class="mr-2 mb-3" onChange="updateSubText()" required>
-                        <input type="text" name="sub1"  placeholder="Sub Kriteria 1" class="mr-2 mb-3" onChange="updateSubText()" required>
-                        <input type="text" name="sub2"  placeholder="Sub Kriteria 2" class="mr-2 mb-3" onChange="updateSubText()" required>
-						<input type="text" name="sub3"  placeholder="Sub Kriteria 3 (optional)" class="mr-2 mb-3" onChange="updateSubText()">
-						<input type="text" name="sub4"  placeholder="Sub Kriteria 4 (optional)" class="mr-2 mb-3" onChange="updateSubText()">
-						<input type="text" name="sub5"  placeholder="Sub Kriteria 5 (optional)" class="mr-2 mb-3" onChange="updateSubText()">
+                        <input type="text"  name="nama"  placeholder="Nama Kriteria" class="mr-2 mb-3" onChange="updateSubText()" required>
+                        <input type="text" id="sub1" name="sub1"  placeholder="Sub Kriteria 1" class="mr-2 mb-3" onChange="updateSubText()" required>
+                        <input type="text" id="sub2" name="sub2"  placeholder="Sub Kriteria 2" class="mr-2 mb-3" onChange="updateSubText()" required>
+						<input type="text" id="sub3" name="sub3"  placeholder="Sub Kriteria 3" class="mr-2 mb-3" onChange="updateSubText()" style="display: none;">
+						<input type="text" id="sub4" name="sub4"  placeholder="Sub Kriteria 4" class="mr-2 mb-3" onChange="updateSubText()" style="display: none;">
+						<input type="text" id="sub5" name="sub5"  placeholder="Sub Kriteria 5" class="mr-2 mb-3" onChange="updateSubText()" style="display: none;">
                     </div>
 					<div id="coba" style="display: none;">
 						<div class="mt-3"> Isikan nilai batas:</div>
 						<div class="col-auto my-1 input-group">            
 							<input name="batas1" type="number" id="v1" placeholder="Batas 1" class="mr-2" required>
 							<input name="batas2" type="number" id="v2" placeholder="Batas 2" class="mr-2" required>
-							<input name="batas3" type="number" id="v3" placeholder="Batas 3" class="mr-2"> 
-							<input name="batas4" type="number" id="v4" placeholder="Batas 4" class="mr-2"> 
-							<input name="batas5" type="number" id="v5" placeholder="Batas 5" class="mr-2">  
+							<input name="batas3" type="number" id="v3" placeholder="Batas 3" class="mr-2" style="display: none;"> 
+							<input name="batas4" type="number" id="v4" placeholder="Batas 4" class="mr-2" style="display: none;"> 
+							<input name="batas5" type="number" id="v5" placeholder="Batas 5" class="mr-2" style="display: none;">  
 						</div>
 					</div>
 
@@ -236,7 +246,267 @@ if($_SESSION['legitUser'] != 'qwerty'){
 		label[0].innerHTML = "Data " + nama;
 		label[1].innerHTML = "Data " + nama;
 	}
+	function myFunction2(){
+		var select= document.getElementById("jumlah_subs");
+		var v1 = document.getElementById("v1");
+		var v2 = document.getElementById("v2");
+		var v3 = document.getElementById("v3");
+		var v4 = document.getElementById("v4");
+		var v5 = document.getElementById("v5");
 
+		var sub1 = document.getElementById("sub1");
+		var sub2 = document.getElementById("sub2");
+		var sub3 = document.getElementById("sub3");
+		var sub4 = document.getElementById("sub4");
+		var sub5 = document.getElementById("sub5");
+
+		let s0 = document.querySelectorAll(".s0");
+		var s1 = document.querySelectorAll(".s1");
+		var s2 = document.querySelectorAll(".s2");
+		var s3 = document.querySelectorAll(".s3");
+		var s4 = document.querySelectorAll(".s4");
+		var s5 = document.querySelectorAll(".s5");
+
+		var kategori = document.getElementById("inlineFormCustomSelect");
+		if(kategori.value == "non_fuzzy"){
+			v1.required = false
+			v2.required = false;
+			v3.required = false;
+			v4.required = false;
+			v5.required = false;
+			
+			if(select.value == "2"){
+				v2.style.display = "block";
+				v3.style.display = "none";
+				v4.style.display = "none";
+				v5.style.display = "none";
+
+				sub3.style.display = "none";
+				sub4.style.display = "none";
+				sub5.style.display = "none";
+				sub2.required = true;
+				sub3.required = false;
+				sub4.required = false;
+				sub5.required = false;
+				sub3.value = "";
+				sub4.value = "";
+				sub5.value = "";
+
+				for (let i = 0; i < s0.length; i++){
+					s3[i].disabled = true;
+					s4[i].disabled = true;
+					s5[i].disabled = true;
+
+					s3[i].hidden = true;
+					s4[i].hidden = true;
+					s5[i].hidden = true;
+				}
+		}if(select.value == "3"){
+				v2.style.display = "block";
+				v3.style.display = "block";
+				v4.style.display = "none";
+				v5.style.display = "none";
+
+				sub2.style.display = "block";
+				sub3.style.display = "block";
+				sub4.style.display = "none";
+				sub5.style.display = "none";
+				sub2.required = true;
+				sub3.required = true;
+				sub4.required = false;
+				sub5.required = false;
+				sub4.value = "";
+				sub5.value = "";
+
+				for (let i = 0; i < s0.length; i++){
+					s3[i].disabled = false;
+					s4[i].disabled = true;
+					s5[i].disabled = true;
+
+					s3[i].hidden = false;
+					s4[i].hidden = true;
+					s5[i].hidden = true;
+				}
+		}
+		if(select.value == "4"){
+			v2.style.display = "block";
+			v3.style.display = "block";
+			v4.style.display = "block";
+			v5.style.display = "none";
+
+			sub2.style.display = "block";
+			sub3.style.display = "block";
+			sub4.style.display = "block";
+			sub5.style.display = "none";
+			sub2.required = true;
+			sub3.required = true;
+			sub4.required = true;
+			sub5.required = false;
+			sub5.value = "";
+
+			for (let i = 0; i < s0.length; i++){
+					s3[i].disabled = false;
+					s4[i].disabled = false;
+					s5[i].disabled = true;
+
+					s3[i].hidden = false;
+					s4[i].hidden = false;
+					s5[i].hidden = true;
+				}
+
+		}if(select.value == "5"){
+			v2.style.display = "block";
+			v3.style.display = "block";
+			v4.style.display = "block";
+			v5.style.display = "block";
+
+			sub2.style.display = "block";
+			sub3.style.display = "block";
+			sub4.style.display = "block";
+			sub5.style.display = "block";
+			sub2.required = true;
+			sub3.required = true;
+			sub4.required = true;
+			sub5.required = true;
+			for (let i = 0; i < s0.length; i++){
+					s3[i].disabled = false;
+					s4[i].disabled = false;
+					s5[i].disabled = false;
+
+					s3[i].hidden = false;
+					s4[i].hidden = false;
+					s5[i].hidden = false;
+				}
+		}
+		}else{
+
+		if(select.value == "2"){
+			v2.style.display = "block";
+				v3.style.display = "none";
+				v4.style.display = "none";
+				v5.style.display = "none";
+				v2.required = true;
+				v3.required = false;
+				v4.required = false;
+				v5.required = false;
+				v3.value = "";
+				v4.value = "";
+				v5.value = "";
+
+				sub3.style.display = "none";
+				sub4.style.display = "none";
+				sub5.style.display = "none";
+				sub2.required = true;
+				sub3.required = false;
+				sub4.required = false;
+				sub5.required = false;
+				sub3.value = "";
+				sub4.value = "";
+				sub5.value = "";
+
+				for (let i = 0; i < s0.length; i++){
+					s3[i].disabled = true;
+					s4[i].disabled = true;
+					s5[i].disabled = true;
+
+					s3[i].hidden = true;
+					s4[i].hidden = true;
+					s5[i].hidden = true;
+				}
+		}if(select.value == "3"){
+				v2.style.display = "block";
+				v3.style.display = "block";
+				v4.style.display = "none";
+				v5.style.display = "none";
+				v2.required = true;
+				v3.required = true;
+				v4.required = false;
+				v5.required = false;
+				v4.value = "";
+				v5.value = "";
+
+				sub2.style.display = "block";
+				sub3.style.display = "block";
+				sub4.style.display = "none";
+				sub5.style.display = "none";
+				sub2.required = true;
+				sub3.required = true;
+				sub4.required = false;
+				sub5.required = false;
+				sub4.value = "";
+				sub5.value = "";
+
+				for (let i = 0; i < s0.length; i++){
+					s3[i].disabled = false;
+					s4[i].disabled = true;
+					s5[i].disabled = true;
+
+					s3[i].hidden = false;
+					s4[i].hidden = true;
+					s5[i].hidden = true;
+				}
+		}
+		if(select.value == "4"){
+			v2.style.display = "block";
+			v3.style.display = "block";
+			v4.style.display = "block";
+			v5.style.display = "none";
+			v2.required = true;
+			v3.required = true;
+			v4.required = true;
+			v5.required = false;
+			v5.value = "";
+
+			sub2.style.display = "block";
+			sub3.style.display = "block";
+			sub4.style.display = "block";
+			sub5.style.display = "none";
+			sub2.required = true;
+			sub3.required = true;
+			sub4.required = true;
+			sub5.required = false;
+			sub5.value = "";
+
+			for (let i = 0; i < s0.length; i++){
+					s3[i].disabled = false;
+					s4[i].disabled = false;
+					s5[i].disabled = true;
+
+					s3[i].hidden = false;
+					s4[i].hidden = false;
+					s5[i].hidden = true;
+				}
+
+		}if(select.value == "5"){
+			v2.style.display = "block";
+			v3.style.display = "block";
+			v4.style.display = "block";
+			v5.style.display = "block";
+			v2.required = true;
+			v3.required = true;
+			v4.required = true;
+			v5.required = true;
+
+			sub2.style.display = "block";
+			sub3.style.display = "block";
+			sub4.style.display = "block";
+			sub5.style.display = "block";
+			sub2.required = true;
+			sub3.required = true;
+			sub4.required = true;
+			sub5.required = true;
+			for (let i = 0; i < s0.length; i++){
+					s3[i].disabled = false;
+					s4[i].disabled = false;
+					s5[i].disabled = false;
+
+					s3[i].hidden = false;
+					s4[i].hidden = false;
+					s5[i].hidden = false;
+				}
+		}
+	}
+	}
 	function myFunction() {
 		var x = document.getElementById("coba");
 		var y = document.getElementById("inlineFormCustomSelect");
