@@ -161,8 +161,8 @@ if($_SESSION['legitUser'] != 'qwerty'){
 					<div class="mt-3"> Pilih jumlah sub-kriteria yang akan digunakan: <div>
 					<div class="col-auto my-1 input-group">
 						<select name="jumlah_sub" class="custom-select mr-sm-1" id="jumlah_subs" onChange="myFunction2()" required>
-							<option value="">Choose</option>
-							<option value="2">2</option>
+							<option value=""hidden disabled></option>
+							<option value="2" selected>2</option>
 							<option value="3">3</option>
 							<option value="4">4</option>
 							<option value="5">5</option>
