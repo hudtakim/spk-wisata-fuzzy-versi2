@@ -34,6 +34,10 @@ if($_SESSION['legitUser'] != 'qwerty'){
 				alert("Nama kriteria dan sub-kriteria tidak boleh mengandung spasi, gunakan underscore ' _ ' sebagai pengganti.");
 				return false;
 			}
+			if(nama.indexOf('&') >= 0 || sub1.indexOf('&') >= 0 || sub2.indexOf('&') >= 0 || sub3.indexOf('&') >= 0 || sub4.indexOf('&') >= 0 || sub5.indexOf('&') >= 0){
+				alert("Nama kriteria dan sub-kriteria tidak boleh mengandung simbol '&'.");
+				return false;
+			}
 		}
 	</script>
 </head>
@@ -157,21 +161,21 @@ if($_SESSION['legitUser'] != 'qwerty'){
 					<div class="mt-3"> Pilih jumlah sub-kriteria yang akan digunakan: <div>
 					<div class="col-auto my-1 input-group">
 						<select name="jumlah_sub" class="custom-select mr-sm-1" id="jumlah_subs" onChange="myFunction2()" required>
-							<option value="" hidden disabled></option>
-							<option value="2" selected>2</option>
+							<option value="">Choose</option>
+							<option value="2">2</option>
 							<option value="3">3</option>
 							<option value="4">4</option>
 							<option value="5">5</option>
 						</select>
                     </div>
-                    <div class="mt-3"> Isikan nama kriteria dan sub-kriteria: <div>
+                    <div class="mt-3"> Isikan nama kriteria dan sub-kriteria: <span style="color:red; font-size: 16px;" class="ml-2">*hanya menerima input a-z, A-Z, 0-9, _</span><div>
 					<div class="col-auto my-1 input-group">
-                        <input type="text"  name="nama"  placeholder="Nama Kriteria" class="mr-2 mb-3" onChange="updateSubText()" required>
-                        <input type="text" id="sub1" name="sub1"  placeholder="Sub Kriteria 1" class="mr-2 mb-3" onChange="updateSubText()" required>
-                        <input type="text" id="sub2" name="sub2"  placeholder="Sub Kriteria 2" class="mr-2 mb-3" onChange="updateSubText()" required>
-						<input type="text" id="sub3" name="sub3"  placeholder="Sub Kriteria 3" class="mr-2 mb-3" onChange="updateSubText()" style="display: none;">
-						<input type="text" id="sub4" name="sub4"  placeholder="Sub Kriteria 4" class="mr-2 mb-3" onChange="updateSubText()" style="display: none;">
-						<input type="text" id="sub5" name="sub5"  placeholder="Sub Kriteria 5" class="mr-2 mb-3" onChange="updateSubText()" style="display: none;">
+                        <input type="text"  name="nama"  placeholder="Nama Kriteria" class="mr-2 mb-3" onChange="updateSubText()" pattern="[a-zA-Z_0-9]{1,50}" required>
+                        <input type="text" id="sub1" name="sub1"  placeholder="Sub Kriteria 1" class="mr-2 mb-3" onChange="updateSubText()" pattern="[a-zA-Z_0-9]{1,30}" required>
+                        <input type="text" id="sub2" name="sub2"  placeholder="Sub Kriteria 2" class="mr-2 mb-3" onChange="updateSubText()" pattern="[a-zA-Z_0-9]{1,30}" required>
+						<input type="text" id="sub3" name="sub3"  placeholder="Sub Kriteria 3" class="mr-2 mb-3" onChange="updateSubText()" pattern="[a-zA-Z_0-9]{1,30}" style="display: none;">
+						<input type="text" id="sub4" name="sub4"  placeholder="Sub Kriteria 4" class="mr-2 mb-3" onChange="updateSubText()" pattern="[a-zA-Z_0-9]{1,30}" style="display: none;">
+						<input type="text" id="sub5" name="sub5"  placeholder="Sub Kriteria 5" class="mr-2 mb-3" onChange="updateSubText()" pattern="[a-zA-Z_0-9]{1,30}" style="display: none;">
                     </div>
 					<div id="coba" style="display: none;">
 						<div class="mt-3"> Isikan nilai batas:</div>
