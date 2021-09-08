@@ -84,7 +84,12 @@ if($_SESSION['legitUser'] != 'qwerty'){
 <div class="jumbotron" id='home' mb-0 style="background-image:url(<?=$value?>)">
     <div style="margin-top:60px;margin-bottom:20px;">
 			<h1 class="text-light shadow-lg"><a href="index.php">Sistem Pendukung Keputusan</a></h1>
-			<p class="h3 text-light shadow-lg" style="text-shadow: 2px 2px red;">Pemilihan Objek Pariwisata Tegal</p>
+			<?php
+				$result = mysqli_query($conn, "SELECT DISTINCT nama_wilayah FROM setting_tampilan");
+				$row = $result->fetch_row();
+				$value = $row[0] ?? false;
+			?>
+			<p class="h3 text-light shadow-lg" style="text-shadow: 2px 2px red;">Pemilihan Objek Pariwisata <?=$value?></p>
 </div>
 	</div>
   

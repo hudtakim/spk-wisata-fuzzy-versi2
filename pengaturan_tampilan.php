@@ -84,7 +84,12 @@ if($_SESSION['legitUser'] != 'qwerty'){
 <div class="jumbotron" id='home' mb-0 style="background-image:url(<?=$value?>)">
     <div style="margin-top:60px;margin-bottom:20px;">
 			<h1 class="text-light shadow-lg"><a href="index.php">Sistem Pendukung Keputusan</a></h1>
-			<p class="h3 text-light shadow-lg" style="text-shadow: 2px 2px red;">Pemilihan Objek Pariwisata Tegal</p>
+			<?php
+				$result = mysqli_query($conn, "SELECT DISTINCT nama_wilayah FROM setting_tampilan");
+				$row = $result->fetch_row();
+				$value = $row[0] ?? false;
+			?>
+			<p class="h3 text-light shadow-lg" style="text-shadow: 2px 2px red;">Pemilihan Objek Pariwisata <?=$value?></p>
 </div>
 	</div>
   
@@ -127,11 +132,19 @@ if($_SESSION['legitUser'] != 'qwerty'){
         <message>
 
 		<div class="tambah-lokasi mt-4">
+			<form method='POST' action="set_wilayah.php">
+				<div class="form-row align-items-center">
+					<div class="col-auto my-1 input-group">
+                        <input type="text" name="nama_wilayah"  placeholder="Nama Kota atau Wilayah" class="mr-1 form-control" required>
+                        <button type="submit" class="btn btn-success float ml-3 pl-5 pr-5" name="submit">Terapkan</button>
+					</div>
+				</div>
+			</form>
 			<form method='POST' action="set_banner.php">
 				<div class="form-row align-items-center">
 					<div class="col-auto my-1 input-group">
-                        <input type="text" name="url"  placeholder="URL Gambar" class="mr-1 form-control" required>
-                        <button type="submit" class="btn btn-success float ml-3 pl-5 pr-5" name="submit">Terapkan</button>
+                        <input type="text" name="url"  placeholder="URL Gambar" class="mr-1 mt-3 form-control" required>
+                        <button type="submit" class="btn btn-success float ml-3 mt-3 pl-5 pr-5" name="submit">Terapkan</button>
 					</div>
 				</div>
 			</form>
@@ -139,7 +152,7 @@ if($_SESSION['legitUser'] != 'qwerty'){
 				<div class="form-row align-items-center">
 					<div class="col-auto my-1 input-group">
 						<select name="warna" class="custom-select mr-1 mt-3 form-control" id="inlineFormCustomSelect" required>
-		                    <option value="">Pilih Warna</option>
+		                    <option value="">Pilih Warna Background</option>
                             <option value="red">Merah</option>
                             <option value="orange">Kuning</option>
                             <option value="green">Hijau</option>

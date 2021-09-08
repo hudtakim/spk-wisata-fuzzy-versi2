@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 08, 2021 at 05:38 AM
+-- Generation Time: Sep 08, 2021 at 06:11 AM
 -- Server version: 10.4.13-MariaDB
 -- PHP Version: 7.4.8
 
@@ -60,9 +60,12 @@ CREATE TABLE `daftar_kriteria` (
 --
 
 INSERT INTO `daftar_kriteria` (`id`, `kriteria`, `sub1`, `sub2`, `sub3`, `sub4`, `sub5`) VALUES
-(94, 'Harga', 'Murah', 'Sedang', 'Mahal', '', ''),
 (95, 'Jenis', 'Alam', 'Religi', 'Sejarah', 'Edukasi', 'Romance'),
-(99, 'Parkir', 'Murah', 'Biasa', 'Mahal', 'Sangat_Mahal', '');
+(101, 'Harga', 'Murah', 'Sedang', 'Mahal', '', ''),
+(102, 'Warna', 'Merah', 'Kuning', 'Hijau', '', ''),
+(103, 'Luas', 'Sempit', 'Sedang', 'Longgar', 'Sangat_Luas', ''),
+(104, 'Stamina', 'Satu', 'Dua', 'Tiga', 'Empat', ''),
+(105, 'Popularitas', 'Tinggi', 'Sedang', 'Rendah', 'Sangat_Rendah', '');
 
 -- --------------------------------------------------------
 
@@ -98,7 +101,8 @@ INSERT INTO `daftar_kriteria_static` (`id`, `kriteria`, `sub1`, `sub2`, `sub3`, 
 (56, 'Parkir', 'Murah', 'Biasa', 'Mahal', '1000', '2000', '3000', 'fuzzy', 'Sangat_Mahal', '', '4000', '0'),
 (57, 'Luas', 'Sempit', 'Sedang', 'Longgar', '50', '100', '150', 'fuzzy', 'Sangat_Luas', '', '200', '0'),
 (58, 'Ketertiban', 'Tawuran', 'Rendah', 'Tertib', '0', '0', '0', 'non_fuzzy', 'Sangat_Tertib', '', '0', '0'),
-(59, 'Fasilitas', 'Sedikit', 'Cukup', 'Banyak', '3', '5', '7', 'fuzzy', '', '', '0', '0');
+(59, 'Fasilitas', 'Sedikit', 'Cukup', 'Banyak', '3', '5', '7', 'fuzzy', '', '', '0', '0'),
+(60, 'Popularitas', 'Tinggi', 'Sedang', 'Rendah', '0', '0', '0', 'non_fuzzy', 'Sangat_Rendah', '', '0', '0');
 
 -- --------------------------------------------------------
 
@@ -348,6 +352,47 @@ INSERT INTO `fuzzy_parkir` (`id`, `obyek_wisata`, `parkir`, `murah`, `biasa`, `m
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `fuzzy_popularitas`
+--
+
+CREATE TABLE `fuzzy_popularitas` (
+  `id` int(11) NOT NULL,
+  `obyek_wisata` varchar(30) NOT NULL,
+  `popularitas` varchar(20) NOT NULL,
+  `tinggi` float NOT NULL,
+  `sedang` float NOT NULL,
+  `rendah` float NOT NULL,
+  `sangat_rendah` float NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `fuzzy_popularitas`
+--
+
+INSERT INTO `fuzzy_popularitas` (`id`, `obyek_wisata`, `popularitas`, `tinggi`, `sedang`, `rendah`, `sangat_rendah`) VALUES
+(1, 'Desa Wisata Guci', 'Tinggi', 1, 0, 0, 0),
+(2, 'Pantai Alam Indah', 'Sedang', 0, 1, 0, 0),
+(3, 'Pantai Purwahamba Indah', 'Rendah', 0, 0, 1, 0),
+(4, 'Waduk Cacaban', 'Sangat_Rendah', 0, 0, 0, 1),
+(5, 'Wisata Kesehatan Jamu Kalibaku', 'Sangat_Rendah', 0, 0, 0, 1),
+(6, 'Yogya Waterboom', 'Tinggi', 1, 0, 0, 0),
+(7, 'Konsorsium Rumah Wayang', 'Sedang', 0, 1, 0, 0),
+(8, 'Gerbang Mas Bahari Waterpark', 'Rendah', 0, 0, 1, 0),
+(9, 'Rita Park', 'Rendah', 0, 0, 1, 0),
+(10, 'Hutan Mangrove Tegal', 'Sangat_Rendah', 0, 0, 0, 1),
+(11, 'Makam Ki Gede Sebayu', 'Tinggi', 1, 0, 0, 0),
+(12, 'Makam Sunan Amangkurat I', 'Rendah', 0, 0, 1, 0),
+(13, 'Klenteng Tek Hay Kiong', 'Rendah', 0, 0, 1, 0),
+(14, 'Situs Purbakala Semedo', 'Sangat_Rendah', 0, 0, 0, 1),
+(15, 'Pool Terrace Samudra', 'Sedang', 0, 1, 0, 0),
+(77, 'Pantai Super', 'Sedang', 0, 1, 0, 0),
+(78, 'Alun-Alun', 'Rendah', 0, 0, 1, 0),
+(79, 'Kantor Tua', 'Sangat_Rendah', 0, 0, 0, 1),
+(80, 'Lapangan Bola', 'Tinggi', 1, 0, 0, 0);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `fuzzy_stamina`
 --
 
@@ -434,15 +479,16 @@ INSERT INTO `fuzzy_warna` (`id`, `obyek_wisata`, `warna`, `merah`, `kuning`, `hi
 
 CREATE TABLE `setting_tampilan` (
   `link_gambar` varchar(500) NOT NULL,
-  `warna_bg` varchar(30) NOT NULL
+  `warna_bg` varchar(30) NOT NULL,
+  `nama_wilayah` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `setting_tampilan`
 --
 
-INSERT INTO `setting_tampilan` (`link_gambar`, `warna_bg`) VALUES
-('https://kamini.id/wp-content/uploads/2020/12/macam-macam-warna-biru_thumbnail-Copy.jpg', 'gray');
+INSERT INTO `setting_tampilan` (`link_gambar`, `warna_bg`, `nama_wilayah`) VALUES
+('https://kamini.id/wp-content/uploads/2020/12/macam-macam-warna-biru_thumbnail-Copy.jpg', 'white', 'Purworejo');
 
 -- --------------------------------------------------------
 
@@ -460,33 +506,34 @@ CREATE TABLE `tempat_wisata_tb` (
   `parkir` float DEFAULT NULL,
   `luas` float DEFAULT NULL,
   `ketertiban` varchar(20) NOT NULL,
-  `fasilitas` float DEFAULT NULL
+  `fasilitas` float DEFAULT NULL,
+  `popularitas` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `tempat_wisata_tb`
 --
 
-INSERT INTO `tempat_wisata_tb` (`obyek_wisata`, `id`, `harga`, `jenis`, `stamina`, `warna`, `parkir`, `luas`, `ketertiban`, `fasilitas`) VALUES
-('Desa Wisata Guci', 1, 12000, 'Religi', 1, 'Merah', 123, 123, 'Rendah', 1),
-('Pantai Alam Indah', 2, 23444, 'Sejarah', 2, 'Kuning', 2323, 1232, 'Sangat_Tertib', 2),
-('Pantai Purwahamba Indah', 3, 213, 'Alam', 3, 'Hijau', 1231, 21, 'Tawuran', 3),
-('Waduk Cacaban', 4, 12323, 'Romance', 4, 'Merah', 2323, 213, 'Rendah', 4),
-('Wisata Kesehatan Jamu Kalibaku', 5, 13, 'Sejarah', 1, 'Kuning', 23, 23, 'Sangat_Tertib', 5),
-('Yogya Waterboom', 6, 2134, 'Alam', 2, 'Hijau', 2132, 2312, 'Rendah', 6),
-('Konsorsium Rumah Wayang', 7, 3434, 'Sejarah', 3, 'Merah', 23, 3, 'Rendah', 6),
-('Gerbang Mas Bahari Waterpark', 8, 23, 'Edukasi', 4, 'Kuning', 213, 43547, 'Tawuran', 7),
-('Rita Park', 9, 2323, 'Alam', 1, 'Hijau', 213, 65, 'Tertib', 8),
-('Hutan Mangrove Tegal', 10, 33, 'Romance', 2, 'Kuning', 23, 5, 'Rendah', 9),
-('Makam Ki Gede Sebayu', 11, 23233, 'Edukasi', 3, 'Merah', 32, 4543, 'Sangat_Tertib', 10),
-('Makam Sunan Amangkurat I', 12, 23233, 'Sejarah', 4, 'Hijau', 32, 2, 'Tawuran', 11),
-('Klenteng Tek Hay Kiong', 13, 232, 'Religi', 1, 'Merah', 2133, 12, 'Tertib', 21),
-('Situs Purbakala Semedo', 14, 2323, 'Romance', 2, 'Kuning', 32, 123, 'Tawuran', 12),
-('Pool Terrace Samudra', 15, 23, 'Sejarah', 3, 'Hijau', 323, 32, 'Tawuran', 1),
-('Pantai Super', 77, 4000, 'Alam', 3, 'Hijau', 2323, 54, 'Sangat_Tertib', 3),
-('Alun-Alun', 78, 232, 'Sejarah', 4, 'Kuning', 213, 457, 'Tertib', 43),
-('Kantor Tua', 79, 16777, 'Romance', 6, 'Hijau', 23, 56, 'Rendah', 2),
-('Lapangan Bola', 80, 4444, 'Edukasi', 23, 'Hijau', 233, 3, 'Tertib', 4);
+INSERT INTO `tempat_wisata_tb` (`obyek_wisata`, `id`, `harga`, `jenis`, `stamina`, `warna`, `parkir`, `luas`, `ketertiban`, `fasilitas`, `popularitas`) VALUES
+('Desa Wisata Guci', 1, 12000, 'Religi', 1, 'Merah', 123, 123, 'Rendah', 1, 'Tinggi'),
+('Pantai Alam Indah', 2, 23444, 'Sejarah', 2, 'Kuning', 2323, 1232, 'Sangat_Tertib', 2, 'Sedang'),
+('Pantai Purwahamba Indah', 3, 213, 'Alam', 3, 'Hijau', 1231, 21, 'Tawuran', 3, 'Rendah'),
+('Waduk Cacaban', 4, 12323, 'Romance', 4, 'Merah', 2323, 213, 'Rendah', 4, 'Sangat_Rendah'),
+('Wisata Kesehatan Jamu Kalibaku', 5, 13, 'Sejarah', 1, 'Kuning', 23, 23, 'Sangat_Tertib', 5, 'Sangat_Rendah'),
+('Yogya Waterboom', 6, 2134, 'Alam', 2, 'Hijau', 2132, 2312, 'Rendah', 6, 'Tinggi'),
+('Konsorsium Rumah Wayang', 7, 3434, 'Sejarah', 3, 'Merah', 23, 3, 'Rendah', 6, 'Sedang'),
+('Gerbang Mas Bahari Waterpark', 8, 23, 'Edukasi', 4, 'Kuning', 213, 43547, 'Tawuran', 7, 'Rendah'),
+('Rita Park', 9, 2323, 'Alam', 1, 'Hijau', 213, 65, 'Tertib', 8, 'Rendah'),
+('Hutan Mangrove Tegal', 10, 33, 'Romance', 2, 'Kuning', 23, 5, 'Rendah', 9, 'Sangat_Rendah'),
+('Makam Ki Gede Sebayu', 11, 23233, 'Edukasi', 3, 'Merah', 32, 4543, 'Sangat_Tertib', 10, 'Tinggi'),
+('Makam Sunan Amangkurat I', 12, 23233, 'Sejarah', 4, 'Hijau', 32, 2, 'Tawuran', 11, 'Rendah'),
+('Klenteng Tek Hay Kiong', 13, 232, 'Religi', 1, 'Merah', 2133, 12, 'Tertib', 21, 'Rendah'),
+('Situs Purbakala Semedo', 14, 2323, 'Romance', 2, 'Kuning', 32, 123, 'Tawuran', 12, 'Sangat_Rendah'),
+('Pool Terrace Samudra', 15, 23, 'Sejarah', 3, 'Hijau', 323, 32, 'Tawuran', 1, 'Sedang'),
+('Pantai Super', 77, 4000, 'Alam', 3, 'Hijau', 2323, 54, 'Sangat_Tertib', 3, 'Sedang'),
+('Alun-Alun', 78, 232, 'Sejarah', 4, 'Kuning', 213, 457, 'Tertib', 43, 'Rendah'),
+('Kantor Tua', 79, 16777, 'Romance', 6, 'Hijau', 23, 56, 'Rendah', 2, 'Sangat_Rendah'),
+('Lapangan Bola', 80, 4444, 'Edukasi', 23, 'Hijau', 233, 3, 'Tertib', 4, 'Tinggi');
 
 --
 -- Indexes for dumped tables
@@ -541,6 +588,12 @@ ALTER TABLE `fuzzy_parkir`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `fuzzy_popularitas`
+--
+ALTER TABLE `fuzzy_popularitas`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `fuzzy_stamina`
 --
 ALTER TABLE `fuzzy_stamina`
@@ -566,67 +619,73 @@ ALTER TABLE `tempat_wisata_tb`
 -- AUTO_INCREMENT for table `daftar_kriteria`
 --
 ALTER TABLE `daftar_kriteria`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=106;
 
 --
 -- AUTO_INCREMENT for table `daftar_kriteria_static`
 --
 ALTER TABLE `daftar_kriteria_static`
-  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --
 -- AUTO_INCREMENT for table `fuzzy_fasilitas`
 --
 ALTER TABLE `fuzzy_fasilitas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
 
 --
 -- AUTO_INCREMENT for table `fuzzy_harga`
 --
 ALTER TABLE `fuzzy_harga`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
 
 --
 -- AUTO_INCREMENT for table `fuzzy_jenis`
 --
 ALTER TABLE `fuzzy_jenis`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
 
 --
 -- AUTO_INCREMENT for table `fuzzy_ketertiban`
 --
 ALTER TABLE `fuzzy_ketertiban`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
 
 --
 -- AUTO_INCREMENT for table `fuzzy_luas`
 --
 ALTER TABLE `fuzzy_luas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
 
 --
 -- AUTO_INCREMENT for table `fuzzy_parkir`
 --
 ALTER TABLE `fuzzy_parkir`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
+
+--
+-- AUTO_INCREMENT for table `fuzzy_popularitas`
+--
+ALTER TABLE `fuzzy_popularitas`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
 
 --
 -- AUTO_INCREMENT for table `fuzzy_stamina`
 --
 ALTER TABLE `fuzzy_stamina`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
 
 --
 -- AUTO_INCREMENT for table `fuzzy_warna`
 --
 ALTER TABLE `fuzzy_warna`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
 
 --
 -- AUTO_INCREMENT for table `tempat_wisata_tb`
 --
 ALTER TABLE `tempat_wisata_tb`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
