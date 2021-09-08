@@ -136,7 +136,7 @@ include"functions.php";
 					$num = 1;
 					while($data = mysqli_fetch_array($daftar_kriteria)):
 				?>
-				<div class="col-auto my-1 input-group" id="krit<?=$num?>">          
+				<div class="col-auto my-1 input-group batesin" id="krit<?=$num?>">          
 					<select name='<?=strtolower($data['kriteria']);?>' class="form-control custom-select mr-sm-1" id="sel<?=$num?>" required>
 						<option value="">--- Pilih <?=$data['kriteria'];?> ---</option>
             <option class="inputan" value="<?=strtolower($data['sub1']);?>"><?=$data['sub1'];?></option>
@@ -704,8 +704,14 @@ include"functions.php";
             input_arr.style.display = "none";
           }
 	}
-
+  var arr_bates = document.querySelectorAll(".batesin");
+  var penghitung = arr_bates.length;
   function delkrit(idx){
+    if(penghitung == 1){
+      alert("Tidak bisa menghapus semua kriteria, anda bisa me-refresh laman untuk memunculkan pilihan kriteria semula.")
+      return false;
+    }
+    penghitung = penghitung-1;
     var input1 = document.getElementById("krit1");
 		var input2 = document.getElementById("krit2");
 		var input3 = document.getElementById("krit3");
