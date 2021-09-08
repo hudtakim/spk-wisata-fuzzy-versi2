@@ -211,7 +211,7 @@ if($_SESSION['legitUser'] != 'qwerty'){
 		if(cek.value == ""){
 			return true;
 		}
-        let confirmAction = confirm("Anda yakin ingin menghapus kriteria?");
+        let confirmAction = confirm("Anda yakin ingin menghapus kriteria " + cek.value + "?");
         if (confirmAction) {
 			 return true;
         } else {

@@ -220,7 +220,7 @@ if($_SESSION['legitUser'] != 'qwerty'){
 						?>
 						<th><?=$data[strtolower($dakrit['kriteria'])];?></th>
 						<?php endwhile;?>
-                        <th><a href="delete.php?id=<?php echo $data['id']; ?>&item=lokasi"><button class="btn btn-danger" onclick="return confirmAction()">Delete</button></a></th>
+                        <th><a href="delete.php?id=<?php echo $data['id']; ?>&item=lokasi"><button class="btn btn-danger" onclick="return confirmAction('<?=$data['obyek_wisata'];?>')">Delete</button></a></th>
                     </tr>
 
                 <?php $num++; endwhile;?>
@@ -235,10 +235,11 @@ if($_SESSION['legitUser'] != 'qwerty'){
 
 <script>
       // The function below will start the confirmation dialog
-      function confirmAction() {
-        let confirmAction = confirm("Anda yakin ingin menghapus data lokasi?");
+      function confirmAction(data) {
+		var cek = document.getElementById("inlineFormCustomSelect");
+        let confirmAction = confirm("Anda yakin ingin menghapus data " + data + "?");
         if (confirmAction) {
-			 alert("Berhasil menghapus data lokasi")
+			 alert("Berhasil menghapus data " + data)
 			 return true;
         } else {
 			return false;
