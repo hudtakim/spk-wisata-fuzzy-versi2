@@ -41,7 +41,6 @@ if($_SESSION['legitUser'] != 'qwerty'){
 <style type="text/css">
 	#home{
 		text-align: center;
-		background-image: url("https://image.myanimelist.net/ui/qZ_8jcwPFtYxKx-4xT6ZrruSqz37nZYqAJuKv91B00EgtWa1Fzpw7uOcMvoZIF_VmrOIW8XkYQxBKl2LiQPUJwZw6dYl9M9xbZ2ftNMwZOM64OZhvbPY2gB4elov7hWZz5C44KqcjG8XUNwbN4B4fA"); 
 		background-size: cover;
 	}
 	p{
@@ -79,9 +78,6 @@ if($_SESSION['legitUser'] != 'qwerty'){
 		padding-left: 50px;
 	}
 
-	body{
-		background: orange;
-	}
 	h1{
 		text-shadow: 5px 2px blue;
 	}
@@ -89,9 +85,18 @@ if($_SESSION['legitUser'] != 'qwerty'){
 	a:hover { color: inherit; } 
 
 </style>
-
-<body>
-<div class="jumbotron" id='home' mb-0>
+<?php
+    $result = mysqli_query($conn, "SELECT DISTINCT warna_bg FROM setting_tampilan");
+    $row = $result->fetch_row();
+    $value = $row[0] ?? false;
+?>
+<body style="background: <?=$value?>;">
+<?php
+    $result = mysqli_query($conn, "SELECT DISTINCT link_gambar FROM setting_tampilan");
+    $row = $result->fetch_row();
+    $value = $row[0] ?? false;
+?>
+<div class="jumbotron" id='home' mb-0 style="background-image:url(<?=$value?>)">
     <div style="margin-top:60px;margin-bottom:20px;">
 			<h1 class="text-light shadow-lg"><a href="index.php">Sistem Pendukung Keputusan</a></h1>
 			<p class="h3 text-light shadow-lg" style="text-shadow: 2px 2px red;">Pemilihan Objek Pariwisata Tegal</p>

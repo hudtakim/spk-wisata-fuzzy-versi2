@@ -25,7 +25,7 @@ if($_SESSION['legitUser'] != 'qwerty'){
 
 <style type="text/css">
 	#home{
-		text-align: center;
+		text-align: center; 
 		background-size: cover;
 	}
 	p{
@@ -119,16 +119,43 @@ if($_SESSION['legitUser'] != 'qwerty'){
     </div>
 </div>
 </nav>
-	<div class='container mt-5'>
-		<p align="center"><b>Ini adalah laman khusus admin</b></p>
-        		<message>
-			Berikut adalah previlege admin :
-        </message>
+	<div class='container mt-5 mb-5'>
+		<p align="center"><b>Pengaturan Tampilan Web</b></p>
+		<a href="admin.php"><button type="button" class="btn btn-info btn-lg btn-block mt-4 mb-4">Kembali ke Menu Utama</button></a>
+        <message>
+            Silahkan atur warna background atau gambar banner untuk diperbaharui.
+        <message>
+
+		<div class="tambah-lokasi mt-4">
+			<form method='POST' action="set_banner.php">
+				<div class="form-row align-items-center">
+					<div class="col-auto my-1 input-group">
+                        <input type="text" name="url"  placeholder="URL Gambar" class="mr-1 form-control" required>
+                        <button type="submit" class="btn btn-success float ml-3 pl-5 pr-5" name="submit">Terapkan</button>
+					</div>
+				</div>
+			</form>
+            <form method='POST' action="set_warnabg.php">
+				<div class="form-row align-items-center">
+					<div class="col-auto my-1 input-group">
+						<select name="warna" class="custom-select mr-1 mt-3 form-control" id="inlineFormCustomSelect" required>
+		                    <option value="">Pilih Warna</option>
+                            <option value="red">Merah</option>
+                            <option value="orange">Kuning</option>
+                            <option value="green">Hijau</option>
+                            <option value="blue">Biru</option>
+                            <option value="cyan">Cyan</option>
+                            <option value="purple">Ungu</option>
+                            <option value="black">Hitam</option>
+                            <option value="gray">Gray</option>
+                            <option value="white">Putih</option>
+						</select>
+                        <button type="submit" class="btn btn-success float mt-3 ml-3 pl-5 pr-5" name="submit">Terapkan</button>
+					</div>
+				</div>
+			</form>
+		</div>
 		
-		<div class="main-menu mt-5">
-            <a href="data_lokasi_wisata.php"><button type="button" class="btn btn-info btn-lg btn-block mt-4 mb-4">Pengaturan Data Lokasi Wisata</button></a>
-            <a href="admin_page.php"><button type="button" class="btn btn-info btn-lg btn-block mt-4 mb-4">Pengaturan Kriteria SPK</button></a>
-			<a href="pengaturan_tampilan.php"><button type="button" class="btn btn-info btn-lg btn-block mt-4 mb-5">Pengaturan Tampilan Web</button></a>
 		</div>
 
 	</div>
