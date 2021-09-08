@@ -1,8 +1,10 @@
-Kekurangan Sementara SPK Wisata:
+Kekurangan Sementara SPK Wisata (Menurut hudtakim@hdmvision):
 
-1. Belum ada fitur update data lokasi, 
+1. Belum ada fitur update data lokasi. 
   (Data lokasi lama harus dihapus terlebih dahulu jika ingin meng-update)
-2. Belum ada fitur update kriteria
+2. Belum ada fitur update kriteria.
    (Data kriteria lama harus dihapus terlebih dahulu jika ingin meng-update)
+3. Handling input untuk mencegah user(admin) memasukkan special char pada fitur tambah kriteria.
+4. Rumus Bobot Kriteria Fuzzy Perlu di perbaiki.
 
 - 8 Sept 2021 -
