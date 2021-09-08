@@ -114,8 +114,8 @@ if(isset($_POST['submit'])){
                     $batas5 = 2 * $batas4;
                     foreach ($nid as &$value) {
                         $val = (float)$datakriteria_id[$it];
-                        $sub1 = getbobot_fuzzy($val, "sub1", $batas1, $batas2, $batas3, $batas4, $batas5);
-                        $sub2 = getbobot_fuzzy($val, "sub2", $batas1, $batas2, $batas3, $batas4, $batas5);
+                        $sub1 = getbobot_fuzzy2($val, "sub1", $batas1, $batas2, $batas3, $batas4, $batas5);
+                        $sub2 = getbobot_fuzzy2($val, "sub2", $batas1, $batas2, $batas3, $batas4, $batas5);
                         $result = mysqli_query($conn, "INSERT INTO {$tname}(id, obyek_wisata, {$nk_lowered},{$nsub1_lowered}, {$nsub2_lowered}) 
                         VALUES('$value', '$lokasiarr[$it]', '$datakriteria_id[$it]','$sub1', '$sub2')");
                         $it++;
@@ -165,9 +165,9 @@ if(isset($_POST['submit'])){
                     $batas5 = 2 * $batas4;
                     foreach ($nid as &$value) {
                         $val = (float)$datakriteria_id[$it];
-                        $sub1 = getbobot_fuzzy($val, "sub1", $batas1, $batas2, $batas3, $batas4, $batas5);
-                        $sub2 = getbobot_fuzzy($val, "sub2", $batas1, $batas2, $batas3, $batas4, $batas5);
-                        $sub3 = getbobot_fuzzy($val, "sub3", $batas1, $batas2, $batas3, $batas4, $batas5);
+                        $sub1 = getbobot_fuzzy3($val, "sub1", $batas1, $batas2, $batas3, $batas4, $batas5);
+                        $sub2 = getbobot_fuzzy3($val, "sub2", $batas1, $batas2, $batas3, $batas4, $batas5);
+                        $sub3 = getbobot_fuzzy3($val, "sub3", $batas1, $batas2, $batas3, $batas4, $batas5);
                         $result = mysqli_query($conn, "INSERT INTO {$tname}(id, obyek_wisata, {$nk_lowered},{$nsub1_lowered}, {$nsub2_lowered}, {$nsub3_lowered}) 
                         VALUES('$value', '$lokasiarr[$it]', '$datakriteria_id[$it]','$sub1', '$sub2', '$sub3')");
                         $it++;
@@ -220,10 +220,10 @@ if(isset($_POST['submit'])){
                     $batas5 = 2 * $batas4;
                     foreach ($nid as &$value) {
                         $val = (float)$datakriteria_id[$it];
-                        $sub1 = getbobot_fuzzy($val, "sub1", $batas1, $batas2, $batas3, $batas4, $batas5);
-                        $sub2 = getbobot_fuzzy($val, "sub2", $batas1, $batas2, $batas3, $batas4, $batas5);
-                        $sub3 = getbobot_fuzzy($val, "sub3", $batas1, $batas2, $batas3, $batas4, $batas5);
-                        $sub4 = getbobot_fuzzy($val, "sub4", $batas1, $batas2, $batas3, $batas4, $batas5);
+                        $sub1 = getbobot_fuzzy4($val, "sub1", $batas1, $batas2, $batas3, $batas4, $batas5);
+                        $sub2 = getbobot_fuzzy4($val, "sub2", $batas1, $batas2, $batas3, $batas4, $batas5);
+                        $sub3 = getbobot_fuzzy4($val, "sub3", $batas1, $batas2, $batas3, $batas4, $batas5);
+                        $sub4 = getbobot_fuzzy4($val, "sub4", $batas1, $batas2, $batas3, $batas4, $batas5);
                         $result = mysqli_query($conn, "INSERT INTO {$tname}(id, obyek_wisata, {$nk_lowered},{$nsub1_lowered}, {$nsub2_lowered}, {$nsub3_lowered}, {$nsub4_lowered}) 
                         VALUES('$value', '$lokasiarr[$it]', '$datakriteria_id[$it]','$sub1', '$sub2', '$sub3', '$sub4')");
                         $it++;
@@ -280,11 +280,11 @@ if(isset($_POST['submit'])){
                     $it=0;
                     foreach ($nid as &$value) {
                         $val = (float)$datakriteria_id[$it];
-                        $sub1 = getbobot_fuzzy($val, "sub1", $batas1, $batas2, $batas3, $batas4, $batas5);
-                        $sub2 = getbobot_fuzzy($val, "sub2", $batas1, $batas2, $batas3, $batas4, $batas5);
-                        $sub3 = getbobot_fuzzy($val, "sub3", $batas1, $batas2, $batas3, $batas4, $batas5);
-                        $sub4 = getbobot_fuzzy($val, "sub4", $batas1, $batas2, $batas3, $batas4, $batas5);
-                        $sub5 = getbobot_fuzzy($val, "sub5", $batas1, $batas2, $batas3, $batas4, $batas5);
+                        $sub1 = getbobot_fuzzy5($val, "sub1", $batas1, $batas2, $batas3, $batas4, $batas5);
+                        $sub2 = getbobot_fuzzy5($val, "sub2", $batas1, $batas2, $batas3, $batas4, $batas5);
+                        $sub3 = getbobot_fuzzy5($val, "sub3", $batas1, $batas2, $batas3, $batas4, $batas5);
+                        $sub4 = getbobot_fuzzy5($val, "sub4", $batas1, $batas2, $batas3, $batas4, $batas5);
+                        $sub5 = getbobot_fuzzy5($val, "sub5", $batas1, $batas2, $batas3, $batas4, $batas5);
                         $result = mysqli_query($conn, "INSERT INTO {$tname}(id, obyek_wisata, {$nk_lowered},{$nsub1_lowered}, {$nsub2_lowered}, {$nsub3_lowered}, {$nsub4_lowered}, {$nsub5_lowered}) 
                         VALUES('$value', '$lokasiarr[$it]', '$datakriteria_id[$it]','$sub1', '$sub2', '$sub3', '$sub4', '$sub5')");
                         $it++;

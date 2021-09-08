@@ -90,11 +90,11 @@ if(isset($_POST['submit'])){
             if($sub3 == ""){
                 if($kategori == "fuzzy"){
                     $v0=(int)$valinput ; $v1= $batas1; $v2= $batas2; $v3= $batas3; $v4=$batas4; $v5=$batas5;
-                    $bsub1 = getbobot_fuzzy($v0, "sub1", $v1, $v2, $v3, $v4, $v5);
-                    $bsub2 = getbobot_fuzzy($v0, "sub2",$v1, $v2, $v3, $v4, $v5);
-                    $bsub3 = getbobot_fuzzy($v0, "sub3",$v1, $v2, $v3, $v4, $v5);
-                    $bsub4 = getbobot_fuzzy($v0, "sub4",$v1, $v2, $v3, $v4, $v5);
-                    $bsub5 = getbobot_fuzzy($v0, "sub5",$v1, $v2, $v3, $v4, $v5);
+                    $bsub1 = getbobot_fuzzy2($v0, "sub1", $v1, $v2, $v3, $v4, $v5);
+                    $bsub2 = getbobot_fuzzy2($v0, "sub2",$v1, $v2, $v3, $v4, $v5);
+                    $bsub3 = getbobot_fuzzy2($v0, "sub3",$v1, $v2, $v3, $v4, $v5);
+                    $bsub4 = getbobot_fuzzy2($v0, "sub4",$v1, $v2, $v3, $v4, $v5);
+                    $bsub5 = getbobot_fuzzy2($v0, "sub5",$v1, $v2, $v3, $v4, $v5);
                     $sukses2 = mysqli_query($conn, "INSERT INTO {$tname}(id, obyek_wisata, {$name_krit}, {$sub1}, {$sub2}) 
                     VALUES('$id','$ob_wis', '$v0', '$bsub1','$bsub2')");
                 }else{
@@ -110,11 +110,11 @@ if(isset($_POST['submit'])){
             }if($sub4 ==""){
                 if($kategori == "fuzzy"){
                     $v0=(int)$valinput ; $v1= $batas1; $v2= $batas2; $v3= $batas3; $v4=$batas4; $v5=$batas5;
-                    $bsub1 = getbobot_fuzzy($v0, "sub1", $v1, $v2, $v3, $v4, $v5);
-                    $bsub2 = getbobot_fuzzy($v0, "sub2",$v1, $v2, $v3, $v4, $v5);
-                    $bsub3 = getbobot_fuzzy($v0, "sub3",$v1, $v2, $v3, $v4, $v5);
-                    $bsub4 = getbobot_fuzzy($v0, "sub4",$v1, $v2, $v3, $v4, $v5);
-                    $bsub5 = getbobot_fuzzy($v0, "sub5",$v1, $v2, $v3, $v4, $v5);
+                    $bsub1 = getbobot_fuzzy3($v0, "sub1", $v1, $v2, $v3, $v4, $v5);
+                    $bsub2 = getbobot_fuzzy3($v0, "sub2",$v1, $v2, $v3, $v4, $v5);
+                    $bsub3 = getbobot_fuzzy3($v0, "sub3",$v1, $v2, $v3, $v4, $v5);
+                    $bsub4 = getbobot_fuzzy3($v0, "sub4",$v1, $v2, $v3, $v4, $v5);
+                    $bsub5 = getbobot_fuzzy3($v0, "sub5",$v1, $v2, $v3, $v4, $v5);
                     $sukses2 = mysqli_query($conn, "INSERT INTO {$tname}(id, obyek_wisata, {$name_krit}, {$sub1}, {$sub2}, {$sub3}) 
                     VALUES('$id','$ob_wis', '$v0', '$bsub1','$bsub2','$bsub3')");
                 }else{
@@ -131,11 +131,11 @@ if(isset($_POST['submit'])){
             }if($sub5==""){
                 if($kategori == "fuzzy"){
                     $v0=(int)$valinput ; $v1= $batas1; $v2= $batas2; $v3= $batas3; $v4=$batas4; $v5=$batas5;
-                    $bsub1 = getbobot_fuzzy($v0, "sub1", $v1, $v2, $v3, $v4, $v5);
-                    $bsub2 = getbobot_fuzzy($v0, "sub2",$v1, $v2, $v3, $v4, $v5);
-                    $bsub3 = getbobot_fuzzy($v0, "sub3",$v1, $v2, $v3, $v4, $v5);
-                    $bsub4 = getbobot_fuzzy($v0, "sub4",$v1, $v2, $v3, $v4, $v5);
-                    $bsub5 = getbobot_fuzzy($v0, "sub5",$v1, $v2, $v3, $v4, $v5);
+                    $bsub1 = getbobot_fuzzy4($v0, "sub1", $v1, $v2, $v3, $v4, $v5);
+                    $bsub2 = getbobot_fuzzy4($v0, "sub2",$v1, $v2, $v3, $v4, $v5);
+                    $bsub3 = getbobot_fuzzy4($v0, "sub3",$v1, $v2, $v3, $v4, $v5);
+                    $bsub4 = getbobot_fuzzy4($v0, "sub4",$v1, $v2, $v3, $v4, $v5);
+                    $bsub5 = getbobot_fuzzy4($v0, "sub5",$v1, $v2, $v3, $v4, $v5);
                     $sukses2 = mysqli_query($conn, "INSERT INTO {$tname}(id, obyek_wisata, {$name_krit}, {$sub1}, {$sub2}, {$sub3},{$sub4}) 
                     VALUES('$id','$ob_wis', '$v0', '$bsub1','$bsub2','$bsub3','$bsub4')");
                 }else{
@@ -154,11 +154,11 @@ if(isset($_POST['submit'])){
             }else{
                 if($kategori == "fuzzy"){
                     $v0=(int)$valinput ; $v1= $batas1; $v2= $batas2; $v3= $batas3; $v4=$batas4; $v5=$batas5;
-                    $bsub1 = getbobot_fuzzy($v0, "sub1", $v1, $v2, $v3, $v4, $v5);
-                    $bsub2 = getbobot_fuzzy($v0, "sub2",$v1, $v2, $v3, $v4, $v5);
-                    $bsub3 = getbobot_fuzzy($v0, "sub3",$v1, $v2, $v3, $v4, $v5);
-                    $bsub4 = getbobot_fuzzy($v0, "sub4",$v1, $v2, $v3, $v4, $v5);
-                    $bsub5 = getbobot_fuzzy($v0, "sub5",$v1, $v2, $v3, $v4, $v5);
+                    $bsub1 = getbobot_fuzzy5($v0, "sub1", $v1, $v2, $v3, $v4, $v5);
+                    $bsub2 = getbobot_fuzzy5($v0, "sub2",$v1, $v2, $v3, $v4, $v5);
+                    $bsub3 = getbobot_fuzzy5($v0, "sub3",$v1, $v2, $v3, $v4, $v5);
+                    $bsub4 = getbobot_fuzzy5($v0, "sub4",$v1, $v2, $v3, $v4, $v5);
+                    $bsub5 = getbobot_fuzzy5($v0, "sub5",$v1, $v2, $v3, $v4, $v5);
                     $sukses2 = mysqli_query($conn, "INSERT INTO {$tname}(id, obyek_wisata, {$name_krit}, {$sub1}, {$sub2}, {$sub3},{$sub4},{$sub5}) 
                     VALUES('$id','$ob_wis', '$v0', '$bsub1','$bsub2','$bsub3','$bsub4','$bsub5')");
                 }else{
