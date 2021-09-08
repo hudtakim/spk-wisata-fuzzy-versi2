@@ -158,7 +158,7 @@ if($_SESSION['legitUser'] != 'qwerty'){
 				?>
 						</select>
 						<button type="submit" class="btn btn-success float ml-2" name="submit">Aktifkan Kriteria</button>
-						<button type="submit" class="btn btn-danger float ml-2" name="submit-del">Hapus Kriteria</button>
+						<button type="submit" class="btn btn-danger float ml-2" name="submit-del" onclick="return confirmAction()">Hapus Kriteria</button>
 					</div>
 				</div>
 			</form>
@@ -203,3 +203,19 @@ if($_SESSION['legitUser'] != 'qwerty'){
 	</div>
 </body>
 </html>
+
+<script>
+      // The function below will start the confirmation dialog
+      function confirmAction() {
+		var cek = document.getElementById("inlineFormCustomSelect");
+		if(cek.value == ""){
+			return true;
+		}
+        let confirmAction = confirm("Anda yakin ingin menghapus kriteria?");
+        if (confirmAction) {
+			 return true;
+        } else {
+			return false;
+        }
+      }
+    </script>
