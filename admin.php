@@ -76,14 +76,47 @@ if($_SESSION['legitUser'] != 'qwerty'){
 </style>
 
 <body>
-	<div class='container mt-5'>
-		<div class="jumbotron" id='home'>
+<div class="jumbotron" id='home' mb-0>
+    <div style="margin-top:60px;margin-bottom:20px;">
 			<h1 class="text-light shadow-lg"><a href="index.php">Sistem Pendukung Keputusan</a></h1>
 			<p class="h3 text-light shadow-lg" style="text-shadow: 2px 2px red;">Pemilihan Objek Pariwisata Tegal</p>
-		</div>
+</div>
+	</div>
+  
+
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark mt-0 fixed-top">
+    <div class="container">
+    <a href="index.php" class="navbar-brand">SPK Wisata</a>
+    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+        <div class="navbar-nav">
+            <a href="#" class="nav-item nav-link active"></a>
+            <a href="index.php" class="nav-item nav-link">Sistem Rekomendasi</a>
+            <?php
+            if(isset($_SESSION['legitUser'])){
+              echo '<a href="admin.php" class="nav-item nav-link">Pengaturan</a>';
+            }
+            ?> 
+        </div>
+        <?php
+      if(isset($_SESSION['legitUser'])){
+      
+      echo '<div class="navbar-nav"><a href="logout.php" class="nav-item nav-link">Logout</a></div>';
+      }else{
+      
+        echo '<div class="navbar-nav"><a href="login_form.html" class="nav-item nav-link">Login Admin</a></div>';
+   
+      }
+      ?>   
+    </div>
+</div>
+</nav>
+	<div class='container mt-5'>
 		<p align="center"><b>Ini adalah laman khusus admin</b></p>
-        <a href="logout.php"><button type="button" class="btn btn-primary btn-lg btn-block mt-4 mb-4">Logout</button></a>
-		<message>
+        		<message>
 			Berikut adalah previlege admin :
         </message>
 		
