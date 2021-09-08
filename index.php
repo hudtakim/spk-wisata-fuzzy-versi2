@@ -136,10 +136,9 @@ include"functions.php";
 					$num = 1;
 					while($data = mysqli_fetch_array($daftar_kriteria)):
 				?>
-				<div class="col-auto my-1">
-					<label class="mr-sm-2" for="inlineFormCustomSelect"><?=$data['kriteria'];?></label>
-					<select name='<?=strtolower($data['kriteria']);?>' class="custom-select mr-sm-1" id="inlineFormCustomSelect" required>
-						<option value="">Choose...</option>
+				<div class="col-auto my-1 input-group" id="krit<?=$num?>">          
+					<select name='<?=strtolower($data['kriteria']);?>' class="form-control custom-select mr-sm-1" id="sel<?=$num?>" required>
+						<option value="">--- Pilih <?=$data['kriteria'];?> ---</option>
             <option class="inputan" value="<?=strtolower($data['sub1']);?>"><?=$data['sub1'];?></option>
 						<option class="inputan" value="<?=strtolower($data['sub2']);?>"><?=$data['sub2'];?></option>
           <?php 
@@ -167,7 +166,9 @@ include"functions.php";
             }
           ?>
 					</select>
+          <button type="button" class="btn btn-danger float ml-2" onclick="delkrit(<?=$num?>)">X</button>
 				</div>
+        
 			<?php $num++; endwhile;?>
 			</div>
 			<button type="submit" name='submit' class="btn btn-primary btn-lg btn-block mt-4 mb-4" value='and'>Submit - Logika AND</button>
@@ -181,18 +182,35 @@ include"functions.php";
 
         $daftar_kriteria = mysqli_query($conn,"SELECT * from daftar_kriteria");
 				$list_kriteria = array();
+        $list_kriteria_b = array();
 				while($data = mysqli_fetch_array($daftar_kriteria)):
             array_push($list_kriteria, strtolower($data['kriteria']));
+            array_push($list_kriteria_b, strtolower($data['kriteria']));
+            
         endwhile;
         
         $inputUser = array();
-        foreach ($list_kriteria as &$value) {
-          array_push($inputUser, $_GET[$value]); 
+        foreach ($list_kriteria_b as &$value) {
+          $vcil = strtolower($value);
+          if($_GET[$vcil] != ""){
+            $ada = $value;
+            array_push($inputUser, $_GET[$value]);
+            $result = mysqli_query($conn, "SELECT * FROM daftar_kriteria WHERE (kriteria='$ada')");
+            $row = $result->fetch_assoc();
+            $kriteria = $row['kriteria'];
+            $sub1 = $row['sub1'];
+            $sub2 = $row['sub2'];
+            $sub3 = $row['sub3'];
+            $sub4 = $row['sub4'];
+            $sub5 = $row['sub5'];
+            $sukses = mysqli_query($conn, "INSERT INTO input_user_tb(kriteria, sub1, sub2, sub3, sub4, sub5) 
+                    VALUES('$kriteria','$sub1', '$sub2', '$sub3','$sub4','$sub5')");
+          }
         }
-
+        
         echo "<br>Pilihan anda:";
         $it=0;
-        $daftar_kriteria = mysqli_query($conn,"SELECT * from daftar_kriteria");
+        $daftar_kriteria = mysqli_query($conn,"SELECT * from input_user_tb");
         while($data = mysqli_fetch_array($daftar_kriteria)):
           $str=" -> ";
           $str.=$data['kriteria'];
@@ -210,7 +228,7 @@ include"functions.php";
 					<th>No</th>
 					<th>Nama Wisata</th>
 					<?php
-						$daftar_kriteria = mysqli_query($conn,"SELECT * from daftar_kriteria");
+						$daftar_kriteria = mysqli_query($conn,"SELECT * from input_user_tb");
 						while($data = mysqli_fetch_array($daftar_kriteria)):
 					?>
 						<th><?=$data['kriteria'];?></th>
@@ -221,7 +239,7 @@ include"functions.php";
 			<tbody>
 
 				<?php
-           $daftar_kriteria = mysqli_query($conn,"SELECT * from daftar_kriteria");
+           $daftar_kriteria = mysqli_query($conn,"SELECT * from input_user_tb");
            $thekrit5 = array();
            $array_bobot = array();
            $it=0;
@@ -257,7 +275,7 @@ include"functions.php";
 
           $result = mysqli_query($conn,"SELECT * from tempat_wisata_tb");
           $rowcount=mysqli_num_rows($result);
-          $result2 = mysqli_query($conn,"SELECT * from daftar_kriteria");
+          $result2 = mysqli_query($conn,"SELECT * from input_user_tb");
           $rowcount2=mysqli_num_rows($result2);
 					
           function get_arrbot($list_arrbot, $rowcount){
@@ -279,7 +297,7 @@ include"functions.php";
 
           $it=0;
           $arrofarrbot = array();
-          $daftar_kriteria = mysqli_query($conn,"SELECT * from daftar_kriteria");
+          $daftar_kriteria = mysqli_query($conn,"SELECT * from input_user_tb");
           while($data = mysqli_fetch_array($daftar_kriteria)):        
             $arbot = get_arrbot($array_bobot[$it], $rowcount);
             array_push($arrofarrbot, $arbot);
@@ -304,11 +322,10 @@ include"functions.php";
           }
 					
 					
-					if(array_sum($fire_strength) == 0){
+					if(array_sum($fire_strength) < 0){
 						echo "<br><h1>TIDAK ADA REKOMENDASI</h1>";
 					}else{
           
-            
           $newliskrit = array(); $new_arrofarrbot = array();
           $it=0;
           foreach ($thekrit5 as &$valkrit){
@@ -476,7 +493,7 @@ include"functions.php";
            endwhile;
 
 					foreach ($fire_strength as &$value) {
-						if($value > 0){
+						if($value >= 0){
               $inwis = $idx -1;
 							$index_wisata = $idx;
 							$get_wisata_query = mysqli_query($conn,"SELECT * from tempat_wisata_tb WHERE (id = '$arrofid[$inwis]')");
@@ -589,7 +606,7 @@ include"functions.php";
 							endwhile;
 						} $idx++;
 					}
-					$get_rekomendasi_query = mysqli_query($conn,"SELECT * from rekomendasi_tb ORDER BY fire_strength DESC");
+					$get_rekomendasi_query = mysqli_query($conn,"SELECT * from rekomendasi_tb ORDER BY fire_strength DESC LIMIT 5");
 					$num = 1;
 					while($data = mysqli_fetch_array($get_rekomendasi_query)):
 					?>
@@ -597,7 +614,7 @@ include"functions.php";
 							<th><?=$num;?></th>
 							<th><?=$data['obyek_wisata'];?></th>
 							<?php
-							$daftar_kriteria = mysqli_query($conn,"SELECT * from daftar_kriteria");
+							$daftar_kriteria = mysqli_query($conn,"SELECT * from input_user_tb");
 								while($dakrit = mysqli_fetch_array($daftar_kriteria)):
 							?>
 							<th><?=$data[strtolower($dakrit['kriteria'])];?></th>
@@ -625,7 +642,7 @@ include"functions.php";
 							<th>No</th>
 							<th>Nama Wisata</th>
 							<?php
-								$daftar_kriteria = mysqli_query($conn,"SELECT * from daftar_kriteria");
+								$daftar_kriteria = mysqli_query($conn,"SELECT * from input_user_tb");
 								while($data = mysqli_fetch_array($daftar_kriteria)):
 							?>
 							<th>Bobot <?=$data['kriteria'];?></th>
@@ -636,7 +653,7 @@ include"functions.php";
 					<tbody>
 
 					<?php
-						$get_fuzzy_query = mysqli_query($conn,"SELECT * from penghitungan_bobot_tb ORDER BY fire_strength DESC");
+						$get_fuzzy_query = mysqli_query($conn,"SELECT * from penghitungan_bobot_tb ORDER BY fire_strength DESC LIMIT 5");
 						$num = 1;
             if($get_fuzzy_query){
               while($data = mysqli_fetch_array($get_fuzzy_query)):
@@ -647,7 +664,7 @@ include"functions.php";
 							<th><?=$data['obyek_wisata'];?></th>
 							
 							<?php
-							$daftar_kriteria = mysqli_query($conn,"SELECT * from daftar_kriteria");
+							$daftar_kriteria = mysqli_query($conn,"SELECT * from input_user_tb");
 							while($dakrit = mysqli_fetch_array($daftar_kriteria)):
 								//$str="bobot_";
 								//$str.=strtolower($dakrit['kriteria']);
@@ -662,6 +679,7 @@ include"functions.php";
 
 					<?php $num++; endwhile; 
           $del = mysqli_query($conn,"DROP TABLE penghitungan_bobot_tb");
+          $del = mysqli_query($conn,"DELETE FROM input_user_tb");
           if($del) {mysqli_close($conn);}
         }
           ?>
@@ -686,4 +704,51 @@ include"functions.php";
             input_arr.style.display = "none";
           }
 	}
+
+  function delkrit(idx){
+    var input1 = document.getElementById("krit1");
+		var input2 = document.getElementById("krit2");
+		var input3 = document.getElementById("krit3");
+		var input4 = document.getElementById("krit4");
+		var input5 = document.getElementById("krit5");
+    var input6 = document.getElementById("krit6");
+    var sel1 = document.getElementById("sel1");
+		var sel2 = document.getElementById("sel2");
+		var sel3 = document.getElementById("sel3");
+		var sel4 = document.getElementById("sel4");
+		var sel5 = document.getElementById("sel5");
+    var sel6 = document.getElementById("sel6");
+
+    if(idx == 1){
+      sel1.value = "";
+      sel1.required = false;
+      input1.style.display = "none";
+    }
+    if(idx == 2){
+      sel2.value = "";
+      sel2.required = false;
+      input2.style.display = "none";
+    }
+    if(idx == 3){
+      sel3.value = "";
+      sel3.required = false;
+      input3.style.display = "none";
+    }
+    if(idx == 4){
+      sel4.value = "";
+      sel4.required = false;
+      input4.style.display = "none";
+    }
+    if(idx == 5){
+      sel5.value = "";
+      sel5.required = false;
+      input5.style.display = "none";
+    }
+    if(idx == 6){
+      sel6.value = "";
+      sel6.required = false;
+      input6.style.display = "none";
+    }
+    return true;
+  }
 </script>

@@ -1,4 +1,5 @@
 <?php 
+session_start();
 include"functions.php";
  ?>
 
@@ -13,10 +14,10 @@ include"functions.php";
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 </head>
 
+
 <style type="text/css">
 	#home{
 		text-align: center;
-		background-image: url("https://image.myanimelist.net/ui/qZ_8jcwPFtYxKx-4xT6ZrruSqz37nZYqAJuKv91B00EgtWa1Fzpw7uOcMvoZIF_VmrOIW8XkYQxBKl2LiQPUJwZw6dYl9M9xbZ2ftNMwZOM64OZhvbPY2gB4elov7hWZz5C44KqcjG8XUNwbN4B4fA"); 
 		background-size: cover;
 	}
 	p{
@@ -54,9 +55,6 @@ include"functions.php";
 		padding-left: 50px;
 	}
 
-	body{
-		background: orange;
-	}
 	h1{
 		text-shadow: 5px 2px blue;
 	}
@@ -64,15 +62,73 @@ include"functions.php";
 	a:hover { color: inherit; } 
 
 </style>
+<?php
+    $result = mysqli_query($conn, "SELECT DISTINCT warna_bg FROM setting_tampilan");
+    $row = $result->fetch_row();
+    $value = $row[0] ?? false;
+?>
+<body style="background: <?=$value?>;">
+<?php
+    $result = mysqli_query($conn, "SELECT DISTINCT link_gambar FROM setting_tampilan");
+    $row = $result->fetch_row();
+    $value = $row[0] ?? false;
+?>
+<div class="jumbotron" id='home' mb-0 style="background-image:url(<?=$value?>)">
+    <div style="margin-top:60px;margin-bottom:20px;">
+			<h1 class="text-light shadow-lg"><a href="index.php">Sistem Pendukung Keputusan</a></h1>
+			<?php
+				$result = mysqli_query($conn, "SELECT DISTINCT nama_wilayah FROM setting_tampilan");
+				$row = $result->fetch_row();
+				$value = $row[0] ?? false;
+			?>
+			<p class="h3 text-light shadow-lg" style="text-shadow: 2px 2px red;">Pemilihan Objek Pariwisata <?=$value?></p>
+</div>
+	</div>
+  
 
-<body>
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark mt-0 fixed-top ">
+    <div class="container">
+    <a href="index.php" class="navbar-brand">SPK Wisata</a>
+    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+        <div class="navbar-nav">
+            <a href="#" class="nav-item nav-link active"></a>
+            <a href="index.php" class="nav-item nav-link">Sistem Rekomendasi</a>
+            <?php
+            if(isset($_SESSION['legitUser'])){
+              echo '<a href="admin.php" class="nav-item nav-link">Pengaturan</a>';
+            }
+            ?> 
+        </div>
+        <?php
+      if(isset($_SESSION['legitUser'])){
+      
+      echo '<div class="navbar-nav"><a href="logout.php" class="nav-item nav-link">Logout</a></div>';
+      }else{
+      
+        echo '<div class="navbar-nav"><a href="login_form.html" class="nav-item nav-link">Login Admin</a></div>';
+   
+      }
+      ?>   
+    </div>
+</div>
+</nav>
+
+
 	<div class='container mt-5'>
-		<div class="jumbotron" id='home'>
-			<h1 class="text-light shadow-lg"><a href="/wisataweb">Sistem Pendukung Keputusan</a></h1>
-			<p class="h3 text-light shadow-lg" style="text-shadow: 2px 2px red;">Pemilihan Objek Pariwisata Tegal</p>
-		</div>
-		<p align="center"><b>Silahkan Masukkan Kriteria Objek Wisata</b></p>
-
+    <?php
+  
+    
+      $krit_aktif = mysqli_query($conn,"SELECT * from daftar_kriteria");
+      $baris=mysqli_num_rows($krit_aktif);
+      if($baris == 0){
+        echo "<p align='center'><b>Mohon maaf, tidak ada kriteria wisata yang aktif, silahkan hubungi admin.</b></p>";
+      }else{
+        echo "<p align='center'><b>Silahkan Masukkan Kriteria Objek Wisata</b></p>";
+    ?>
 		<form method='GET' action="">
 			<div class="form-row align-items-center">
 			<?php
@@ -80,15 +136,39 @@ include"functions.php";
 					$num = 1;
 					while($data = mysqli_fetch_array($daftar_kriteria)):
 				?>
-				<div class="col-auto my-1">
-					<label class="mr-sm-2" for="inlineFormCustomSelect"><?=$data['kriteria'];?></label>
-					<select name='<?=strtolower($data['kriteria']);?>' class="custom-select mr-sm-1" id="inlineFormCustomSelect" required>
-						<option value="">Choose...</option>
-						<option value="<?=strtolower($data['bawah']);?>"><?=$data['bawah'];?></option>
-						<option value="<?=strtolower($data['tengah']);?>"><?=$data['tengah'];?></option>
-						<option value="<?=strtolower($data['atas']);?>"><?=$data['atas'];?></option>
+				<div class="col-auto my-1 input-group" id="krit<?=$num?>">          
+					<select name='<?=strtolower($data['kriteria']);?>' class="form-control custom-select mr-sm-1" id="sel<?=$num?>" required>
+						<option value="">--- Pilih <?=$data['kriteria'];?> ---</option>
+            <option class="inputan" value="<?=strtolower($data['sub1']);?>"><?=$data['sub1'];?></option>
+						<option class="inputan" value="<?=strtolower($data['sub2']);?>"><?=$data['sub2'];?></option>
+          <?php 
+            if($data['sub3'] != ""){
+          
+          ?>
+          <option class="inputan" value="<?=strtolower($data['sub3']);?>"><?=$data['sub3'];?></option>
+              <?php    
+            }
+          ?>
+          <?php 
+            if($data['sub4'] != ""){
+          
+          ?>
+          <option class="inputan" value="<?=strtolower($data['sub4']);?>"><?=$data['sub4'];?></option>
+              <?php    
+            }
+          ?>
+          <?php 
+            if($data['sub5'] != ""){
+          
+          ?>
+          <option class="inputan" value="<?=strtolower($data['sub5']);?>"><?=$data['sub5'];?></option>
+              <?php    
+            }
+          ?>
 					</select>
+          <button type="button" class="btn btn-danger float ml-2" onclick="delkrit(<?=$num?>)">X</button>
 				</div>
+        
 			<?php $num++; endwhile;?>
 			</div>
 			<button type="submit" name='submit' class="btn btn-primary btn-lg btn-block mt-4 mb-4" value='and'>Submit - Logika AND</button>
@@ -96,23 +176,41 @@ include"functions.php";
 		</form>
 
 		<?php
+      }
 			if(isset($_GET['submit'])){
 			  $submit = $_GET['submit'];
 
         $daftar_kriteria = mysqli_query($conn,"SELECT * from daftar_kriteria");
 				$list_kriteria = array();
+        $list_kriteria_b = array();
 				while($data = mysqli_fetch_array($daftar_kriteria)):
             array_push($list_kriteria, strtolower($data['kriteria']));
+            array_push($list_kriteria_b, strtolower($data['kriteria']));
+            
         endwhile;
         
         $inputUser = array();
-        foreach ($list_kriteria as &$value) {
-          array_push($inputUser, $_GET[$value]); 
+        foreach ($list_kriteria_b as &$value) {
+          $vcil = strtolower($value);
+          if($_GET[$vcil] != ""){
+            $ada = $value;
+            array_push($inputUser, $_GET[$value]);
+            $result = mysqli_query($conn, "SELECT * FROM daftar_kriteria WHERE (kriteria='$ada')");
+            $row = $result->fetch_assoc();
+            $kriteria = $row['kriteria'];
+            $sub1 = $row['sub1'];
+            $sub2 = $row['sub2'];
+            $sub3 = $row['sub3'];
+            $sub4 = $row['sub4'];
+            $sub5 = $row['sub5'];
+            $sukses = mysqli_query($conn, "INSERT INTO input_user_tb(kriteria, sub1, sub2, sub3, sub4, sub5) 
+                    VALUES('$kriteria','$sub1', '$sub2', '$sub3','$sub4','$sub5')");
+          }
         }
-
+        
         echo "<br>Pilihan anda:";
         $it=0;
-        $daftar_kriteria = mysqli_query($conn,"SELECT * from daftar_kriteria");
+        $daftar_kriteria = mysqli_query($conn,"SELECT * from input_user_tb");
         while($data = mysqli_fetch_array($daftar_kriteria)):
           $str=" -> ";
           $str.=$data['kriteria'];
@@ -130,7 +228,7 @@ include"functions.php";
 					<th>No</th>
 					<th>Nama Wisata</th>
 					<?php
-						$daftar_kriteria = mysqli_query($conn,"SELECT * from daftar_kriteria");
+						$daftar_kriteria = mysqli_query($conn,"SELECT * from input_user_tb");
 						while($data = mysqli_fetch_array($daftar_kriteria)):
 					?>
 						<th><?=$data['kriteria'];?></th>
@@ -141,7 +239,7 @@ include"functions.php";
 			<tbody>
 
 				<?php
-           $daftar_kriteria = mysqli_query($conn,"SELECT * from daftar_kriteria");
+           $daftar_kriteria = mysqli_query($conn,"SELECT * from input_user_tb");
            $thekrit5 = array();
            $array_bobot = array();
            $it=0;
@@ -150,7 +248,7 @@ include"functions.php";
              array_push($thekrit5, $krit);
              $tname = "fuzzy_";
              $tname .= $krit;
-             $sub1 = strtolower($data['bawah']); $sub2 = strtolower($data['tengah']); $sub3 = strtolower($data['atas']);
+             $sub1 = strtolower($data['sub1']); $sub2 = strtolower($data['sub2']); $sub3 = strtolower($data['sub3']);$sub4 = strtolower($data['sub4']);$sub5 = strtolower($data['sub5']);
            
              if($inputUser[$it] == $sub1){
                $bobot = mysqli_query($conn,"SELECT {$sub1} from {$tname}");
@@ -161,7 +259,14 @@ include"functions.php";
              }else if($inputUser[$it] == $sub3){
                $bobot = mysqli_query($conn,"SELECT {$sub3} from {$tname}");
                array_push($array_bobot, $bobot);
-             }else{
+             }else if($inputUser[$it] == $sub4){
+              $bobot = mysqli_query($conn,"SELECT {$sub4} from {$tname}");
+              array_push($array_bobot, $bobot);
+            }else if($inputUser[$it] == $sub5){
+              $bobot = mysqli_query($conn,"SELECT {$sub5} from {$tname}");
+              array_push($array_bobot, $bobot);
+            }
+             else{
                echo "<h1>Terjadi Masalah Pada Baris Program 153, test.php</h1>";
              }
              $it++;
@@ -170,7 +275,7 @@ include"functions.php";
 
           $result = mysqli_query($conn,"SELECT * from tempat_wisata_tb");
           $rowcount=mysqli_num_rows($result);
-          $result2 = mysqli_query($conn,"SELECT * from daftar_kriteria");
+          $result2 = mysqli_query($conn,"SELECT * from input_user_tb");
           $rowcount2=mysqli_num_rows($result2);
 					
           function get_arrbot($list_arrbot, $rowcount){
@@ -192,7 +297,7 @@ include"functions.php";
 
           $it=0;
           $arrofarrbot = array();
-          $daftar_kriteria = mysqli_query($conn,"SELECT * from daftar_kriteria");
+          $daftar_kriteria = mysqli_query($conn,"SELECT * from input_user_tb");
           while($data = mysqli_fetch_array($daftar_kriteria)):        
             $arbot = get_arrbot($array_bobot[$it], $rowcount);
             array_push($arrofarrbot, $arbot);
@@ -217,11 +322,10 @@ include"functions.php";
           }
 					
 					
-					if(array_sum($fire_strength) == 0){
+					if(array_sum($fire_strength) < 0){
 						echo "<br><h1>TIDAK ADA REKOMENDASI</h1>";
 					}else{
           
-            
           $newliskrit = array(); $new_arrofarrbot = array();
           $it=0;
           foreach ($thekrit5 as &$valkrit){
@@ -348,16 +452,51 @@ include"functions.php";
             fire_strength float(20) NOT NULL,
             PRIMARY KEY ( id )
             )");
-          }else{
+          }elseif($rowcount2 == 6){
+            //create rekomendasi_tb untuk menampung yg direkomendasikan
+            $result = mysqli_query($conn, "CREATE TABLE rekomendasi_tb(
+            id INT NOT NULL AUTO_INCREMENT,
+            obyek_wisata VARCHAR(30) NOT NULL,
+            {$newliskrit[0]} varchar(20) NOT NULL,
+            {$newliskrit[1]} varchar(20) NOT NULL,
+            {$newliskrit[2]} varchar(20) NOT NULL,
+            {$newliskrit[3]} varchar(20) NOT NULL,
+            {$newliskrit[4]} varchar(20) NOT NULL,
+            {$newliskrit[5]} varchar(20) NOT NULL,
+            fire_strength float(20) NOT NULL,
+            PRIMARY KEY ( id )
+            )");
+            //create penghitungan_bobot_tb untuk menampung bobot2 rekomendasi
+            $result = mysqli_query($conn, "CREATE TABLE penghitungan_bobot_tb(
+            id INT NOT NULL AUTO_INCREMENT,
+            obyek_wisata VARCHAR(30) NOT NULL,
+            {$newliskrit[0]} float(20) NOT NULL,
+            {$newliskrit[1]} float(20) NOT NULL,
+            {$newliskrit[2]} float(20) NOT NULL,
+            {$newliskrit[3]} float(20) NOT NULL,
+            {$newliskrit[4]} float(20) NOT NULL,
+            {$newliskrit[5]} float(20) NOT NULL,
+            fire_strength float(20) NOT NULL,
+            PRIMARY KEY ( id )
+            )");
+          }
+          else{
             echo "<h1>Terdapat masalah pada data kriteria</h1>";
           }
 
 					$temp = array();
 					$idx = 1;
+          $arrofid = array();
+          $daftar_id = mysqli_query($conn,"SELECT * from tempat_wisata_tb");
+           while($data = mysqli_fetch_array($daftar_id)):
+              array_push($arrofid, $data['id']);
+           endwhile;
+
 					foreach ($fire_strength as &$value) {
-						if($value > 0){
+						if($value >= 0){
+              $inwis = $idx -1;
 							$index_wisata = $idx;
-							$get_wisata_query = mysqli_query($conn,"SELECT * from tempat_wisata_tb WHERE (id = '$index_wisata')");
+							$get_wisata_query = mysqli_query($conn,"SELECT * from tempat_wisata_tb WHERE (id = '$arrofid[$inwis]')");
 							while($data = mysqli_fetch_array($get_wisata_query)):
 
                 if($rowcount2==1){
@@ -438,14 +577,36 @@ include"functions.php";
                   VALUES('$ob_wis', '$krit1', '$krit2', '$krit3', '$krit4','$krit5', '$fs')");
                   mysqli_query($conn, "INSERT INTO penghitungan_bobot_tb(obyek_wisata, {$newliskrit[0]}, {$newliskrit[1]},{$newliskrit[2]}, {$newliskrit[3]},{$newliskrit[4]}, fire_strength) 
                   VALUES('$ob_wis', '$bk1', '$bk2','$bk3','$bk4','$bk5','$fs')");
-                }else{
+                }elseif($rowcount2==6){
+                  $ob_wis = $data['obyek_wisata'];
+                  $krit1 = $data[$newliskrit[0]];
+                  $krit2 = $data[$newliskrit[1]];
+                  $krit3 = $data[$newliskrit[2]];
+                  $krit4 = $data[$newliskrit[3]];
+                  $krit5 = $data[$newliskrit[4]];
+                  $krit6 = $data[$newliskrit[5]];
+                  $it = $idx-1;
+								  $fs  = $fire_strength[$it];
+                  $bk1 = $new_arrofarrbot[0][$it];
+                  $bk2 = $new_arrofarrbot[1][$it];
+                  $bk3 = $new_arrofarrbot[2][$it];
+                  $bk4 = $new_arrofarrbot[3][$it];
+                  $bk5 = $new_arrofarrbot[4][$it];
+                  $bk6 = $new_arrofarrbot[5][$it];
+
+                  mysqli_query($conn, "INSERT INTO rekomendasi_tb(obyek_wisata, {$newliskrit[0]}, {$newliskrit[1]},{$newliskrit[2]}, {$newliskrit[3]},{$newliskrit[4]}, {$newliskrit[5]}, fire_strength) 
+                  VALUES('$ob_wis', '$krit1', '$krit2', '$krit3', '$krit4','$krit5','$krit6', '$fs')");
+                  mysqli_query($conn, "INSERT INTO penghitungan_bobot_tb(obyek_wisata, {$newliskrit[0]}, {$newliskrit[1]},{$newliskrit[2]}, {$newliskrit[3]},{$newliskrit[4]}, {$newliskrit[5]}, fire_strength) 
+                  VALUES('$ob_wis', '$bk1', '$bk2','$bk3','$bk4','$bk5','$bk6','$fs')");
+                }
+                else{
                   echo "<h1>Terdapat masalah pada data kriteria</h1>";
                 }
 	
 							endwhile;
 						} $idx++;
 					}
-					$get_rekomendasi_query = mysqli_query($conn,"SELECT * from rekomendasi_tb ORDER BY fire_strength DESC");
+					$get_rekomendasi_query = mysqli_query($conn,"SELECT * from rekomendasi_tb ORDER BY fire_strength DESC LIMIT 5");
 					$num = 1;
 					while($data = mysqli_fetch_array($get_rekomendasi_query)):
 					?>
@@ -453,7 +614,7 @@ include"functions.php";
 							<th><?=$num;?></th>
 							<th><?=$data['obyek_wisata'];?></th>
 							<?php
-							$daftar_kriteria = mysqli_query($conn,"SELECT * from daftar_kriteria");
+							$daftar_kriteria = mysqli_query($conn,"SELECT * from input_user_tb");
 								while($dakrit = mysqli_fetch_array($daftar_kriteria)):
 							?>
 							<th><?=$data[strtolower($dakrit['kriteria'])];?></th>
@@ -481,7 +642,7 @@ include"functions.php";
 							<th>No</th>
 							<th>Nama Wisata</th>
 							<?php
-								$daftar_kriteria = mysqli_query($conn,"SELECT * from daftar_kriteria");
+								$daftar_kriteria = mysqli_query($conn,"SELECT * from input_user_tb");
 								while($data = mysqli_fetch_array($daftar_kriteria)):
 							?>
 							<th>Bobot <?=$data['kriteria'];?></th>
@@ -492,7 +653,7 @@ include"functions.php";
 					<tbody>
 
 					<?php
-						$get_fuzzy_query = mysqli_query($conn,"SELECT * from penghitungan_bobot_tb ORDER BY fire_strength DESC");
+						$get_fuzzy_query = mysqli_query($conn,"SELECT * from penghitungan_bobot_tb ORDER BY fire_strength DESC LIMIT 5");
 						$num = 1;
             if($get_fuzzy_query){
               while($data = mysqli_fetch_array($get_fuzzy_query)):
@@ -503,7 +664,7 @@ include"functions.php";
 							<th><?=$data['obyek_wisata'];?></th>
 							
 							<?php
-							$daftar_kriteria = mysqli_query($conn,"SELECT * from daftar_kriteria");
+							$daftar_kriteria = mysqli_query($conn,"SELECT * from input_user_tb");
 							while($dakrit = mysqli_fetch_array($daftar_kriteria)):
 								//$str="bobot_";
 								//$str.=strtolower($dakrit['kriteria']);
@@ -517,7 +678,10 @@ include"functions.php";
 						</tr>
 
 					<?php $num++; endwhile; 
-          $del = mysqli_query($conn,"DROP TABLE penghitungan_bobot_tb"); }
+          $del = mysqli_query($conn,"DROP TABLE penghitungan_bobot_tb");
+          $del = mysqli_query($conn,"DELETE FROM input_user_tb");
+          if($del) {mysqli_close($conn);}
+        }
           ?>
            
            
@@ -532,3 +696,59 @@ include"functions.php";
 	</div>
 </body>
 </html>
+
+<script>
+  var input_arr = document.querySelectorAll(".inputan");
+  for (let i = 0; i < input_arr.length; i++) {
+					if(input_arr.value == ""){
+            input_arr.style.display = "none";
+          }
+	}
+
+  function delkrit(idx){
+    var input1 = document.getElementById("krit1");
+		var input2 = document.getElementById("krit2");
+		var input3 = document.getElementById("krit3");
+		var input4 = document.getElementById("krit4");
+		var input5 = document.getElementById("krit5");
+    var input6 = document.getElementById("krit6");
+    var sel1 = document.getElementById("sel1");
+		var sel2 = document.getElementById("sel2");
+		var sel3 = document.getElementById("sel3");
+		var sel4 = document.getElementById("sel4");
+		var sel5 = document.getElementById("sel5");
+    var sel6 = document.getElementById("sel6");
+
+    if(idx == 1){
+      sel1.value = "";
+      sel1.required = false;
+      input1.style.display = "none";
+    }
+    if(idx == 2){
+      sel2.value = "";
+      sel2.required = false;
+      input2.style.display = "none";
+    }
+    if(idx == 3){
+      sel3.value = "";
+      sel3.required = false;
+      input3.style.display = "none";
+    }
+    if(idx == 4){
+      sel4.value = "";
+      sel4.required = false;
+      input4.style.display = "none";
+    }
+    if(idx == 5){
+      sel5.value = "";
+      sel5.required = false;
+      input5.style.display = "none";
+    }
+    if(idx == 6){
+      sel6.value = "";
+      sel6.required = false;
+      input6.style.display = "none";
+    }
+    return true;
+  }
+</script>
