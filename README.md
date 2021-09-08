@@ -14,7 +14,8 @@ Instalasi:
 
 User Guide:
 1. Isikan seluruh kriteria wisata yang diinginkan.
-2. Klik tombol submit untuk melihat hasil rekomendasi.
+2. User dapat menghapus kriteria yang tidak ingin digunakan.
+3. Klik tombol submit untuk melihat hasil rekomendasi.
 
 Cara Kerja Aplikasi:
 1. Menerima input kriteria wisata dari user.
@@ -32,7 +33,9 @@ Admin Guide:
    - Menambah data kriteria
    - Menghapus data kriteria
    - Mengaktifkan atau menonaktifkan kriteria pada tampilan user.
+   - Mengatur tampilan web (Nama kota, gambar banner, dan warna latar belakang)
 
 Perhatian: 
 1. Projek ini dibuat sebagai latihan/pembelajaran saja.
-2. Untuk mencoba aplikasi ini secara langsung silahkan menuju link berikut: http://hudtakim.byethost12.com/spkwisata  <--- (linkini masih versi web yg lama)
+2. Dilarang memperjualbelikan tanpa seijin pengembang.
+3. Untuk mencoba aplikasi ini secara langsung silahkan menuju link berikut: http://hudtakim.byethost12.com/spkwisata  <--- (Last Update 8 Sept 2021)
