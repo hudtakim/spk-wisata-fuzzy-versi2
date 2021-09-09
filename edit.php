@@ -22,6 +22,7 @@ $row = $data_kriteria->fetch_assoc();
 $id_krit = $row['id'];
 $kategori = $row['kategori'];
 $kriteria = $row['kriteria'];
+$lowkrit = strtolower($kriteria);
 $sub1 = $row['sub1'];
 $sub2 = $row['sub2'];
 $sub3 = $row['sub3'];
@@ -315,7 +316,7 @@ else{$available_krit=5;}
                             <tr>
                                 <th><?=$num;?></th>
                                 <th><?=$data['obyek_wisata'];?></th>
-                                <th><input name="datakriteria<?=$data['id'];?>" type="number" placeholder="Nilai Kriteria" class="datakriteria" required></th>
+                                <th><input value="<?=$data[$lowkrit];?>" name="datakriteria<?=$data['id'];?>" type="number" placeholder="Nilai Kriteria" class="datakriteria" required></th>
                             </tr>
 
                         <?php $num++; endwhile;?>
@@ -344,11 +345,136 @@ else{$available_krit=5;}
 								<th>
 								<select name="datakritnon<?=$data['id'];?>" class="custom-select mr-sm-1 datakritnon" required>
 									<option value="" class="s0">Choose...</option>
-									<option value="sub1" class="s1">Sub Kriteria 1</option>
-									<option value="sub2" class="s2">Sub Kriteria 2</option>
-									<option value="sub3" class="s3" disabled>Sub Kriteria 3</option>
-									<option value="sub4" class="s4" disabled>Sub Kriteria 4</option>
-									<option value="sub5" class="s5" disabled>Sub Kriteria 5</option>
+									<?php if($data[$lowkrit] == $sub1) { ?>
+									<?php if($available_krit == 2) {?>
+									<option value="sub1" class="s1" selected><?=$sub1?></option>
+									<option value="sub2" class="s2"><?=$sub2?></option>
+									<option value="sub3" class="s3" disabled><?=$sub3?></option>
+									<option value="sub4" class="s4" disabled><?=$sub4?></option>
+									<option value="sub5" class="s5" disabled><?=$sub5?></option>
+									<?php } if($available_krit == 3){ ?>
+									<option value="sub1" class="s1" selected><?=$sub1?></option>
+									<option value="sub2" class="s2"><?=$sub2?></option>
+									<option value="sub3" class="s3"><?=$sub3?></option>
+									<option value="sub4" class="s4" disabled><?=$sub4?></option>
+									<option value="sub5" class="s5" disabled><?=$sub5?></option>
+									<?php } if ($available_krit == 4) { ?>
+									<option value="sub1" class="s1" selected><?=$sub1?></option>
+									<option value="sub2" class="s2"><?=$sub2?></option>
+									<option value="sub3" class="s3"><?=$sub3?></option>
+									<option value="sub4" class="s4"><?=$sub4?></option>
+									<option value="sub5" class="s5" disabled><?=$sub5?></option>
+									<?php } if($available_krit == 5) { ?>
+									<option value="sub1" class="s1" selected><?=$sub1?></option>
+									<option value="sub2" class="s2"><?=$sub2?></option>
+									<option value="sub3" class="s3"><?=$sub3?></option>
+									<option value="sub4" class="s4"><?=$sub4?></option>
+									<option value="sub5" class="s5"><?=$sub5?></option>
+									<?php } } ?>
+									<?php if($data[$lowkrit] == $sub2) { ?>
+									<?php if($available_krit == 2) {?>
+									<option value="sub1" class="s1"><?=$sub1?></option>
+									<option value="sub2" class="s2" selected><?=$sub2?></option>
+									<option value="sub3" class="s3" disabled><?=$sub3?></option>
+									<option value="sub4" class="s4" disabled><?=$sub4?></option>
+									<option value="sub5" class="s5" disabled><?=$sub5?></option>
+									<?php } if($available_krit == 3){ ?>
+									<option value="sub1" class="s1"><?=$sub1?></option>
+									<option value="sub2" class="s2" selected><?=$sub2?></option>
+									<option value="sub3" class="s3"><?=$sub3?></option>
+									<option value="sub4" class="s4" disabled><?=$sub4?></option>
+									<option value="sub5" class="s5" disabled><?=$sub5?></option>
+									<?php } if ($available_krit == 4) { ?>
+									<option value="sub1" class="s1"><?=$sub1?></option>
+									<option value="sub2" class="s2" selected><?=$sub2?></option>
+									<option value="sub3" class="s3"><?=$sub3?></option>
+									<option value="sub4" class="s4"><?=$sub4?></option>
+									<option value="sub5" class="s5" disabled><?=$sub5?></option>
+									<?php } if($available_krit == 5) { ?>
+									<option value="sub1" class="s1"><?=$sub1?></option>
+									<option value="sub2" class="s2" selected><?=$sub2?></option>
+									<option value="sub3" class="s3"><?=$sub3?></option>
+									<option value="sub4" class="s4"><?=$sub4?></option>
+									<option value="sub5" class="s5"><?=$sub5?></option>
+									<?php } } ?>
+									<?php if($data[$lowkrit] == $sub3) { ?>
+									<?php if($available_krit == 2) {?>
+									<option value="sub1" class="s1"><?=$sub1?></option>
+									<option value="sub2" class="s2"><?=$sub2?></option>
+									<option value="sub3" class="s3" disabled><?=$sub3?></option>
+									<option value="sub4" class="s4" disabled><?=$sub4?></option>
+									<option value="sub5" class="s5" disabled><?=$sub5?></option>
+									<?php } if($available_krit == 3){ ?>
+									<option value="sub1" class="s1"><?=$sub1?></option>
+									<option value="sub2" class="s2"><?=$sub2?></option>
+									<option value="sub3" class="s3" selected><?=$sub3?></option>
+									<option value="sub4" class="s4" disabled><?=$sub4?></option>
+									<option value="sub5" class="s5" disabled><?=$sub5?></option>
+									<?php } if ($available_krit == 4) { ?>
+									<option value="sub1" class="s1"><?=$sub1?></option>
+									<option value="sub2" class="s2"><?=$sub2?></option>
+									<option value="sub3" class="s3"selected><?=$sub3?></option>
+									<option value="sub4" class="s4"><?=$sub4?></option>
+									<option value="sub5" class="s5" disabled><?=$sub5?></option>
+									<?php } if($available_krit == 5) { ?>
+									<option value="sub1" class="s1"><?=$sub1?></option>
+									<option value="sub2" class="s2"><?=$sub2?></option>
+									<option value="sub3" class="s3" selected><?=$sub3?></option>
+									<option value="sub4" class="s4"><?=$sub4?></option>
+									<option value="sub5" class="s5"><?=$sub5?></option>
+									<?php } } ?>
+									<?php if($data[$lowkrit] == $sub4) { ?>
+									<?php if($available_krit == 2) {?>
+									<option value="sub1" class="s1"><?=$sub1?></option>
+									<option value="sub2" class="s2"><?=$sub2?></option>
+									<option value="sub3" class="s3" disabled><?=$sub3?></option>
+									<option value="sub4" class="s4" disabled><?=$sub4?></option>
+									<option value="sub5" class="s5" disabled><?=$sub5?></option>
+									<?php } if($available_krit == 3){ ?>
+									<option value="sub1" class="s1"><?=$sub1?></option>
+									<option value="sub2" class="s2"><?=$sub2?></option>
+									<option value="sub3" class="s3"><?=$sub3?></option>
+									<option value="sub4" class="s4" disabled><?=$sub4?></option>
+									<option value="sub5" class="s5" disabled><?=$sub5?></option>
+									<?php } if ($available_krit == 4) { ?>
+									<option value="sub1" class="s1"><?=$sub1?></option>
+									<option value="sub2" class="s2"><?=$sub2?></option>
+									<option value="sub3" class="s3"><?=$sub3?></option>
+									<option value="sub4" class="s4" selected><?=$sub4?></option>
+									<option value="sub5" class="s5" disabled><?=$sub5?></option>
+									<?php } if($available_krit == 5) { ?>
+									<option value="sub1" class="s1"><?=$sub1?></option>
+									<option value="sub2" class="s2"><?=$sub2?></option>
+									<option value="sub3" class="s3"><?=$sub3?></option>
+									<option value="sub4" class="s4" selected><?=$sub4?></option>
+									<option value="sub5" class="s5"><?=$sub5?></option>
+									<?php } } ?>
+									<?php if($data[$lowkrit] == $sub5) { ?>
+									<?php if($available_krit == 2) {?>
+									<option value="sub1" class="s1"><?=$sub1?></option>
+									<option value="sub2" class="s2"><?=$sub2?></option>
+									<option value="sub3" class="s3" disabled><?=$sub3?></option>
+									<option value="sub4" class="s4" disabled><?=$sub4?></option>
+									<option value="sub5" class="s5" disabled><?=$sub5?></option>
+									<?php } if($available_krit == 3){ ?>
+									<option value="sub1" class="s1"><?=$sub1?></option>
+									<option value="sub2" class="s2"><?=$sub2?></option>
+									<option value="sub3" class="s3"><?=$sub3?></option>
+									<option value="sub4" class="s4" disabled><?=$sub4?></option>
+									<option value="sub5" class="s5" disabled><?=$sub5?></option>
+									<?php } if ($available_krit == 4) { ?>
+									<option value="sub1" class="s1"><?=$sub1?></option>
+									<option value="sub2" class="s2"><?=$sub2?></option>
+									<option value="sub3" class="s3"><?=$sub3?></option>
+									<option value="sub4" class="s4"><?=$sub4?></option>
+									<option value="sub5" class="s5" disabled><?=$sub5?></option>
+									<?php } if($available_krit == 5) { ?>
+									<option value="sub1" class="s1"><?=$sub1?></option>
+									<option value="sub2" class="s2"><?=$sub2?></option>
+									<option value="sub3" class="s3"><?=$sub3?></option>
+									<option value="sub4" class="s4"><?=$sub4?></option>
+									<option value="sub5" class="s5"selected><?=$sub5?></option>
+									<?php } } ?>
 								</select>
 								</th>
 							</tr>
