@@ -324,6 +324,7 @@ include"functions.php";
               $it1++;
             }
 						$it2++;
+            if($submit == 'or'){$value = $value/$rowcount2;}
             array_push($fire_strength, $value);
           }
 					
@@ -662,7 +663,7 @@ include"functions.php";
           <?php
             } 
           }else{
-            if($data['fire_strength'] == $rowcount2){
+            if($data['fire_strength'] == 1){
               ?>
                 <tr style="background: #fc9803;">
                   <th><?=$num;?></th>
