@@ -718,11 +718,11 @@ include"functions.php";
 
 			</tbody>
 		</table>
-    <div class="agenda">
+    <div class="agenda pb-5">
       <p>Keterangan:</p>
-      <div class="p-2 m-1 float" style="background-color: #fc9803; width:25%"><b>Sangat direkomendasikan</b></div>
-      <div class="p-2 m-1 float" style="background-color: #fcdb03; width:25%"><b>Direkomendasikan</b></div>
-      <div class="p-2 m-1 float" style="background-color: #fff6bd; width:25%"><b>Tidak direkomendasikan</b></div>
+      <div class="p-2 m-1 mt-1 float-left" style="background-color: #fc9803; width:25%"><b>Sangat direkomendasikan</b></div>
+      <div class="p-2 m-1 mt-1 float-left" style="background-color: #fcdb03; width:25%"><b>Direkomendasikan</b></div>
+      <div class="p-2 m-1 mt-1 float-left" style="background-color: #fff6bd; width:25%"><b>Tidak direkomendasikan</b></div>
     </div>
 
 		<div class="mt-5 mb-5">
