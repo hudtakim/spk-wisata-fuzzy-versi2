@@ -8,10 +8,6 @@ if($_SESSION['legitUser'] != 'qwerty'){
 
 ?>
 
-<?php
-
- ?>
-
  <!DOCTYPE html>
 <html>
 <head>
@@ -68,7 +64,12 @@ if($_SESSION['legitUser'] != 'qwerty'){
 	}
 	a { color: inherit; }
 	a:hover { color: inherit; } 
-
+	.container{
+		overflow:auto;
+	}
+	table{
+		font-size:14px;
+	}  
 </style>
 <?php
     $result = mysqli_query($conn, "SELECT DISTINCT warna_bg FROM setting_tampilan");
@@ -135,10 +136,10 @@ if($_SESSION['legitUser'] != 'qwerty'){
 			<form method='POST' action="process.php">
 				<div class="form-row align-items-center">
 					<div class="col-auto my-1 input-group">
-						<select name='kriteria' class="custom-select mr-sm-1" id="inlineFormCustomSelect" required>
+						<select name='kriteria' class="custom-select mr-sm-1" id="inlineFormCustomSelect" onChange="myFunction()" required>
 							<option value="">Choose...</option>
 				<?php
-						$daftar_kriteria = mysqli_query($conn,"SELECT * from daftar_kriteria_static");
+						$daftar_kriteria = mysqli_query($conn,"SELECT * from daftar_kriteria_static ORDER BY kriteria");
 							
 						while($data = mysqli_fetch_array($daftar_kriteria)):
 							$status = "false";
@@ -158,7 +159,7 @@ if($_SESSION['legitUser'] != 'qwerty'){
 				?>
 						</select>
 						<button type="submit" class="btn btn-success float ml-2" name="submit">Aktifkan Kriteria</button>
-						<button type="submit" disabled class="btn btn-primary float ml-2" name="submit">Edit Kriteria</button>
+						<a href="" id="linka"><button id="butt" disabled type="button" class="btn btn-primary float ml-2">Edit Kriteria</button></a>
 						<button type="submit" class="btn btn-danger float ml-2" name="submit-del" onclick="return confirmAction()">Hapus Kriteria</button>
 					</div>
 				</div>
@@ -219,4 +220,14 @@ if($_SESSION['legitUser'] != 'qwerty'){
 			return false;
         }
       }
-    </script>
+
+	  function myFunction(){
+		var select = document.getElementById("inlineFormCustomSelect");
+		var a = document.getElementById("linka");
+		var butt = document.getElementById("butt");
+		if(butt.disabled = true){
+			butt.disabled = false;
+		}
+		a.href= "edit.php?nama_krit=" + select.value;
+	  }
+</script>

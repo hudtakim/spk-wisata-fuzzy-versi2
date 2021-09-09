@@ -144,7 +144,7 @@ include"functions.php";
 				?>
 				<div class="col-auto my-1 input-group batesin" id="krit<?=$num?>">          
 					<select name='<?=strtolower($data['kriteria']);?>' class="form-control custom-select mr-sm-1" id="sel<?=$num?>" required>
-						<option value="">--- Pilih <?=$data['kriteria'];?> ---</option>
+						<option value="">--- Pilih Kriteria <?=$data['kriteria'];?> ---</option>
             <option class="inputan" value="<?=strtolower($data['sub1']);?>"><?=$data['sub1'];?></option>
 						<option class="inputan" value="<?=strtolower($data['sub2']);?>"><?=$data['sub2'];?></option>
           <?php 

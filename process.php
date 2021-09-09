@@ -70,8 +70,8 @@ if(isset($_POST['submit'])){
     }else{
         $message = "[GAGAL!!!] - Kriteria yang akan anda hapus masih aktif, silahkan non-aktifkan terlebih dahulu. ";
         echo "<script>alert('$message'); window.location.replace('admin_page.php');</script>";
-    }
-
-    
+    } 
+}elseif(isser($_POST['submit-update'])){
+echo "Nothing";
 }
 ?>
