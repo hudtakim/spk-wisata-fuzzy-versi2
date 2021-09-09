@@ -179,11 +179,13 @@ if(isset($_POST['submit'])){
             }
             $it++;
         }
-
-        //if($sukses){ 
-            $message = "Berhasil menambahkan data lokasi wisata.";
-            echo "<script>alert('$message'); window.location.replace('data_lokasi_wisata.php');</script>";
-        //} else {
+        
+        //$result = mysqli_query($conn, "ALTER TABLE tempat_wisata_tb AUTO_INCREMENT = 1");
+        
+        //if($result){ 
+        $message = "Berhasil menambahkan data lokasi wisata.";
+        echo "<script>alert('$message'); window.location.replace('data_lokasi_wisata.php');</script>";
+        //}
             //echo "<h1>WARNING !!!</h1> <br>";
             //echo $sukses;
             //echo "<br>---------------------------<br>";

@@ -10,6 +10,7 @@ if($_SESSION['legitUser'] != 'qwerty'){
 if(isset($_POST['submit'])){
     $id_krit = $_POST['id_krit'];
     $kategori = $_POST['kategori'];
+    $old_nama_kriteria = $_POST['name_krit'];
     $nama_kriteria = $_POST['nama'];
     $nama_sub1 = $_POST['sub1'];
     $nama_sub2 = $_POST['sub2'];
@@ -28,29 +29,49 @@ if(isset($_POST['submit'])){
     $lokasiarr = array();
 
     //cek dulu apakah kriteria sudah ada di database
-    $result = mysqli_query($conn,"SELECT * from daftar_kriteria_static WHERE (kriteria = '$nama_kriteria')");
+    $result = mysqli_query($conn,"SELECT * from daftar_kriteria_static WHERE (kriteria = '$nama_kriteria' AND id != '$id_krit')");
     $rowcount = mysqli_num_rows($result);
     $result = mysqli_query($conn,"SELECT * from daftar_kriteria_static");
     $kriteria_tersimpan = mysqli_num_rows($result);
-    if($rowcount > 1 ){
-        $message = "Gagal, kriteria yang anda edit tidak tersedia di database!";
-        echo "<script>alert('$message'); window.location.replace('tambah_kriteria.php');</script>";
+    if($rowcount > 0 ){
+        $message = "Gagal, nama kriteria sudah tersedia di database.";
+        echo "<script>alert('$message'); window.location.replace('edit.php?nama_krit=$old_nama_kriteria');</script>";
     }elseif($kriteria_tersimpan > 10){
         $message = "Gagal, batas kriteria yang dapat disimpan telah mencapai batas maksimal (10). Silahkan hapus kriteria terlebih dahulu atau upgrade ke versi pro dengan menghubungi developer: hudtakim@gmail.com";
-        echo "<script>alert('$message'); window.location.replace('tambah_kriteria.php');</script>";
+        echo "<script>alert('$message'); window.location.replace('edit.php?nama_krit=$old_nama_kriteria');</script>";
     }
     else{
+        $data_array = mysqli_query($conn,"SELECT * from tempat_wisata_tb");
+        while($data = mysqli_fetch_array($data_array)):
+            $id = (string)$data['id'];
+            if($kategori == "fuzzy"){
+                $namecol = "datakriteria";
+            } else{
+                $namecol = "datakritnon";
+            }
+            $namecol.=$id;
+            array_push($nid, $data['id']);
+            array_push($datakriteria_id, $_POST[$namecol]);
+            array_push($lokasiarr, $data['obyek_wisata']);
+        endwhile;
+
         $result = mysqli_query($conn, "UPDATE daftar_kriteria_static SET kriteria='$nama_kriteria', sub1='$nama_sub1', sub2='$nama_sub2', sub3='$nama_sub3', sub4='$nama_sub4', sub5='$nama_sub5', batas1='$batas1', batas2='$batas2', batas3='$batas3', batas4='$batas4', batas5='$batas5' WHERE id = $id_krit");
         if($result){ 
+            
             $data_array = mysqli_query($conn,"SELECT * from tempat_wisata_tb");
             while($data = mysqli_fetch_array($data_array)):
-                array_push($nid, $data['id']);
                 array_push($lokasiarr, $data['obyek_wisata']);
             endwhile;
 
+            $nkriter_lowered = strtolower($old_nama_kriteria);
+            $tnamed = "fuzzy_";
+            $tnamed.=$nkriter_lowered;
+            $del = mysqli_query($conn,"DROP TABLE {$tnamed}");
+            $del = mysqli_query($conn, "ALTER TABLE tempat_wisata_tb DROP COLUMN {$nkriter_lowered};");
+
             $nk_lowered = strtolower($nama_kriteria);
             if($kategori == "fuzzy"){
-                mysqli_query($conn ,"ALTER TABLE tempat_wisata_tb RENAME COLUMN {$nk_lowered} float(20)" ) or die(mysqli_error($conn));
+                mysqli_query($conn ,"ALTER TABLE tempat_wisata_tb  ADD {$nk_lowered} float(20)" ) or die(mysqli_error($conn));
             }else{
                 mysqli_query($conn ,"ALTER TABLE tempat_wisata_tb ADD {$nk_lowered} VARCHAR(20) NOT NULL" ) or die(mysqli_error($conn));
             }
@@ -106,8 +127,8 @@ if(isset($_POST['submit'])){
                     $batas5 = 2 * $batas4;
                     foreach ($nid as &$value) {
                         $val = (float)$datakriteria_id[$it];
-                        $sub1 = getbobot_fuzzy2($val, "sub1", $batas1, $batas2, $batas3, $batas4, $batas5);
-                        $sub2 = getbobot_fuzzy2($val, "sub2", $batas1, $batas2, $batas3, $batas4, $batas5);
+                        $sub1 = getbobot_fuzzy2($val, "sub1", $batas1, $batas2);
+                        $sub2 = getbobot_fuzzy2($val, "sub2", $batas1, $batas2);
                         $result = mysqli_query($conn, "INSERT INTO {$tname}(id, obyek_wisata, {$nk_lowered},{$nsub1_lowered}, {$nsub2_lowered}) 
                         VALUES('$value', '$lokasiarr[$it]', '$datakriteria_id[$it]','$sub1', '$sub2')");
                         $it++;
@@ -157,9 +178,9 @@ if(isset($_POST['submit'])){
                     $batas5 = 2 * $batas4;
                     foreach ($nid as &$value) {
                         $val = (float)$datakriteria_id[$it];
-                        $sub1 = getbobot_fuzzy3($val, "sub1", $batas1, $batas2, $batas3, $batas4, $batas5);
-                        $sub2 = getbobot_fuzzy3($val, "sub2", $batas1, $batas2, $batas3, $batas4, $batas5);
-                        $sub3 = getbobot_fuzzy3($val, "sub3", $batas1, $batas2, $batas3, $batas4, $batas5);
+                        $sub1 = getbobot_fuzzy3($val, "sub1", $batas1, $batas2, $batas3);
+                        $sub2 = getbobot_fuzzy3($val, "sub2", $batas1, $batas2, $batas3);
+                        $sub3 = getbobot_fuzzy3($val, "sub3", $batas1, $batas2, $batas3);
                         $result = mysqli_query($conn, "INSERT INTO {$tname}(id, obyek_wisata, {$nk_lowered},{$nsub1_lowered}, {$nsub2_lowered}, {$nsub3_lowered}) 
                         VALUES('$value', '$lokasiarr[$it]', '$datakriteria_id[$it]','$sub1', '$sub2', '$sub3')");
                         $it++;
@@ -212,10 +233,10 @@ if(isset($_POST['submit'])){
                     $batas5 = 2 * $batas4;
                     foreach ($nid as &$value) {
                         $val = (float)$datakriteria_id[$it];
-                        $sub1 = getbobot_fuzzy4($val, "sub1", $batas1, $batas2, $batas3, $batas4, $batas5);
-                        $sub2 = getbobot_fuzzy4($val, "sub2", $batas1, $batas2, $batas3, $batas4, $batas5);
-                        $sub3 = getbobot_fuzzy4($val, "sub3", $batas1, $batas2, $batas3, $batas4, $batas5);
-                        $sub4 = getbobot_fuzzy4($val, "sub4", $batas1, $batas2, $batas3, $batas4, $batas5);
+                        $sub1 = getbobot_fuzzy4($val, "sub1", $batas1, $batas2, $batas3, $batas4);
+                        $sub2 = getbobot_fuzzy4($val, "sub2", $batas1, $batas2, $batas3, $batas4);
+                        $sub3 = getbobot_fuzzy4($val, "sub3", $batas1, $batas2, $batas3, $batas4);
+                        $sub4 = getbobot_fuzzy4($val, "sub4", $batas1, $batas2, $batas3, $batas4);
                         $result = mysqli_query($conn, "INSERT INTO {$tname}(id, obyek_wisata, {$nk_lowered},{$nsub1_lowered}, {$nsub2_lowered}, {$nsub3_lowered}, {$nsub4_lowered}) 
                         VALUES('$value', '$lokasiarr[$it]', '$datakriteria_id[$it]','$sub1', '$sub2', '$sub3', '$sub4')");
                         $it++;
@@ -302,9 +323,7 @@ if(isset($_POST['submit'])){
                 }
             }
             
-
-            
-            $message = "Berhasil menambahkan kriteria baru.";
+            $message = "Update data kriteria berhasil.";
             echo "<script>alert('$message'); window.location.replace('admin_page.php');</script>";
 
         } 

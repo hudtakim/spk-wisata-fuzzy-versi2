@@ -177,9 +177,11 @@ else{$available_krit=5;}
 			<form method='POST' action="edit_kriteria_process.php" name="form-kriteria" onsubmit="return validateForm()">
 				<div class="form-row align-items-center">
 					<input name="id_krit" type="text" value="<?=$id_krit?>" style="display:none;">
+					<input name="name_krit" type="text" value="<?=$nama_kriteria?>" style="display:none;">
+					<input name="kategori" type="text" value="<?=$kategori?>" style="display:none;">
 				<div class="mt-3"> Jenis kriteria: <div>
 					<div class="col-auto my-1 input-group">
-						<select disabled name="kategori" class="custom-select mr-sm-1" id="inlineFormCustomSelect" onChange="myFunction()" required>
+						<select disabled name="kategorix" class="custom-select mr-sm-1" id="inlineFormCustomSelect" onChange="myFunction()" required>
 							<option value="">Choose...</option>
 						<?php
 						if($kategori == "fuzzy"){ ?>
@@ -195,7 +197,7 @@ else{$available_krit=5;}
 					<div class="col-auto my-1 input-group">
 						<?php if($available_krit == 2){ ?>
 							<select name="jumlah_sub" class="custom-select mr-sm-1" id="jumlah_subs" onChange="myFunction2()" required>
-								<option value=""hidden disabled></option>
+								<option class="numkrit" value="" hidden disabled></option>
 								<option value="2" selected>2</option>
 								<option value="3">3</option>
 								<option value="4">4</option>
@@ -203,7 +205,7 @@ else{$available_krit=5;}
 							</select>
 							<?php } if($available_krit == 3){?>
 							<select name="jumlah_sub" class="custom-select mr-sm-1" id="jumlah_subs" onChange="myFunction2()" required>
-								<option value=""hidden disabled></option>
+								<option class="numkrit" value="" hidden disabled></option>
 								<option value="2">2</option>
 								<option value="3" selected>3</option>
 								<option value="4">4</option>
@@ -211,7 +213,7 @@ else{$available_krit=5;}
 							</select>
 							<?php } if($available_krit == 4) { ?>
 							<select name="jumlah_sub" class="custom-select mr-sm-1" id="jumlah_subs" onChange="myFunction2()" required>
-								<option value=""hidden disabled></option>
+								<option class="numkrit" value="" hidden disabled></option>
 								<option value="2">2</option>
 								<option value="3">3</option>
 								<option value="4"selected>4</option>
@@ -219,7 +221,7 @@ else{$available_krit=5;}
 							</select>
 							<?php } if($available_krit == 5) { ?>
 							<select name="jumlah_sub" class="custom-select mr-sm-1" id="jumlah_subs" onChange="myFunction2()" required>
-								<option value=""hidden disabled></option>
+								<option class="numkrit" value="" hidden disabled></option>
 								<option value="2">2</option>
 								<option value="3">3</option>
 								<option value="4">4</option>
@@ -548,6 +550,10 @@ else{$available_krit=5;}
 		var s3 = document.querySelectorAll(".s3");
 		var s4 = document.querySelectorAll(".s4");
 		var s5 = document.querySelectorAll(".s5");
+
+		for(let x=0; x<s0.length; x++){
+			s0[x].selected = true;
+		}
 
 		var kategori = document.getElementById("inlineFormCustomSelect");
 		if(kategori.value == "non_fuzzy"){

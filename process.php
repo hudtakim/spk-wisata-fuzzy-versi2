@@ -54,24 +54,29 @@ if(isset($_POST['submit'])){
     $result = mysqli_query($conn,"SELECT * from daftar_kriteria WHERE (kriteria = '$kriteria')");
     $rowcount=mysqli_num_rows($result);
     if($rowcount == 0){
-        $del = mysqli_query($conn,"DELETE FROM daftar_kriteria_static where kriteria = '$kriteria'");
-        $nk_lowered = strtolower($kriteria);
-        $tname = "fuzzy_";
-        $tname.=$nk_lowered;
-        $del = mysqli_query($conn,"DROP TABLE {$tname}");
-        $del = mysqli_query($conn, "ALTER TABLE tempat_wisata_tb DROP COLUMN {$nk_lowered};");
-        if($del){
-            mysqli_close($conn); // Close connection
-            $message = "Kriteria berhasil dihapus dari database.";
+        $result = mysqli_query($conn,"SELECT * from daftar_kriteria_static");
+        $rowcount=mysqli_num_rows($result);
+        if($rowcount == 1){
+            $message = "[GAGAL!!!] - Setidaknya harus ada 1 kriteria yang tersimpan pada database.";
             echo "<script>alert('$message'); window.location.replace('admin_page.php');</script>";
-        }else {
-            echo "Error deleting record"; // display error message if not delete
+        }else{
+            $del = mysqli_query($conn,"DELETE FROM daftar_kriteria_static where kriteria = '$kriteria'");
+            $nk_lowered = strtolower($kriteria);
+            $tname = "fuzzy_";
+            $tname.=$nk_lowered;
+            $del = mysqli_query($conn,"DROP TABLE {$tname}");
+            $del = mysqli_query($conn, "ALTER TABLE tempat_wisata_tb DROP COLUMN {$nk_lowered};");
+            if($del){
+                mysqli_close($conn); // Close connection
+                $message = "Kriteria berhasil dihapus dari database.";
+                echo "<script>alert('$message'); window.location.replace('admin_page.php');</script>";
+            }else {
+                echo "Error deleting record"; // display error message if not delete
+            }
         }
     }else{
         $message = "[GAGAL!!!] - Kriteria yang akan anda hapus masih aktif, silahkan non-aktifkan terlebih dahulu. ";
         echo "<script>alert('$message'); window.location.replace('admin_page.php');</script>";
     } 
-}elseif(isser($_POST['submit-update'])){
-echo "Nothing";
 }
 ?>

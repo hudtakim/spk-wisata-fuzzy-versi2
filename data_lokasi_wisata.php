@@ -248,7 +248,6 @@ if($_SESSION['legitUser'] != 'qwerty'){
 		var cek = document.getElementById("inlineFormCustomSelect");
         let confirmAction = confirm("Anda yakin ingin menghapus data " + data + "?");
         if (confirmAction) {
-			 alert("Berhasil menghapus data " + data)
 			 return true;
         } else {
 			return false;
