@@ -166,7 +166,7 @@ if($_SESSION['legitUser'] != 'qwerty'){
 			</form>
 		</div>
 
-		<div class="daftar-kriteria mt-5">
+		<div class="daftar-kriteria mt-5 mb-5">
 			<table class='table table-bordered'>
 				<thead class="thead-dark">
 					<tr>
@@ -227,6 +227,9 @@ if($_SESSION['legitUser'] != 'qwerty'){
 		var butt = document.getElementById("butt");
 		if(butt.disabled = true){
 			butt.disabled = false;
+		}
+		if(select.value == ""){
+			butt.disabled = true;
 		}
 		a.href= "edit.php?nama_krit=" + select.value;
 	  }

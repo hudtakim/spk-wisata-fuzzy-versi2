@@ -185,6 +185,14 @@ include"functions.php";
       }
 			if(isset($_GET['submit'])){
 			  $submit = $_GET['submit'];
+        $daftar_wisata = mysqli_query($conn,"SELECT * from tempat_wisata_tb");
+        $jumlah_wisata = mysqli_num_rows($daftar_wisata);
+        if($jumlah_wisata == 0){
+          echo "<div class='m-5'>";
+          echo "<h5>Belum ada Data lokasi wisata di database, silahkan menghubungi admin.</h5>";
+          echo "</div>";
+        }
+        else{
 
         $daftar_kriteria = mysqli_query($conn,"SELECT * from daftar_kriteria");
 				$list_kriteria = array();
@@ -227,7 +235,7 @@ include"functions.php";
         echo "<br>";
 		?>
 		
-		<h4>Berikut adalah saran objek wisata berdasarkan kriteria yang anda inputkan:</h4>
+		<h5>Berikut adalah hasil rekomendasi objek wisata berdasarkan kriteria yang dipilih:</h5>
 		<table class='table table-bordered'>
 			<thead class="thead-dark">
 				<tr>
@@ -771,7 +779,7 @@ include"functions.php";
           ?>
            
            
-           <?php } ?> 
+           <?php } } ?> 
 						
 						
 

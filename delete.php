@@ -15,7 +15,7 @@ if($item == 'kriteria'){
 if($item == 'lokasi'){
     $result = mysqli_query($conn,"SELECT * from tempat_wisata_tb");
     $rowcount=mysqli_num_rows($result);
-    if($rowcount == 1){
+    if(false){
         $message = "[GAGAL!!!] - Setidaknya harus ada 1 data lokasi wisata yang tersimpan pada database.";
         echo "<script>alert('$message'); window.location.replace('data_lokasi_wisata.php');</script>";
     }else{

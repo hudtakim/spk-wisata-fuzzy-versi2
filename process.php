@@ -56,7 +56,7 @@ if(isset($_POST['submit'])){
     if($rowcount == 0){
         $result = mysqli_query($conn,"SELECT * from daftar_kriteria_static");
         $rowcount=mysqli_num_rows($result);
-        if($rowcount == 1){
+        if(false){
             $message = "[GAGAL!!!] - Setidaknya harus ada 1 kriteria yang tersimpan pada database.";
             echo "<script>alert('$message'); window.location.replace('admin_page.php');</script>";
         }else{
