@@ -228,7 +228,7 @@ if($_SESSION['legitUser'] != 'qwerty'){
 						<?php endwhile;?>
                         <th>
 						<a href="edit.php?id=<?php echo $data['id']; ?>&item=lokasi"><button disabled class="btn btn-primary btn-sm " style="width:100%">Edit</button></a>
-							<a href="delete.php?id=<?php echo $data['id']; ?>&item=lokasi"><button class="btn btn-danger btn-sm mt-1" onclick="return confirmAction('<?=$data['obyek_wisata'];?>')">Delete</button></a>
+						<a href="delete.php?id=<?php echo $data['id']; ?>&item=lokasi"><button class="btn btn-danger btn-sm mt-1" style="width:100%" onclick="return confirmAction('<?=$data['obyek_wisata'];?>')">Delete</button></a>
 						</th>
 					</tr>
 
