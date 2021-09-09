@@ -158,6 +158,7 @@ if($_SESSION['legitUser'] != 'qwerty'){
 				?>
 						</select>
 						<button type="submit" class="btn btn-success float ml-2" name="submit">Aktifkan Kriteria</button>
+						<button type="submit" disabled class="btn btn-primary float ml-2" name="submit">Edit Kriteria</button>
 						<button type="submit" class="btn btn-danger float ml-2" name="submit-del" onclick="return confirmAction()">Hapus Kriteria</button>
 					</div>
 				</div>

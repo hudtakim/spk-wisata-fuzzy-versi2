@@ -59,7 +59,13 @@ include"functions.php";
 		text-shadow: 5px 2px blue;
 	}
 	a { color: inherit; }
-	a:hover { color: inherit; } 
+	a:hover { color: inherit; }
+  .container{
+		overflow:auto;
+	}
+	table{
+		font-size:14px;
+	}  
 
 </style>
 <?php
@@ -129,7 +135,7 @@ include"functions.php";
       }else{
         echo "<p align='center'><b>Silahkan Masukkan Kriteria Objek Wisata</b></p>";
     ?>
-		<form method='GET' action="">
+		<form method='GET' action="#" onsubmit="myJsFunction();return false">
 			<div class="form-row align-items-center">
 			<?php
 					$daftar_kriteria = mysqli_query($conn,"SELECT * from daftar_kriteria");
@@ -609,8 +615,39 @@ include"functions.php";
 					$get_rekomendasi_query = mysqli_query($conn,"SELECT * from rekomendasi_tb ORDER BY fire_strength DESC LIMIT 5");
 					$num = 1;
 					while($data = mysqli_fetch_array($get_rekomendasi_query)):
-					?>
-						<tr>
+            if($_GET['submit'] == 'and'){
+   
+            if($data['fire_strength'] == 1){
+          ?>
+          	<tr style="background: #fc9803;">
+							<th><?=$num;?></th>
+							<th><?=$data['obyek_wisata'];?></th>
+							<?php
+							$daftar_kriteria = mysqli_query($conn,"SELECT * from input_user_tb");
+								while($dakrit = mysqli_fetch_array($daftar_kriteria)):
+							?>
+							<th><?=$data[strtolower($dakrit['kriteria'])];?></th>
+							<?php endwhile;?>
+							<th><?=$data['fire_strength'];?></th>
+						</tr>
+          <?php 
+            }elseif($data['fire_strength'] >0){
+          ?>
+            	<tr style="background: #fcdb03;">
+							<th><?=$num;?></th>
+							<th><?=$data['obyek_wisata'];?></th>
+							<?php
+							$daftar_kriteria = mysqli_query($conn,"SELECT * from input_user_tb");
+								while($dakrit = mysqli_fetch_array($daftar_kriteria)):
+							?>
+							<th><?=$data[strtolower($dakrit['kriteria'])];?></th>
+							<?php endwhile;?>
+							<th><?=$data['fire_strength'];?></th>
+						</tr>
+          <?php
+            }else{
+          ?>
+	          <tr style="background: #fff6bd;">
 							<th><?=$num;?></th>
 							<th><?=$data['obyek_wisata'];?></th>
 							<?php
@@ -622,6 +659,57 @@ include"functions.php";
 							<th><?=$data['fire_strength'];?></th>
 						</tr>
 	
+          <?php
+            } 
+          }else{
+            if($data['fire_strength'] == $rowcount2){
+              ?>
+                <tr style="background: #fc9803;">
+                  <th><?=$num;?></th>
+                  <th><?=$data['obyek_wisata'];?></th>
+                  <?php
+                  $daftar_kriteria = mysqli_query($conn,"SELECT * from input_user_tb");
+                    while($dakrit = mysqli_fetch_array($daftar_kriteria)):
+                  ?>
+                  <th><?=$data[strtolower($dakrit['kriteria'])];?></th>
+                  <?php endwhile;?>
+                  <th><?=$data['fire_strength'];?></th>
+                </tr>
+              <?php 
+                }elseif($data['fire_strength'] >0){
+              ?>
+                  <tr style="background: #fcdb03;">
+                  <th><?=$num;?></th>
+                  <th><?=$data['obyek_wisata'];?></th>
+                  <?php
+                  $daftar_kriteria = mysqli_query($conn,"SELECT * from input_user_tb");
+                    while($dakrit = mysqli_fetch_array($daftar_kriteria)):
+                  ?>
+                  <th><?=$data[strtolower($dakrit['kriteria'])];?></th>
+                  <?php endwhile;?>
+                  <th><?=$data['fire_strength'];?></th>
+                </tr>
+              <?php
+                }else{
+              ?>
+                <tr style="background: #fff6bd;">
+                  <th><?=$num;?></th>
+                  <th><?=$data['obyek_wisata'];?></th>
+                  <?php
+                  $daftar_kriteria = mysqli_query($conn,"SELECT * from input_user_tb");
+                    while($dakrit = mysqli_fetch_array($daftar_kriteria)):
+                  ?>
+                  <th><?=$data[strtolower($dakrit['kriteria'])];?></th>
+                  <?php endwhile;?>
+                  <th><?=$data['fire_strength'];?></th>
+                </tr>
+      
+              <?php
+                } 
+          }
+          
+					?>
+					
 				<?php $num++; endwhile; 
           $del = mysqli_query($conn,"DROP TABLE rekomendasi_tb");
         }
@@ -629,6 +717,12 @@ include"functions.php";
 
 			</tbody>
 		</table>
+    <div class="agenda">
+      <p>Keterangan:</p>
+      <div class="p-2 m-1 float" style="background-color: #fc9803; width:25%"><b>Sangat direkomendasikan</b></div>
+      <div class="p-2 m-1 float" style="background-color: #fcdb03; width:25%"><b>Direkomendasikan</b></div>
+      <div class="p-2 m-1 float" style="background-color: #fff6bd; width:25%"><b>Tidak direkomendasikan</b></div>
+    </div>
 
 		<div class="mt-5 mb-5">
 			<button class="btn btn-info btn-block" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
@@ -756,5 +850,5 @@ include"functions.php";
       input6.style.display = "none";
     }
     return true;
-  }
+  }  
 </script>

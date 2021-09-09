@@ -67,7 +67,13 @@ if($_SESSION['legitUser'] != 'qwerty'){
 		text-shadow: 5px 2px blue;
 	}
 	a { color: inherit; }
-	a:hover { color: inherit; } 
+	a:hover { color: inherit; }
+	.container{
+		overflow:auto;
+	}
+	table{
+		font-size:12px;
+	} 
 
 </style>
 <?php
@@ -207,7 +213,7 @@ if($_SESSION['legitUser'] != 'qwerty'){
                 <tbody>
 
                 <?php
-                    $result = mysqli_query($conn,"SELECT * from tempat_wisata_tb");
+                    $result = mysqli_query($conn,"SELECT * from tempat_wisata_tb ORDER BY obyek_wisata");
                     $num = 1;
                     while($data = mysqli_fetch_array($result)):
                 ?>
@@ -220,8 +226,11 @@ if($_SESSION['legitUser'] != 'qwerty'){
 						?>
 						<th><?=$data[strtolower($dakrit['kriteria'])];?></th>
 						<?php endwhile;?>
-                        <th><a href="delete.php?id=<?php echo $data['id']; ?>&item=lokasi"><button class="btn btn-danger" onclick="return confirmAction('<?=$data['obyek_wisata'];?>')">Delete</button></a></th>
-                    </tr>
+                        <th>
+						<a href="edit.php?id=<?php echo $data['id']; ?>&item=lokasi"><button disabled class="btn btn-primary btn-sm " style="width:100%">Edit</button></a>
+							<a href="delete.php?id=<?php echo $data['id']; ?>&item=lokasi"><button class="btn btn-danger btn-sm mt-1" onclick="return confirmAction('<?=$data['obyek_wisata'];?>')">Delete</button></a>
+						</th>
+					</tr>
 
                 <?php $num++; endwhile;?>
 
