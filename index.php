@@ -340,16 +340,7 @@ include"functions.php";
             array_push($new_arrofarrbot,$arrofarrbot[$it]);
             $it++; 
           }
-          if($it<5){
-            $temp = array();
-            for ($x = $it; $x < 5; $x++) {
-              array_push($newliskrit, "kosong");
-              for ($x = 0; $x < $rowcount; $x++){
-                array_push($temp, "kosong");
-              }
-              array_push($new_arrofarrbot, $temp);
-            }
-          }
+
 
           if($rowcount2 == 1){
             //create rekomendasi_tb untuk menampung yg direkomendasikan
