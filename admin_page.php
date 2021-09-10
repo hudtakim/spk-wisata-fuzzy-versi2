@@ -130,7 +130,7 @@ if($_SESSION['legitUser'] != 'qwerty'){
 		<a href="admin.php"><button type="button" class="btn btn-info btn-lg btn-block mt-4 mb-4">Kembali ke Menu Utama</button></a>
 		<a href="tambah_kriteria.php"><button type="button" class="btn btn-info btn-lg btn-block mt-4 mb-4">Tambah Kriteria Baru</button></a>
 		<message>
-			Silahkan pilih kriteria yang akan diaktifkan:
+			Anda dapat menambah, mengaktifkan, edit, dan menghapus kriteria:
         </message>
 		<div class="edit-kriteria mt-4">
 			<form method='POST' action="process.php">
@@ -166,6 +166,16 @@ if($_SESSION['legitUser'] != 'qwerty'){
 			</form>
 		</div>
 
+		<?php 
+					$daftar_kriteria = mysqli_query($conn,"SELECT * from daftar_kriteria");
+					$jumlah_kriteria = mysqli_num_rows($daftar_kriteria);
+					if($jumlah_kriteria == 0){
+						echo "<div class='m-5'>";
+						echo "<h5>Belum ada kriteria yang aktif, silahkan pilih kriteria dan aktifkan agar SPK Wisata dapat digunakan oleh user.</h5>";
+						echo "</div>";
+					}else{
+		?>
+
 		<div class="daftar-kriteria mt-5 mb-5">
 			<table class='table table-bordered'>
 				<thead class="thead-dark">
@@ -183,7 +193,6 @@ if($_SESSION['legitUser'] != 'qwerty'){
 				<tbody>
 
 				<?php
-					$daftar_kriteria = mysqli_query($conn,"SELECT * from daftar_kriteria");
 					$num = 1;
 					while($data = mysqli_fetch_array($daftar_kriteria)):
 				?>
@@ -197,7 +206,7 @@ if($_SESSION['legitUser'] != 'qwerty'){
 					<th><?=$data['sub5'];?></th>
 					<th><a href="delete.php?id=<?php echo $data['id']; ?>&item=kriteria"><button class="btn btn-danger">Non-aktifkan</button></a></th>
 				</tr>
-				<?php $num++; endwhile;?>
+				<?php $num++; endwhile; }?>
 				</tbody>
 			</table>
 		</div>
