@@ -202,7 +202,7 @@ function getbobot_fuzzy2($value, $subkrit, $sub1, $sub2){
         }
     }
     if($subkrit == "sub2"){
-        if($value <= $sub2){
+        if($value <= $sub1){
             $bobot = 0; 
             return $bobot;
         } elseif($value >= $sub1 && $value <= $sub2){
