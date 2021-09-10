@@ -21,14 +21,19 @@ $nama_lokasi = $data_lokasi['obyek_wisata'];
 
 $arr_name_krit = array();
 $arr_label_krit = array();
-$arr_datalokrit = array();
+$arr_datalokrit_fuzzy = array();
+$arr_datalokrit_nonfuzzy = array();
 $daftar_kriteria = mysqli_query($conn, "SELECT * FROM daftar_kriteria_static");
 while($data = mysqli_fetch_array($daftar_kriteria)):
     $name_krit = $data['kriteria'];
     $label_krit = strtolower($name_krit);
     array_push($arr_label_krit, $label_krit);
     array_push($arr_name_krit, $name_krit);
-    array_push($arr_datalokrit, $data_lokasi[$label_krit]);
+    if(is_numeric($data_lokasi[$label_krit])){
+        array_push($arr_datalokrit_fuzzy, $data_lokasi[$label_krit]);
+    }else{
+        array_push($arr_datalokrit_nonfuzzy, $data_lokasi[$label_krit]);
+    }
 endwhile;
 $available_krit = count($arr_name_krit);
 ?>
@@ -174,49 +179,69 @@ $available_krit = count($arr_name_krit);
 			<form method='POST' action="tambah_lokasi.php">
 				<div class="form-row align-items-center">
 					<div class="col-auto my-1 input-group">
-                        <input value="<?=$nama_lokasi?>" type="text" name="nama"  placeholder="Nama Lokasi" class="mr-1 mt-3" required>
-						<?php
+                        <div>
+                        <label style="display:block;" class="label">Nama Lokasi</label>
+                        <input style="display:block;" value="<?=$nama_lokasi?>" type="text" name="nama"  placeholder="Nama Lokasi" class="mr-1 mt-3" required>
+                        </div>
+                    
+                        <?php
 							$daftar_kriteria = mysqli_query($conn,"SELECT * from daftar_kriteria_static WHERE (kategori = 'non_fuzzy')");
-							while($data = mysqli_fetch_array($daftar_kriteria)):
+							$it=0;
+                            while($data = mysqli_fetch_array($daftar_kriteria)):
 						?>
-						<select name="<?= strtolower($data['kriteria']) ?>" class=" mr-1 mt-3" id="inlineFormCustomSelect" required>
-							<option value=""><?=$data['kriteria']?></option>
-                            <option value="sub1"><?=$data['sub1']?></option>
+                        <div>
+                        <label style="display:block;" class="label"><?=$data['kriteria'];?></label>
+						<select style="display:block;" name="<?= strtolower($data['kriteria']) ?>" class="mr-1 mt-3 p-1" id="inlineFormCustomSelect" required>
+						<?php if($arr_datalokrit_nonfuzzy[$it] == $data['sub1'] ) { ?>
+                            <option value=""><?=$data['kriteria']?></option>
+                            <option value="sub1" selected><?=$data['sub1']?></option>
                             <option value="sub2"><?=$data['sub2']?></option>
-                            			
+                        <?php } else { ?>
+                            <option value=""><?=$data['kriteria']?></option>
+                            <option value="sub1"><?=$data['sub1']?></option>
+                            <option value="sub2" selected><?=$data['sub2']?></option>
+                        <?php } ?>
 							<?php 
-            if($data['sub3'] != ""){
-          
-          ?>
-          <option value="sub3"><?=$data['sub3']?></option>
-              <?php    
-            }
-          ?>
-          <?php 
-            if($data['sub4'] != ""){
-          
-          ?>
-          <option value="sub4"><?=$data['sub4']?></option>
-              <?php    
-            }
-          ?>
-          <?php 
-            if($data['sub5'] != ""){
-          
-          ?>
-          <option value="sub5"><?=$data['sub5']?></option>
-              <?php    
-            }
-          ?>
+                                if($data['sub3'] != ""){
+                                    if($arr_datalokrit_nonfuzzy[$it] == $data['sub3'] ) {
+                            ?>
+                            <option value="sub3" selected><?=$data['sub3']?></option>
+                                <?php    
+                                } else { ?>
+                                    <option value="sub3"><?=$data['sub3']?></option>
+                               <?php } }
+                            ?>
+                            <?php 
+                                if($data['sub4'] != ""){
+                                    if($arr_datalokrit_nonfuzzy[$it] == $data['sub4'] ) {
+                            ?>
+                            <option value="sub4" selected><?=$data['sub4']?></option>
+                                <?php    
+                                }else { ?>  
+                            <option value="sub4" selected><?=$data['sub4']?></option>
+                               <?php } }
+                            ?>
+                            <?php 
+                                if($data['sub5'] != ""){
+                                    if($arr_datalokrit_nonfuzzy[$it] == $data['sub5'] ) {
+                            ?>
+                            <option value="sub5"><?=$data['sub5']?></option>
+                                <?php } else { ?>  
+                               <?php } }
+                            ?>
 						</select>
-						<?php endwhile;?>
+                        </div>
+						<?php $it++ ;endwhile;?>
 						<?php
 							$daftar_kriteria = mysqli_query($conn,"SELECT * from daftar_kriteria_static WHERE (kategori = 'fuzzy')");
 							$it=0;
                             while($data = mysqli_fetch_array($daftar_kriteria)):
 						?>
-							<input value="<?=$arr_datalokrit[$it]?>" name="<?= strtolower($data['kriteria']) ?>" type="number" placeholder="<?=$data['kriteria'];?>" class="mr-1 mt-3" required>
-						<?php $it++; 
+                            <div>
+                            <label style="display:block;" class="label"><?=$data['kriteria']?></label>
+							<input style="display:block;" value="<?=$arr_datalokrit_fuzzy[$it]?>" name="<?= strtolower($data['kriteria']) ?>" type="number" placeholder="<?=$data['kriteria'];?>" class="mr-1 mt-3" required>
+                            </div>
+                        <?php $it++; 
                         endwhile;?>
 					</div>
                     <div class="col-12 my-1">
