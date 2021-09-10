@@ -5,11 +5,17 @@ include"functions.php";
 if($_SESSION['legitUser'] != 'qwerty'){
     die(header("location: 404.html"));
 }
-//if(isset($_GET['nama_krit'])==false){
-//	die(header("location: 404.html"));
-//}
+if(isset($_GET['nama_krit'])==false){
+	die(header("location: admin_page.php"));
+}
 $nama_kriteria = $_GET['nama_krit'];
-
+//cek apakah kriteria ada di db apa tidak
+$result = mysqli_query($conn, "SELECT * FROM daftar_kriteria_static WHERE (kriteria = '$nama_kriteria')");
+$rowcount = mysqli_num_rows($result);
+if($rowcount == 0){
+    $message = "Mohon maaf, kriteria yang anda pilih tidak tersedia di database.";
+    echo "<script>alert('$message'); window.location.replace('admin_page.php');</script>";
+}
 //Cek kriteria sedang Aktif atau tidak, jika ya maka jangan diupdate
 $result = mysqli_query($conn, "SELECT * FROM daftar_kriteria WHERE (kriteria = '$nama_kriteria')");
 $rowcount = mysqli_num_rows($result);
