@@ -41,8 +41,20 @@ if(isset($_POST['submit'])){
                 $cek = mysqli_query($conn,"SELECT * from tempat_wisata_tb WHERE (obyek_wisata = '$ob_wis')");
                 $count_cek = mysqli_num_rows($cek);
                 if($count_cek == 0){
-                    $sukses = mysqli_query($conn, "INSERT INTO tempat_wisata_tb(obyek_wisata, {$krit}) 
-                    VALUES('$ob_wis', '$valkrit')");
+                    if($value == "fuzzy"){
+                        $sukses = mysqli_query($conn, "INSERT INTO tempat_wisata_tb(obyek_wisata, {$krit}) 
+                        VALUES('$ob_wis', '$valkrit')");
+                    }else{
+                        $get_kategori = mysqli_query($conn,"SELECT * from daftar_kriteria_static WHERE (kriteria = '$krit2')");
+                        $row = $get_kategori->fetch_assoc();
+                        if($valkrit== "sub1"){$valu = $row['sub1'];}
+                        if($valkrit == "sub2"){$valu = $row['sub2'];}
+                        if($valkrit == "sub3"){$valu = $row['sub3'];}
+                        if($valkrit == "sub4"){$valu = $row['sub4'];}
+                        if($valkrit == "sub5"){$valu = $row['sub5'];}
+                        $sukses = mysqli_query($conn, "INSERT INTO tempat_wisata_tb(obyek_wisata, {$krit}) 
+                        VALUES('$ob_wis', '$valu')");
+                    }
                 }else{
                     $get_kategori = mysqli_query($conn,"SELECT kategori from daftar_kriteria_static WHERE (kriteria = '$krit2')");
                     $row = $get_kategori->fetch_row();
@@ -50,7 +62,7 @@ if(isset($_POST['submit'])){
                     if($value == "fuzzy"){
                         $sukses = mysqli_query($conn, "UPDATE tempat_wisata_tb SET {$krit} = $valkrit WHERE (obyek_wisata = '$ob_wis')");
                     }else{
-                        $get_kategori = mysqli_query($conn,"SELECT sub1, sub2, sub3, sub4, sub5 from daftar_kriteria_static WHERE (kriteria = '$krit2')");
+                        $get_kategori = mysqli_query($conn,"SELECT * from daftar_kriteria_static WHERE (kriteria = '$krit2')");
                         $row = $get_kategori->fetch_assoc();
                         if($valkrit== "sub1"){$valu = $row['sub1'];}
                         if($valkrit == "sub2"){$valu = $row['sub2'];}

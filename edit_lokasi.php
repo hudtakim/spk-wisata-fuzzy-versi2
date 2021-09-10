@@ -176,11 +176,12 @@ $available_krit = count($arr_name_krit);
         <message>
 
 		<div class="tambah-lokasi mt-4 mb-5">
-			<form method='POST' action="tambah_lokasi.php">
+			<form method='POST' action="edit_lokasi_process.php">
 				<div class="form-row align-items-center">
 					<div class="col-auto my-1 input-group">
                         <div>
                         <label style="display:block;" class="label">Nama Lokasi</label>
+						<input style="display:none;" value="<?=$id_lokasi?>" type="number" name="id_lokasi" class="mr-1 mt-3" required>
                         <input style="display:block;" value="<?=$nama_lokasi?>" type="text" name="nama"  placeholder="Nama Lokasi" class="mr-1 mt-3" required>
                         </div>
                     
@@ -245,7 +246,7 @@ $available_krit = count($arr_name_krit);
                         endwhile;?>
 					</div>
                     <div class="col-12 my-1">
-                        <button type="submit" class="btn btn-success btn-block float mt-3" name="submit" disabled>Update Data</button>
+                        <button type="submit" class="btn btn-success btn-block float mt-3" name="submit">Update Data</button>
                     </div>
 				</div>
 			</form>
