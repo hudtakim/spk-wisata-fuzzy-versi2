@@ -1,5 +1,5 @@
 <?php
-//////TEST ONLY///////////////////
+//////Done///////////////////
 
 function getbobot_non_fuzzy($subkrit){
     $bobot = array();
@@ -29,7 +29,6 @@ function getbobot_non_fuzzy($subkrit){
         return $bobot;
     }
 }
-
 
 function getbobot_fuzzy5($value, $subkrit, $sub1, $sub2, $sub3, $sub4, $sub5){
     $bobot = array();
@@ -74,10 +73,10 @@ function getbobot_fuzzy5($value, $subkrit, $sub1, $sub2, $sub3, $sub4, $sub5){
             $bobot = 0; 
             return $bobot;
         } elseif($value >= $sub3 && $value <= $sub4){
-            $bobot= ($value - $sub2)/($sub3-$sub2);
+            $bobot= ($value - $sub3)/$sub4-$sub3;
             return $bobot;
         } else {
-            $bobot= ($sub5 - $value)/($sub5-$sub4);
+            $bobot= ($sub5-$value)/($sub5-$sub4);
             return $bobot;
         }
     }
@@ -86,7 +85,7 @@ function getbobot_fuzzy5($value, $subkrit, $sub1, $sub2, $sub3, $sub4, $sub5){
             $bobot = 0; 
             return $bobot;
         } elseif($value >= $sub4 && $value <= $sub5){
-            $bobot= ($value - $sub4)/$sub4;
+            $bobot= ($value - $sub4)/($sub5-$sub4);
             return $bobot;
         } else {
             $bobot= 1;
@@ -134,11 +133,11 @@ function getbobot_fuzzy4($value, $subkrit, $sub1, $sub2, $sub3, $sub4){
         }
     }
     if($subkrit == "sub4"){
-        if($value <= $sub4){
+        if($value <= $sub3){
             $bobot = 0; 
             return $bobot;
         } elseif($value >= $sub3 && $value <= $sub4){
-            $bobot= ($value - $sub3)/$sub3;
+            $bobot= ($value - $sub3)/($sub4-$sub3);
             return $bobot;
         } else {
             $bobot= 1;
@@ -174,11 +173,11 @@ function getbobot_fuzzy3($value, $subkrit, $sub1, $sub2, $sub3){
         }
     }
     if($subkrit == "sub3"){
-        if($value <= $sub3){
+        if($value <= $sub2){
             $bobot = 0; 
             return $bobot;
         } elseif($value >= $sub2 && $value <= $sub3){
-            $bobot= ($value - $sub2)/$sub2;
+            $bobot= ($value - $sub2)/($sub3-$sub2);
             return $bobot;
         } else {
             $bobot= 1;
@@ -206,7 +205,7 @@ function getbobot_fuzzy2($value, $subkrit, $sub1, $sub2){
             $bobot = 0; 
             return $bobot;
         } elseif($value >= $sub1 && $value <= $sub2){
-            $bobot= ($value - $sub1)/$sub1;
+            $bobot= ($value - $sub1)/($sub2-$sub1);
             return $bobot;
         } else {
             $bobot= 1;
