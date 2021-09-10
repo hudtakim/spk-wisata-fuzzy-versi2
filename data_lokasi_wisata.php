@@ -190,13 +190,23 @@ if($_SESSION['legitUser'] != 'qwerty'){
 				</div>
 			</form>
 		</div>
+		<?php 
 
+		$result = mysqli_query($conn,"SELECT * from tempat_wisata_tb ORDER BY obyek_wisata");
+		$jumlah_wisata = mysqli_num_rows($result);
+		if($jumlah_wisata == 0){
+			echo "<div class='m-5'>";
+			echo "<h5>Belum ada data lokasi wisata di database, silahkan tambahkan data.</h5>";
+			echo "</div>";
+		}else{
+
+		?>
         <div class="mt-4">
 			Berikut adalah daftar lokasi wisata yang terdaftar pada sistem:
-                        </div>
+        </div>
 
 		<div class="data-lokasi mt-4">
-            <table class='table table-bordered mt-4'>
+            <table class='table table-bordered mt-4 mb-5'>
                 <thead class="thead-dark">
                     <tr>
                         <th>No</th>
@@ -213,7 +223,6 @@ if($_SESSION['legitUser'] != 'qwerty'){
                 <tbody>
 
                 <?php
-                    $result = mysqli_query($conn,"SELECT * from tempat_wisata_tb ORDER BY obyek_wisata");
                     $num = 1;
                     while($data = mysqli_fetch_array($result)):
                 ?>
@@ -232,7 +241,7 @@ if($_SESSION['legitUser'] != 'qwerty'){
 						</th>
 					</tr>
 
-                <?php $num++; endwhile;?>
+                <?php $num++; endwhile; }?>
 
                 </tbody>
             </table>
