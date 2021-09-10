@@ -170,7 +170,7 @@ $available_krit = count($arr_name_krit);
 </nav>
 	<div class='container mt-5'>
     <p align="center"><b>Edit Data Objek Wisata <?=$nama_lokasi?></b></p>
-		<a href="admin.php"><button type="button" class="btn btn-info btn-lg btn-block mt-4 mb-4">Kembali ke Menu Utama</button></a>
+		<a href="data_lokasi_wisata.php"><button type="button" class="btn btn-info btn-lg btn-block mt-4 mb-4">Kembali ke Pengaturan Lokasi Wisata</button></a>
         <message>
             Isi form berikut untuk mengedit data lokasi wisata.
         <message>
