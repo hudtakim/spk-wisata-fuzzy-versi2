@@ -172,7 +172,7 @@ include"functions.php";
             }
           ?>
 					</select>
-          <button type="button" class="btn btn-danger float ml-2" onclick="delkrit(<?=$num?>)">X</button>
+          <button id="btn<?=$num?>" type="button" class="btn btn-danger float ml-2" onclick="delkrit(<?=$num?>)">X</button>
 				</div>
         
 			<?php $num++; endwhile;?>
@@ -719,9 +719,9 @@ include"functions.php";
 		</table>
     <div class="agenda pb-5">
       <p>Keterangan:</p>
-      <div class="p-2 m-1 mt-1 float-left" style="background-color: #fc9803; width:25%"><b>Sangat direkomendasikan</b></div>
-      <div class="p-2 m-1 mt-1 float-left" style="background-color: #fcdb03; width:25%"><b>Direkomendasikan</b></div>
-      <div class="p-2 m-1 mt-1 float-left" style="background-color: #fff6bd; width:25%"><b>Tidak direkomendasikan</b></div>
+      <div class="pl-2 pt-2 pb-2 m-1 mt-1 float-left" style="background-color: #fc9803; width:25%"><b>Sangat direkomendasikan (FS = 1)</b></div>
+      <div class="pl-2 pt-2 pb-2 m-1 mt-1 float-left" style="background-color: #fcdb03; width:25%"><b>Direkomendasikan (0 < FS < 1)</b></div>
+      <div class="pl-2 pt-2 pb-2 m-1 mt-1 float-left" style="background-color: #fff6bd; width:25%"><b>Tidak direkomendasikan (FS = 0)</b></div>
     </div>
 
 		<div class="mt-5 mb-5">
@@ -793,6 +793,7 @@ include"functions.php";
 
 <script>
   var input_arr = document.querySelectorAll(".inputan");
+
   for (let i = 0; i < input_arr.length; i++) {
 					if(input_arr.value == ""){
             input_arr.style.display = "none";
@@ -800,12 +801,14 @@ include"functions.php";
 	}
   var arr_bates = document.querySelectorAll(".batesin");
   var penghitung = arr_bates.length;
+
   function delkrit(idx){
     if(penghitung == 1){
-      alert("Tidak bisa menghapus semua kriteria, anda bisa me-refresh laman untuk memunculkan pilihan kriteria semula.")
+      window.location.replace('index.php');
       return false;
     }
     penghitung = penghitung-1;
+
     var input1 = document.getElementById("krit1");
 		var input2 = document.getElementById("krit2");
 		var input3 = document.getElementById("krit3");
@@ -818,6 +821,12 @@ include"functions.php";
 		var sel4 = document.getElementById("sel4");
 		var sel5 = document.getElementById("sel5");
     var sel6 = document.getElementById("sel6");
+    var btn1 = document.getElementById("btn1");
+    var btn2 = document.getElementById("btn2");
+    var btn3 = document.getElementById("btn3");
+    var btn4 = document.getElementById("btn4");
+    var btn5 = document.getElementById("btn5");
+    var btn6 = document.getElementById("btn6");
 
     if(idx == 1){
       sel1.value = "";
@@ -849,6 +858,26 @@ include"functions.php";
       sel6.required = false;
       input6.style.display = "none";
     }
+    if(penghitung == 1){
+        btn1.classList.remove('btn-danger');
+        btn1.classList.add('btn-success');
+        btn1.innerHTML = "+";
+        btn2.classList.remove('btn-danger');
+        btn2.classList.add('btn-success');
+        btn2.innerHTML = "+";
+        btn3.classList.remove('btn-danger');
+        btn3.classList.add('btn-success');
+        btn3.innerHTML = "+";
+        btn4.classList.remove('btn-danger');
+        btn4.classList.add('btn-success');
+        btn4.innerHTML = "+";
+        btn5.classList.remove('btn-danger');
+        btn5.classList.add('btn-success');
+        btn5.innerHTML = "+";
+        btn6.classList.remove('btn-danger');
+        btn6.classList.add('btn-success');
+        btn6.innerHTML = "+";
+      }
     return true;
   }  
 </script>
