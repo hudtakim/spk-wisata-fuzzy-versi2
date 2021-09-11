@@ -40,4 +40,4 @@ Perhatian:
 2. Data lokasi wisata yang digunakan untuk uji coba aplikasi web ini berasal dari hasil penelitian Agung Prayogi, 
    silahkan baca paper penelitiannya di: https://docplayer.info/82508178-Sistem-pendukung-keputusan-pemilihan-obyek-wisata-tegal-menggunakan-metode-fuzzy-tahani.html
 3. Dilarang diperjualbelikan.
-4. Untuk mencoba aplikasi ini secara langsung silahkan menuju link berikut: http://hudtakim.byethost12.com/spkwisata  <--- (Last Update 8 Sept 2021)
+4. Untuk mencoba aplikasi ini secara langsung silahkan menuju link berikut: http://hudtakim.byethost12.com/spkwisata  <--- (Last Update 11 Sept 2021)
