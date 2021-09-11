@@ -135,7 +135,7 @@ include"functions.php";
       }else{
         echo "<p align='center'><b>Silahkan Masukkan Kriteria Objek Wisata</b></p>";
     ?>
-		<form method='GET' action="#" onsubmit="myJsFunction();return false">
+		<form class="mb-5" method='GET' action="#" onsubmit="myJsFunction();return false">
 			<div class="form-row align-items-center">
 			<?php
 					$daftar_kriteria = mysqli_query($conn,"SELECT * from daftar_kriteria");
@@ -178,7 +178,7 @@ include"functions.php";
 			<?php $num++; endwhile;?>
 			</div>
 			<!--	<button type="submit" name='submit' class="btn btn-primary btn-lg btn-block mt-4 mb-4" value='and'>Submit - Logika AND</button> -->
-			<button type="submit" name='submit' class="btn btn-primary btn-lg btn-block mt-4 mb-4" value='or'>Dapatkan Rekomendasi</button>
+			<button type="submit" name='submit' class="btn btn-primary btn-lg btn-block mt-4 mb-5" value='or'>Dapatkan Rekomendasi</button>
 		</form>
 
 		<?php
@@ -837,11 +837,10 @@ include"functions.php";
 								//$str.=strtolower($dakrit['kriteria']);
                 $str=strtolower($dakrit['kriteria']);
 							?>
-							
-							<th><?=$data[$str];?></th>
+							<th><?=number_format((float)$data[$str], 2, '.', '');?></th>
 							<?php endwhile;?>
 							
-							<th><?=$data['fire_strength'];?></th>
+							<th><?=number_format((float)$data['fire_strength'], 2, '.', '');?></th>
 						</tr>
 
 					<?php $num++; endwhile; 
