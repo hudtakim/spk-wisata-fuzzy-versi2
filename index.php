@@ -142,8 +142,8 @@ include"functions.php";
 					$num = 1;
 					while($data = mysqli_fetch_array($daftar_kriteria)):
 				?>
-				<div class="col-auto my-1 input-group batesin" id="krit<?=$num?>">          
-					<select name='<?=strtolower($data['kriteria']);?>' class="form-control custom-select mr-sm-1" id="sel<?=$num?>" required>
+				<div class="my-2 input-group batesin"  id="krit<?=$num?>">          
+					<select name='<?=strtolower($data['kriteria']);?>' class="form-control custom-select mr-2" id="sel<?=$num?>" required>
 						<option value="">--- Pilih Kriteria <?=$data['kriteria'];?> ---</option>
             <option class="inputan" value="<?=strtolower($data['sub1']);?>"><?=$data['sub1'];?></option>
 						<option class="inputan" value="<?=strtolower($data['sub2']);?>"><?=$data['sub2'];?></option>
@@ -857,10 +857,10 @@ include"functions.php";
            <?php }else{
              $del = mysqli_query($conn,"DELETE FROM input_user_tb");
              if($del) {mysqli_close($conn);}
-             echo "<script>alert('Maaf, server sedang sibuk. Silahkan coba beberapa saat lagi. (Gagal create tabel temp)')</script>";
+             echo "<script>alert('Maaf, server sedang sibuk. Silahkan coba beberapa saat lagi. (Error - 002 hudtakim@hdmvision)')</script>";
            } }
             }else{
-             echo "<script>alert('Maaf, server sedang sibuk. Silahkan coba beberapa saat lagi. (Gagal create input tb)')</script>";
+             echo "<script>alert('Maaf, server sedang sibuk. Silahkan coba beberapa saat lagi. (Error - 001 hudtakim@hdmvision)')</script>";
            } } }?> 
 						
 						
@@ -883,13 +883,11 @@ include"functions.php";
 	}
   var arr_bates = document.querySelectorAll(".batesin");
   var penghitung = arr_bates.length;
+  var penghitung2 = arr_bates.length;
+
+
 
   function delkrit(idx){
-    if(penghitung == 1){
-      window.location.replace('index.php');
-      return false;
-    }
-    penghitung = penghitung-1;
 
     var input1 = document.getElementById("krit1");
 		var input2 = document.getElementById("krit2");
@@ -909,6 +907,149 @@ include"functions.php";
     var btn4 = document.getElementById("btn4");
     var btn5 = document.getElementById("btn5");
     var btn6 = document.getElementById("btn6");
+
+    if(penghitung == 1){
+        
+          //sel1.value = "";
+          if(penghitung2 == 6){
+            sel1.required = true;
+            input1.style.display = "";
+
+            sel2.required = true;
+            input2.style.display = "";
+          
+            sel3.required = true;
+            input3.style.display = "";
+        
+            sel4.required = true;
+            input4.style.display = "";
+          
+            sel5.required = true;
+            input5.style.display = "";
+        
+            sel6.value = "";
+            sel6.required = true;
+            input6.style.display = "";
+          
+            btn1.classList.remove('btn-success');
+            btn1.classList.add('btn-danger');
+            btn1.innerHTML = "X";
+            btn2.classList.remove('btn-success');
+            btn2.classList.add('btn-danger');
+            btn2.innerHTML = "X";
+            btn3.classList.remove('btn-success');
+            btn3.classList.add('btn-danger');
+            btn3.innerHTML = "X";
+            btn4.classList.remove('btn-success');
+            btn4.classList.add('btn-danger');
+            btn4.innerHTML = "X";
+            btn5.classList.remove('btn-success');
+            btn5.classList.add('btn-danger');
+            btn5.innerHTML = "X";
+            btn6.classList.remove('btn-success');
+            btn6.classList.add('btn-danger');
+            btn6.innerHTML = "X";
+          }else if(penghitung2 == 5){
+            sel1.required = true;
+            input1.style.display = "";
+
+            sel2.required = true;
+            input2.style.display = "";
+          
+            sel3.required = true;
+            input3.style.display = "";
+        
+            sel4.required = true;
+            input4.style.display = "";
+          
+            sel5.required = true;
+            input5.style.display = "";
+          
+            btn1.classList.remove('btn-success');
+            btn1.classList.add('btn-danger');
+            btn1.innerHTML = "X";
+            btn2.classList.remove('btn-success');
+            btn2.classList.add('btn-danger');
+            btn2.innerHTML = "X";
+            btn3.classList.remove('btn-success');
+            btn3.classList.add('btn-danger');
+            btn3.innerHTML = "X";
+            btn4.classList.remove('btn-success');
+            btn4.classList.add('btn-danger');
+            btn4.innerHTML = "X";
+            btn5.classList.remove('btn-success');
+            btn5.classList.add('btn-danger');
+            btn5.innerHTML = "X";
+          }else if(penghitung2 == 4){
+            sel1.required = true;
+            input1.style.display = "";
+
+            sel2.required = true;
+            input2.style.display = "";
+          
+            sel3.required = true;
+            input3.style.display = "";
+        
+            sel4.required = true;
+            input4.style.display = "";
+          
+            btn1.classList.remove('btn-success');
+            btn1.classList.add('btn-danger');
+            btn1.innerHTML = "X";
+            btn2.classList.remove('btn-success');
+            btn2.classList.add('btn-danger');
+            btn2.innerHTML = "X";
+            btn3.classList.remove('btn-success');
+            btn3.classList.add('btn-danger');
+            btn3.innerHTML = "X";
+            btn4.classList.remove('btn-success');
+            btn4.classList.add('btn-danger');
+            btn4.innerHTML = "X";
+          } else if(penghitung2 == 3){
+            sel1.required = true;
+            input1.style.display = "";
+
+            sel2.required = true;
+            input2.style.display = "";
+          
+            sel3.required = true;
+            input3.style.display = "";
+          
+            btn1.classList.remove('btn-success');
+            btn1.classList.add('btn-danger');
+            btn1.innerHTML = "X";
+            btn2.classList.remove('btn-success');
+            btn2.classList.add('btn-danger');
+            btn2.innerHTML = "X";
+            btn3.classList.remove('btn-success');
+            btn3.classList.add('btn-danger');
+            btn3.innerHTML = "X";
+          }else if(penghitung2 == 2){
+            sel1.required = true;
+            input1.style.display = "";
+
+            sel2.required = true;
+            input2.style.display = "";
+          
+            btn1.classList.remove('btn-success');
+            btn1.classList.add('btn-danger');
+            btn1.innerHTML = "X";
+            btn2.classList.remove('btn-success');
+            btn2.classList.add('btn-danger');
+            btn2.innerHTML = "X";
+          }else{
+            sel1.required = true;
+            input1.style.display = "";
+          
+            btn1.classList.remove('btn-success');
+            btn1.classList.add('btn-danger');
+            btn1.innerHTML = "X";
+          }
+      //window.location.replace('index.php');
+      penghitung = penghitung2;
+      return true;
+    }
+    penghitung = penghitung-1;
 
     if(idx == 1){
       sel1.value = "";
@@ -941,24 +1082,76 @@ include"functions.php";
       input6.style.display = "none";
     }
     if(penghitung == 1){
-        btn1.classList.remove('btn-danger');
-        btn1.classList.add('btn-success');
-        btn1.innerHTML = "+";
-        btn2.classList.remove('btn-danger');
-        btn2.classList.add('btn-success');
-        btn2.innerHTML = "+";
-        btn3.classList.remove('btn-danger');
-        btn3.classList.add('btn-success');
-        btn3.innerHTML = "+";
-        btn4.classList.remove('btn-danger');
-        btn4.classList.add('btn-success');
-        btn4.innerHTML = "+";
-        btn5.classList.remove('btn-danger');
-        btn5.classList.add('btn-success');
-        btn5.innerHTML = "+";
-        btn6.classList.remove('btn-danger');
-        btn6.classList.add('btn-success');
-        btn6.innerHTML = "+";
+        if(penghitung2 == 1){
+          btn1.classList.remove('btn-danger');
+          btn1.classList.add('btn-success');
+          btn1.innerHTML = "+";
+        }else if(penghitung2 == 2){
+          btn1.classList.remove('btn-danger');
+          btn1.classList.add('btn-success');
+          btn1.innerHTML = "+";
+          btn2.classList.remove('btn-danger');
+          btn2.classList.add('btn-success');
+          btn2.innerHTML = "+";
+        }else if(penghitung2 == 3){
+          btn1.classList.remove('btn-danger');
+          btn1.classList.add('btn-success');
+          btn1.innerHTML = "+";
+          btn2.classList.remove('btn-danger');
+          btn2.classList.add('btn-success');
+          btn2.innerHTML = "+";
+          btn3.classList.remove('btn-danger');
+          btn3.classList.add('btn-success');
+          btn3.innerHTML = "+";
+        }else if(penghitung2 == 4){
+          btn1.classList.remove('btn-danger');
+          btn1.classList.add('btn-success');
+          btn1.innerHTML = "+";
+          btn2.classList.remove('btn-danger');
+          btn2.classList.add('btn-success');
+          btn2.innerHTML = "+";
+          btn3.classList.remove('btn-danger');
+          btn3.classList.add('btn-success');
+          btn3.innerHTML = "+";
+          btn4.classList.remove('btn-danger');
+          btn4.classList.add('btn-success');
+          btn4.innerHTML = "+";
+        }else if(penghitung2 == 5){
+          btn1.classList.remove('btn-danger');
+          btn1.classList.add('btn-success');
+          btn1.innerHTML = "+";
+          btn2.classList.remove('btn-danger');
+          btn2.classList.add('btn-success');
+          btn2.innerHTML = "+";
+          btn3.classList.remove('btn-danger');
+          btn3.classList.add('btn-success');
+          btn3.innerHTML = "+";
+          btn4.classList.remove('btn-danger');
+          btn4.classList.add('btn-success');
+          btn4.innerHTML = "+";
+          btn5.classList.remove('btn-danger');
+          btn5.classList.add('btn-success');
+          btn5.innerHTML = "+";
+        }else{
+          btn1.classList.remove('btn-danger');
+          btn1.classList.add('btn-success');
+          btn1.innerHTML = "+";
+          btn2.classList.remove('btn-danger');
+          btn2.classList.add('btn-success');
+          btn2.innerHTML = "+";
+          btn3.classList.remove('btn-danger');
+          btn3.classList.add('btn-success');
+          btn3.innerHTML = "+";
+          btn4.classList.remove('btn-danger');
+          btn4.classList.add('btn-success');
+          btn4.innerHTML = "+";
+          btn5.classList.remove('btn-danger');
+          btn5.classList.add('btn-success');
+          btn5.innerHTML = "+";
+          btn6.classList.remove('btn-danger');
+          btn6.classList.add('btn-success');
+          btn6.innerHTML = "+";
+        }
       }
     return true;
   }  
