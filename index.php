@@ -177,8 +177,8 @@ include"functions.php";
         
 			<?php $num++; endwhile;?>
 			</div>
-			<button type="submit" name='submit' class="btn btn-primary btn-lg btn-block mt-4 mb-4" value='and'>Submit - Logika AND</button>
-			<button type="submit" name='submit' class="btn btn-success btn-lg btn-block mt-4 mb-4" value='or'>Submit - Logika OR</button>
+			<!--	<button type="submit" name='submit' class="btn btn-primary btn-lg btn-block mt-4 mb-4" value='and'>Submit - Logika AND</button> -->
+			<button type="submit" name='submit' class="btn btn-primary btn-lg btn-block mt-4 mb-4" value='or'>Dapatkan Rekomendasi</button>
 		</form>
 
 		<?php
@@ -235,23 +235,6 @@ include"functions.php";
         echo "<br>";
 		?>
 		
-		<h5>Berikut adalah hasil rekomendasi objek wisata berdasarkan kriteria yang dipilih:</h5>
-		<table class='table table-bordered'>
-			<thead class="thead-dark">
-				<tr>
-					<th>No</th>
-					<th>Nama Wisata</th>
-					<?php
-						$daftar_kriteria = mysqli_query($conn,"SELECT * from input_user_tb");
-						while($data = mysqli_fetch_array($daftar_kriteria)):
-					?>
-						<th><?=$data['kriteria'];?></th>
-					<?php endwhile;?>
-					<th>Fire Strength</th>
-				</tr>
-			</thead>
-			<tbody>
-
 				<?php
            $daftar_kriteria = mysqli_query($conn,"SELECT * from input_user_tb");
            $thekrit5 = array();
@@ -318,7 +301,7 @@ include"functions.php";
             $it++;
           endwhile;
 					
-					$fire_strength = array();
+/*					$fire_strength = array();
 					$it2 = 0;
           for ($x = 0; $x < $rowcount; $x++){
             $it1 = 0;
@@ -334,12 +317,70 @@ include"functions.php";
 						$it2++;
             if($submit == 'or'){$value = $value/$rowcount2;}
             array_push($fire_strength, $value);
+          } */
+
+          $fire_strength = array();
+					$it2 = 0;
+          for ($x = 0; $x < $rowcount; $x++){
+            $it1 = 0;
+            $value=1;
+            for ($y = 0; $y < $rowcount2; $y++){
+
+              $value = $value * $arrofarrbot[$it1][$it2];
+              
+              $it1++;
+            }
+						$it2++;
+            
+            array_push($fire_strength, $value);
+          }
+
+          if(array_sum($fire_strength) == 0){
+              $fire_strength = array();
+              $it2 = 0;
+              for ($x = 0; $x < $rowcount; $x++){
+                $it1 = 0;
+                $value=0;
+                for ($y = 0; $y < $rowcount2; $y++){
+                  $value = $value + $arrofarrbot[$it1][$it2];
+                  $it1++;
+                }
+                $it2++;
+                if($submit == 'or'){$value = $value/$rowcount2;}
+                array_push($fire_strength, $value);
+              }
           }
 					
 					
-					if(array_sum($fire_strength) < 0){
-						echo "<br><h1>TIDAK ADA REKOMENDASI</h1>";
-					}else{
+					if(array_sum($fire_strength) == 0){
+						echo "<br><h5 class='mb-5 pb-5'>TIDAK DITEMUKAN REKOMENDASI YANG SESUAI DENGAN KRITERIA YANG ANDA PILIH</h5>";
+            $del = mysqli_query($conn,"DELETE FROM input_user_tb");
+            if($del) {mysqli_close($conn);}
+            else{
+              echo "Error pada database";
+            }
+
+					}else{ ?>
+          
+          <h5 class="mt-3">Berikut adalah rekomendasi objek wisata berdasarkan kriteria yang dipilih:</h5>
+            <table class='table table-bordered'>
+              <thead class="thead-dark">
+                <tr>
+                  <th>No</th>
+                  <th>Nama Wisata</th>
+                  <?php
+                    $daftar_kriteria = mysqli_query($conn,"SELECT * from input_user_tb");
+                    while($data = mysqli_fetch_array($daftar_kriteria)):
+                  ?>
+                    <th><?=$data['kriteria'];?></th>
+                  <?php endwhile;?>
+                  <th>Fire Strength</th>
+                </tr>
+              </thead>
+            <tbody>
+          
+          <?php
+          
           
           $newliskrit = array(); $new_arrofarrbot = array();
           $it=0;
@@ -499,7 +540,7 @@ include"functions.php";
            endwhile;
 
 					foreach ($fire_strength as &$value) {
-						if($value >= 0){
+						if($value > 0){
               $inwis = $idx -1;
 							$index_wisata = $idx;
 							$get_wisata_query = mysqli_query($conn,"SELECT * from tempat_wisata_tb WHERE (id = '$arrofid[$inwis]')");
@@ -631,9 +672,23 @@ include"functions.php";
 							<th><?=$data['fire_strength'];?></th>
 						</tr>
           <?php 
-            }elseif($data['fire_strength'] >0){
+            }elseif($data['fire_strength'] >= 0.5){
           ?>
             	<tr style="background: #fcdb03;">
+							<th><?=$num;?></th>
+							<th><?=$data['obyek_wisata'];?></th>
+							<?php
+							$daftar_kriteria = mysqli_query($conn,"SELECT * from input_user_tb");
+								while($dakrit = mysqli_fetch_array($daftar_kriteria)):
+							?>
+							<th><?=$data[strtolower($dakrit['kriteria'])];?></th>
+							<?php endwhile;?>
+							<th><?=$data['fire_strength'];?></th>
+						</tr>
+            <?php 
+            }elseif($data['fire_strength'] > 0){
+          ?>
+            	<tr style="background: #fff6bd;">
 							<th><?=$num;?></th>
 							<th><?=$data['obyek_wisata'];?></th>
 							<?php
@@ -647,7 +702,7 @@ include"functions.php";
           <?php
             }else{
           ?>
-	          <tr style="background: #fff6bd;">
+	          <tr style="background: red;">
 							<th><?=$num;?></th>
 							<th><?=$data['obyek_wisata'];?></th>
 							<?php
@@ -656,7 +711,7 @@ include"functions.php";
 							?>
 							<th><?=$data[strtolower($dakrit['kriteria'])];?></th>
 							<?php endwhile;?>
-							<th><?=$data['fire_strength'];?></th>
+							<th><?=number_format((float)$data['fire_strength'], 2, '.', '');?></th>
 						</tr>
 	
           <?php
@@ -673,10 +728,10 @@ include"functions.php";
                   ?>
                   <th><?=$data[strtolower($dakrit['kriteria'])];?></th>
                   <?php endwhile;?>
-                  <th><?=$data['fire_strength'];?></th>
+                  <th><?=number_format((float)$data['fire_strength'], 2, '.', '');?></th>
                 </tr>
               <?php 
-                }elseif($data['fire_strength'] >0){
+                }elseif($data['fire_strength'] > 0.5){
               ?>
                   <tr style="background: #fcdb03;">
                   <th><?=$num;?></th>
@@ -687,12 +742,26 @@ include"functions.php";
                   ?>
                   <th><?=$data[strtolower($dakrit['kriteria'])];?></th>
                   <?php endwhile;?>
-                  <th><?=$data['fire_strength'];?></th>
+                  <th><?=number_format((float)$data['fire_strength'], 2, '.', '');?></th>
+                </tr>
+                <?php 
+                }elseif($data['fire_strength'] > 0){
+              ?>
+                  <tr style="background: #fff6bd;">
+                  <th><?=$num;?></th>
+                  <th><?=$data['obyek_wisata'];?></th>
+                  <?php
+                  $daftar_kriteria = mysqli_query($conn,"SELECT * from input_user_tb");
+                    while($dakrit = mysqli_fetch_array($daftar_kriteria)):
+                  ?>
+                  <th><?=$data[strtolower($dakrit['kriteria'])]?></th>
+                  <?php endwhile;?>
+                  <th><?=number_format((float)$data['fire_strength'], 2, '.', '');?></th>
                 </tr>
               <?php
                 }else{
               ?>
-                <tr style="background: #fff6bd;">
+                <tr style="background: #ff0000;">
                   <th><?=$num;?></th>
                   <th><?=$data['obyek_wisata'];?></th>
                   <?php
@@ -701,7 +770,7 @@ include"functions.php";
                   ?>
                   <th><?=$data[strtolower($dakrit['kriteria'])];?></th>
                   <?php endwhile;?>
-                  <th><?=$data['fire_strength'];?></th>
+                  <th><?=number_format((float)$data['fire_strength'], 2, '.', '');?></th>
                 </tr>
       
               <?php
@@ -712,25 +781,29 @@ include"functions.php";
 					
 				<?php $num++; endwhile; 
           $del = mysqli_query($conn,"DROP TABLE rekomendasi_tb");
-        }
+        
 				?>
 
 			</tbody>
 		</table>
-    <div class="agenda pb-5">
+    <div class="agenda pt-1 pb-5 table-responsive">
       <p>Keterangan:</p>
-      <div class="pl-2 pt-2 pb-2 m-1 mt-1 float-left" style="background-color: #fc9803; width:25%"><b>Sangat direkomendasikan (FS = 1)</b></div>
-      <div class="pl-2 pt-2 pb-2 m-1 mt-1 float-left" style="background-color: #fcdb03; width:25%"><b>Direkomendasikan (0 < FS < 1)</b></div>
-      <div class="pl-2 pt-2 pb-2 m-1 mt-1 float-left" style="background-color: #fff6bd; width:25%"><b>Tidak direkomendasikan (FS = 0)</b></div>
+      <table class="table">
+        <tr>
+          <th style="background-color: #fc9803;text-align: center;">Sangat direkomendasikan (FS = 1)</th>
+          <th style="background-color: #fcdb03;text-align: center;">Direkomendasikan (0.5 < FS < 1)</th>
+          <th style="background-color: #fff6bd;text-align: center;">Kurang direkomendasikan (0 < FS < 0.5)</th>
+        </tr>
+      </table>
     </div>
 
-		<div class="mt-5 mb-5">
+		<div class="mt-2 mb-5">
 			<button class="btn btn-info btn-block" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
 				Klik di sini untuk melihat hasil penghitungan fuzzy
 			</button>
 
 			<div class="collapse" id="collapseExample">
-				<table class='table table-bordered mt-4'>
+				<table class='table table-bordered table-striped mt-4'>
 					<thead class="thead-dark">
 						<tr>
 							<th>No</th>
@@ -779,7 +852,7 @@ include"functions.php";
           ?>
            
            
-           <?php } } ?> 
+           <?php } } }?> 
 						
 						
 
