@@ -202,7 +202,9 @@ include"functions.php";
             array_push($list_kriteria_b, strtolower($data['kriteria']));
             
         endwhile;
-        
+        $resultxx = mysqli_query($conn,"SELECT * from input_user_tb");
+        $rowcountxx=mysqli_num_rows($resultxx);
+        if($rowcountxx == 0){
         $inputUser = array();
         foreach ($list_kriteria_b as &$value) {
           $vcil = strtolower($value);
@@ -390,10 +392,9 @@ include"functions.php";
             $it++; 
           }
 
-
           if($rowcount2 == 1){
             //create rekomendasi_tb untuk menampung yg direkomendasikan
-          $result = mysqli_query($conn, "CREATE TABLE rekomendasi_tb(
+          $result_rekom = mysqli_query($conn, "CREATE TABLE rekomendasi_tb(
             id INT NOT NULL AUTO_INCREMENT,
             obyek_wisata VARCHAR(30) NOT NULL,
             {$newliskrit[0]} varchar(20) NOT NULL,
@@ -401,7 +402,7 @@ include"functions.php";
             PRIMARY KEY ( id )
          )");
           //create penghitungan_bobot_tb untuk menampung bobot2 rekomendasi
-          $result = mysqli_query($conn, "CREATE TABLE penghitungan_bobot_tb(
+          $result_bot = mysqli_query($conn, "CREATE TABLE penghitungan_bobot_tb(
             id INT NOT NULL AUTO_INCREMENT,
             obyek_wisata VARCHAR(30) NOT NULL,
             {$newliskrit[0]} float(20) NOT NULL,
@@ -410,7 +411,7 @@ include"functions.php";
           )");
           }elseif($rowcount2 == 2){
                         //create rekomendasi_tb untuk menampung yg direkomendasikan
-          $result = mysqli_query($conn, "CREATE TABLE rekomendasi_tb(
+          $result_rekom = mysqli_query($conn, "CREATE TABLE rekomendasi_tb(
             id INT NOT NULL AUTO_INCREMENT,
             obyek_wisata VARCHAR(30) NOT NULL,
             {$newliskrit[0]} varchar(20) NOT NULL,
@@ -419,7 +420,7 @@ include"functions.php";
             PRIMARY KEY ( id )
          )");
           //create penghitungan_bobot_tb untuk menampung bobot2 rekomendasi
-          $result = mysqli_query($conn, "CREATE TABLE penghitungan_bobot_tb(
+          $result_bot = mysqli_query($conn, "CREATE TABLE penghitungan_bobot_tb(
             id INT NOT NULL AUTO_INCREMENT,
             obyek_wisata VARCHAR(30) NOT NULL,
             {$newliskrit[0]} float(20) NOT NULL,
@@ -429,7 +430,7 @@ include"functions.php";
           )");
           }elseif($rowcount2 == 3){
             //create rekomendasi_tb untuk menampung yg direkomendasikan
-            $result = mysqli_query($conn, "CREATE TABLE rekomendasi_tb(
+            $result_rekom = mysqli_query($conn, "CREATE TABLE rekomendasi_tb(
             id INT NOT NULL AUTO_INCREMENT,
             obyek_wisata VARCHAR(30) NOT NULL,
             {$newliskrit[0]} varchar(20) NOT NULL,
@@ -440,7 +441,7 @@ include"functions.php";
             )");
 
             //create penghitungan_bobot_tb untuk menampung bobot2 rekomendasi
-            $result = mysqli_query($conn, "CREATE TABLE penghitungan_bobot_tb(
+            $result_bot = mysqli_query($conn, "CREATE TABLE penghitungan_bobot_tb(
             id INT NOT NULL AUTO_INCREMENT,
             obyek_wisata VARCHAR(30) NOT NULL,
             {$newliskrit[0]} float(20) NOT NULL,
@@ -452,7 +453,7 @@ include"functions.php";
 
           }elseif($rowcount2 == 4){
             //create rekomendasi_tb untuk menampung yg direkomendasikan
-            $result = mysqli_query($conn, "CREATE TABLE rekomendasi_tb(
+            $result_rekom = mysqli_query($conn, "CREATE TABLE rekomendasi_tb(
             id INT NOT NULL AUTO_INCREMENT,
             obyek_wisata VARCHAR(30) NOT NULL,
             {$newliskrit[0]} varchar(20) NOT NULL,
@@ -463,7 +464,7 @@ include"functions.php";
             PRIMARY KEY ( id )
             )");
             //create penghitungan_bobot_tb untuk menampung bobot2 rekomendasi
-            $result = mysqli_query($conn, "CREATE TABLE penghitungan_bobot_tb(
+            $result_bot = mysqli_query($conn, "CREATE TABLE penghitungan_bobot_tb(
             id INT NOT NULL AUTO_INCREMENT,
             obyek_wisata VARCHAR(30) NOT NULL,
             {$newliskrit[0]} float(20) NOT NULL,
@@ -476,7 +477,7 @@ include"functions.php";
           }
           elseif($rowcount2 == 5){
             //create rekomendasi_tb untuk menampung yg direkomendasikan
-            $result = mysqli_query($conn, "CREATE TABLE rekomendasi_tb(
+            $result_rekom = mysqli_query($conn, "CREATE TABLE rekomendasi_tb(
             id INT NOT NULL AUTO_INCREMENT,
             obyek_wisata VARCHAR(30) NOT NULL,
             {$newliskrit[0]} varchar(20) NOT NULL,
@@ -488,7 +489,7 @@ include"functions.php";
             PRIMARY KEY ( id )
             )");
             //create penghitungan_bobot_tb untuk menampung bobot2 rekomendasi
-            $result = mysqli_query($conn, "CREATE TABLE penghitungan_bobot_tb(
+            $result_bot = mysqli_query($conn, "CREATE TABLE penghitungan_bobot_tb(
             id INT NOT NULL AUTO_INCREMENT,
             obyek_wisata VARCHAR(30) NOT NULL,
             {$newliskrit[0]} float(20) NOT NULL,
@@ -501,7 +502,7 @@ include"functions.php";
             )");
           }elseif($rowcount2 == 6){
             //create rekomendasi_tb untuk menampung yg direkomendasikan
-            $result = mysqli_query($conn, "CREATE TABLE rekomendasi_tb(
+            $result_rekom = mysqli_query($conn, "CREATE TABLE rekomendasi_tb(
             id INT NOT NULL AUTO_INCREMENT,
             obyek_wisata VARCHAR(30) NOT NULL,
             {$newliskrit[0]} varchar(20) NOT NULL,
@@ -514,7 +515,7 @@ include"functions.php";
             PRIMARY KEY ( id )
             )");
             //create penghitungan_bobot_tb untuk menampung bobot2 rekomendasi
-            $result = mysqli_query($conn, "CREATE TABLE penghitungan_bobot_tb(
+            $result_bot = mysqli_query($conn, "CREATE TABLE penghitungan_bobot_tb(
             id INT NOT NULL AUTO_INCREMENT,
             obyek_wisata VARCHAR(30) NOT NULL,
             {$newliskrit[0]} float(20) NOT NULL,
@@ -530,6 +531,8 @@ include"functions.php";
           else{
             echo "<h1>Terdapat masalah pada data kriteria</h1>";
           }
+
+          if($result_bot && $result_rekom){
 
 					$temp = array();
 					$idx = 1;
@@ -851,7 +854,14 @@ include"functions.php";
           ?>
            
            
-           <?php } } }?> 
+           <?php }else{
+             $del = mysqli_query($conn,"DELETE FROM input_user_tb");
+             if($del) {mysqli_close($conn);}
+             echo "<script>alert('Maaf, server sedang sibuk. Silahkan coba beberapa saat lagi. (Gagal create tabel temp)')</script>";
+           } }
+            }else{
+             echo "<script>alert('Maaf, server sedang sibuk. Silahkan coba beberapa saat lagi. (Gagal create input tb)')</script>";
+           } } }?> 
 						
 						
 
