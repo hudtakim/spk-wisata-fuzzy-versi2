@@ -265,10 +265,15 @@ include"functions.php";
               $bobot = mysqli_query($conn,"SELECT {$sub5} from {$tname}");
               array_push($array_bobot, $bobot);
             }
-             else{
-               echo "<h1>Terjadi Masalah Pada Baris Program 153, test.php</h1>";
+             if(!$bobot){
+              $del = mysqli_query($conn,"DELETE FROM input_user_tb");
+              if($del) {mysqli_close($conn);}
+              echo "<script>alert('Terjadi masalah pada data input. Silahkan coba lagi.')</script>";
+              header('Location: index.php'); 
+             }else{
+              $it++;
              }
-             $it++;
+             
            endwhile;
           
 
