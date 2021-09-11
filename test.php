@@ -144,7 +144,7 @@ include"functions.php";
 				?>
 				<div class="col-auto my-1 input-group batesin" id="krit<?=$num?>">          
 					<select name='<?=strtolower($data['kriteria']);?>' class="form-control custom-select mr-sm-1" id="sel<?=$num?>" required>
-						<option value="">--- Pilih <?=$data['kriteria'];?> ---</option>
+						<option value="">--- Pilih Kriteria <?=$data['kriteria'];?> ---</option>
             <option class="inputan" value="<?=strtolower($data['sub1']);?>"><?=$data['sub1'];?></option>
 						<option class="inputan" value="<?=strtolower($data['sub2']);?>"><?=$data['sub2'];?></option>
           <?php 
@@ -185,6 +185,14 @@ include"functions.php";
       }
 			if(isset($_GET['submit'])){
 			  $submit = $_GET['submit'];
+        $daftar_wisata = mysqli_query($conn,"SELECT * from tempat_wisata_tb");
+        $jumlah_wisata = mysqli_num_rows($daftar_wisata);
+        if($jumlah_wisata == 0){
+          echo "<div class='m-5'>";
+          echo "<h5>Belum ada Data lokasi wisata di database, silahkan menghubungi admin.</h5>";
+          echo "</div>";
+        }
+        else{
 
         $daftar_kriteria = mysqli_query($conn,"SELECT * from daftar_kriteria");
 				$list_kriteria = array();
@@ -227,7 +235,7 @@ include"functions.php";
         echo "<br>";
 		?>
 		
-		<h4>Berikut adalah saran objek wisata berdasarkan kriteria yang anda inputkan:</h4>
+		<h5>Berikut adalah hasil rekomendasi objek wisata berdasarkan kriteria yang dipilih:</h5>
 		<table class='table table-bordered'>
 			<thead class="thead-dark">
 				<tr>
@@ -240,6 +248,7 @@ include"functions.php";
 						<th><?=$data['kriteria'];?></th>
 					<?php endwhile;?>
 					<th>Fire Strength</th>
+          <th>Informasi</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -340,16 +349,7 @@ include"functions.php";
             array_push($new_arrofarrbot,$arrofarrbot[$it]);
             $it++; 
           }
-          if($it<5){
-            $temp = array();
-            for ($x = $it; $x < 5; $x++) {
-              array_push($newliskrit, "kosong");
-              for ($x = 0; $x < $rowcount; $x++){
-                array_push($temp, "kosong");
-              }
-              array_push($new_arrofarrbot, $temp);
-            }
-          }
+
 
           if($rowcount2 == 1){
             //create rekomendasi_tb untuk menampung yg direkomendasikan
@@ -358,6 +358,7 @@ include"functions.php";
             obyek_wisata VARCHAR(30) NOT NULL,
             {$newliskrit[0]} varchar(20) NOT NULL,
             fire_strength float(20) NOT NULL,
+            info VARCHAR(30) NOT NULL,
             PRIMARY KEY ( id )
          )");
           //create penghitungan_bobot_tb untuk menampung bobot2 rekomendasi
@@ -366,6 +367,7 @@ include"functions.php";
             obyek_wisata VARCHAR(30) NOT NULL,
             {$newliskrit[0]} float(20) NOT NULL,
             fire_strength float(20) NOT NULL,
+            info VARCHAR(30) NOT NULL,
             PRIMARY KEY ( id )
           )");
           }elseif($rowcount2 == 2){
@@ -376,6 +378,7 @@ include"functions.php";
             {$newliskrit[0]} varchar(20) NOT NULL,
             {$newliskrit[1]} varchar(20) NOT NULL,
             fire_strength float(20) NOT NULL,
+            info VARCHAR(30) NOT NULL,
             PRIMARY KEY ( id )
          )");
           //create penghitungan_bobot_tb untuk menampung bobot2 rekomendasi
@@ -385,6 +388,7 @@ include"functions.php";
             {$newliskrit[0]} float(20) NOT NULL,
             {$newliskrit[1]} float(20) NOT NULL,
             fire_strength float(20) NOT NULL,
+            info VARCHAR(30) NOT NULL,
             PRIMARY KEY ( id )
           )");
           }elseif($rowcount2 == 3){
@@ -396,6 +400,7 @@ include"functions.php";
             {$newliskrit[1]} varchar(20) NOT NULL,
             {$newliskrit[2]} varchar(20) NOT NULL,
             fire_strength float(20) NOT NULL,
+            info VARCHAR(30) NOT NULL,
             PRIMARY KEY ( id )
             )");
 
@@ -407,6 +412,7 @@ include"functions.php";
             {$newliskrit[1]} float(20) NOT NULL,
             {$newliskrit[2]} float(20) NOT NULL,
             fire_strength float(20) NOT NULL,
+            info VARCHAR(30) NOT NULL,
             PRIMARY KEY ( id )
             )");
 
@@ -420,6 +426,7 @@ include"functions.php";
             {$newliskrit[2]} varchar(20) NOT NULL,
             {$newliskrit[3]} varchar(20) NOT NULL,
             fire_strength float(20) NOT NULL,
+            info VARCHAR(30) NOT NULL,
             PRIMARY KEY ( id )
             )");
             //create penghitungan_bobot_tb untuk menampung bobot2 rekomendasi
@@ -431,6 +438,7 @@ include"functions.php";
             {$newliskrit[2]} float(20) NOT NULL,
             {$newliskrit[3]} float(20) NOT NULL,
             fire_strength float(20) NOT NULL,
+            info VARCHAR(30) NOT NULL,
             PRIMARY KEY ( id )
             )");
           }
@@ -445,6 +453,7 @@ include"functions.php";
             {$newliskrit[3]} varchar(20) NOT NULL,
             {$newliskrit[4]} varchar(20) NOT NULL,
             fire_strength float(20) NOT NULL,
+            info VARCHAR(30) NOT NULL,
             PRIMARY KEY ( id )
             )");
             //create penghitungan_bobot_tb untuk menampung bobot2 rekomendasi
@@ -457,6 +466,7 @@ include"functions.php";
             {$newliskrit[3]} float(20) NOT NULL,
             {$newliskrit[4]} float(20) NOT NULL,
             fire_strength float(20) NOT NULL,
+            info VARCHAR(30) NOT NULL,
             PRIMARY KEY ( id )
             )");
           }elseif($rowcount2 == 6){
@@ -471,6 +481,7 @@ include"functions.php";
             {$newliskrit[4]} varchar(20) NOT NULL,
             {$newliskrit[5]} varchar(20) NOT NULL,
             fire_strength float(20) NOT NULL,
+            info VARCHAR(30) NOT NULL,
             PRIMARY KEY ( id )
             )");
             //create penghitungan_bobot_tb untuk menampung bobot2 rekomendasi
@@ -484,6 +495,7 @@ include"functions.php";
             {$newliskrit[4]} float(20) NOT NULL,
             {$newliskrit[5]} float(20) NOT NULL,
             fire_strength float(20) NOT NULL,
+            info VARCHAR(30) NOT NULL,
             PRIMARY KEY ( id )
             )");
           }
@@ -508,17 +520,19 @@ include"functions.php";
 
                 if($rowcount2==1){
                   $ob_wis = $data['obyek_wisata'];
+                  $info = $data['info'];
                   $krit1 = $data[$newliskrit[0]];
                   $it = $idx-1;
 								  $fs  = $fire_strength[$it];
                   $bk1 = $new_arrofarrbot[0][$it];
 
-                  mysqli_query($conn, "INSERT INTO rekomendasi_tb(obyek_wisata, {$newliskrit[0]}, fire_strength) 
-													VALUES('$ob_wis', '$krit1', '$fs')");
+                  mysqli_query($conn, "INSERT INTO rekomendasi_tb(obyek_wisata, {$newliskrit[0]}, fire_strength, info) 
+													VALUES('$ob_wis', '$krit1', '$fs', '$info')");
 								  mysqli_query($conn, "INSERT INTO penghitungan_bobot_tb(obyek_wisata, {$newliskrit[0]}, fire_strength) 
 													VALUES('$ob_wis', '$bk1', '$fs')");
                 }elseif($rowcount2==2){
                   $ob_wis = $data['obyek_wisata'];
+                  $info = $data['info'];
                   $krit1 = $data[$newliskrit[0]];
                   $krit2 = $data[$newliskrit[1]];
                   $it = $idx-1;
@@ -526,8 +540,8 @@ include"functions.php";
                   $bk1 = $new_arrofarrbot[0][$it];
                   $bk2 = $new_arrofarrbot[1][$it];
 
-                  mysqli_query($conn, "INSERT INTO rekomendasi_tb(obyek_wisata, {$newliskrit[0]}, {$newliskrit[1]}, fire_strength) 
-                  VALUES('$ob_wis', '$krit1', '$krit2', '$fs')");
+                  mysqli_query($conn, "INSERT INTO rekomendasi_tb(obyek_wisata, {$newliskrit[0]}, {$newliskrit[1]}, fire_strength, info) 
+                  VALUES('$ob_wis', '$krit1', '$krit2', '$fs', '$info')");
                   mysqli_query($conn, "INSERT INTO penghitungan_bobot_tb(obyek_wisata, {$newliskrit[0]}, {$newliskrit[1]}, fire_strength) 
                   VALUES('$ob_wis', '$bk1', '$bk2','$fs')");
                 }elseif($rowcount2==3){
@@ -540,9 +554,10 @@ include"functions.php";
                   $bk1 = $new_arrofarrbot[0][$it];
                   $bk2 = $new_arrofarrbot[1][$it];
                   $bk3 = $new_arrofarrbot[2][$it];
+                  $info = $data['info'];
                   
-                  $result1 = mysqli_query($conn, "INSERT INTO rekomendasi_tb(obyek_wisata, {$newliskrit[0]}, {$newliskrit[1]}, {$newliskrit[2]}, fire_strength) 
-                  VALUES('$ob_wis', '$krit1', '$krit2','$krit3', '$fs')");
+                  $result1 = mysqli_query($conn, "INSERT INTO rekomendasi_tb(obyek_wisata, {$newliskrit[0]}, {$newliskrit[1]}, {$newliskrit[2]}, fire_strength, info) 
+                  VALUES('$ob_wis', '$krit1', '$krit2','$krit3', '$fs', '$info')");
                   $result2 = mysqli_query($conn, "INSERT INTO penghitungan_bobot_tb(obyek_wisata, {$newliskrit[0]}, {$newliskrit[1]}, {$newliskrit[2]}, fire_strength) 
                   VALUES('$ob_wis', '$bk1', '$bk2','$bk3','$fs')");
 
@@ -560,9 +575,10 @@ include"functions.php";
                   $bk2 = $new_arrofarrbot[1][$it];
                   $bk3 = $new_arrofarrbot[2][$it];
                   $bk4 = $new_arrofarrbot[3][$it];
+                  $info = $data['info'];
 
-                  mysqli_query($conn, "INSERT INTO rekomendasi_tb(obyek_wisata, {$newliskrit[0]}, {$newliskrit[1]},{$newliskrit[2]}, {$newliskrit[3]}, fire_strength) 
-                  VALUES('$ob_wis', '$krit1', '$krit2', '$krit3', '$krit4', '$fs')");
+                  mysqli_query($conn, "INSERT INTO rekomendasi_tb(obyek_wisata, {$newliskrit[0]}, {$newliskrit[1]},{$newliskrit[2]}, {$newliskrit[3]}, fire_strength, info) 
+                  VALUES('$ob_wis', '$krit1', '$krit2', '$krit3', '$krit4', '$fs', '$info')");
                   mysqli_query($conn, "INSERT INTO penghitungan_bobot_tb(obyek_wisata, {$newliskrit[0]}, {$newliskrit[1]},{$newliskrit[2]}, {$newliskrit[3]}, fire_strength) 
                   VALUES('$ob_wis', '$bk1', '$bk2','$bk3','$bk4','$fs')");
                 }elseif($rowcount2==5){
@@ -579,9 +595,10 @@ include"functions.php";
                   $bk3 = $new_arrofarrbot[2][$it];
                   $bk4 = $new_arrofarrbot[3][$it];
                   $bk5 = $new_arrofarrbot[4][$it];
+                  $info = $data['info'];
 
-                  mysqli_query($conn, "INSERT INTO rekomendasi_tb(obyek_wisata, {$newliskrit[0]}, {$newliskrit[1]},{$newliskrit[2]}, {$newliskrit[3]},{$newliskrit[4]}, fire_strength) 
-                  VALUES('$ob_wis', '$krit1', '$krit2', '$krit3', '$krit4','$krit5', '$fs')");
+                  mysqli_query($conn, "INSERT INTO rekomendasi_tb(obyek_wisata, {$newliskrit[0]}, {$newliskrit[1]},{$newliskrit[2]}, {$newliskrit[3]},{$newliskrit[4]}, fire_strength, info) 
+                  VALUES('$ob_wis', '$krit1', '$krit2', '$krit3', '$krit4','$krit5', '$fs', '$info')");
                   mysqli_query($conn, "INSERT INTO penghitungan_bobot_tb(obyek_wisata, {$newliskrit[0]}, {$newliskrit[1]},{$newliskrit[2]}, {$newliskrit[3]},{$newliskrit[4]}, fire_strength) 
                   VALUES('$ob_wis', '$bk1', '$bk2','$bk3','$bk4','$bk5','$fs')");
                 }elseif($rowcount2==6){
@@ -600,9 +617,10 @@ include"functions.php";
                   $bk4 = $new_arrofarrbot[3][$it];
                   $bk5 = $new_arrofarrbot[4][$it];
                   $bk6 = $new_arrofarrbot[5][$it];
+                  $info = $data['info'];
 
-                  mysqli_query($conn, "INSERT INTO rekomendasi_tb(obyek_wisata, {$newliskrit[0]}, {$newliskrit[1]},{$newliskrit[2]}, {$newliskrit[3]},{$newliskrit[4]}, {$newliskrit[5]}, fire_strength) 
-                  VALUES('$ob_wis', '$krit1', '$krit2', '$krit3', '$krit4','$krit5','$krit6', '$fs')");
+                  mysqli_query($conn, "INSERT INTO rekomendasi_tb(obyek_wisata, {$newliskrit[0]}, {$newliskrit[1]},{$newliskrit[2]}, {$newliskrit[3]},{$newliskrit[4]}, {$newliskrit[5]}, fire_strength, info) 
+                  VALUES('$ob_wis', '$krit1', '$krit2', '$krit3', '$krit4','$krit5','$krit6', '$fs', '$info')");
                   mysqli_query($conn, "INSERT INTO penghitungan_bobot_tb(obyek_wisata, {$newliskrit[0]}, {$newliskrit[1]},{$newliskrit[2]}, {$newliskrit[3]},{$newliskrit[4]}, {$newliskrit[5]}, fire_strength) 
                   VALUES('$ob_wis', '$bk1', '$bk2','$bk3','$bk4','$bk5','$bk6','$fs')");
                 }
@@ -630,6 +648,7 @@ include"functions.php";
 							<th><?=$data[strtolower($dakrit['kriteria'])];?></th>
 							<?php endwhile;?>
 							<th><?=$data['fire_strength'];?></th>
+              <th><a href="<?=$data['info']?>">Klik di sini</a></th>
 						</tr>
           <?php 
             }elseif($data['fire_strength'] >0){
@@ -644,6 +663,7 @@ include"functions.php";
 							<th><?=$data[strtolower($dakrit['kriteria'])];?></th>
 							<?php endwhile;?>
 							<th><?=$data['fire_strength'];?></th>
+              <th><a href="<?=$data['info']?>">Klik di sini</a></th>
 						</tr>
           <?php
             }else{
@@ -658,6 +678,7 @@ include"functions.php";
 							<th><?=$data[strtolower($dakrit['kriteria'])];?></th>
 							<?php endwhile;?>
 							<th><?=$data['fire_strength'];?></th>
+              <th><a href="<?=$data['info']?>">Klik di sini</a></th>
 						</tr>
 	
           <?php
@@ -675,6 +696,7 @@ include"functions.php";
                   <th><?=$data[strtolower($dakrit['kriteria'])];?></th>
                   <?php endwhile;?>
                   <th><?=$data['fire_strength'];?></th>
+                  <th><a href="<?=$data['info']?>">Klik di sini</a></th>
                 </tr>
               <?php 
                 }elseif($data['fire_strength'] >0){
@@ -689,6 +711,7 @@ include"functions.php";
                   <th><?=$data[strtolower($dakrit['kriteria'])];?></th>
                   <?php endwhile;?>
                   <th><?=$data['fire_strength'];?></th>
+                  <th><a href="<?=$data['info']?>">Klik di sini</a></th>
                 </tr>
               <?php
                 }else{
@@ -703,6 +726,7 @@ include"functions.php";
                   <th><?=$data[strtolower($dakrit['kriteria'])];?></th>
                   <?php endwhile;?>
                   <th><?=$data['fire_strength'];?></th>
+                  <th><a href="<?=$data['info']?>">Klik di sini</a></th>
                 </tr>
       
               <?php
@@ -718,11 +742,11 @@ include"functions.php";
 
 			</tbody>
 		</table>
-    <div class="agenda">
+    <div class="agenda pb-5">
       <p>Keterangan:</p>
-      <div class="p-2 m-1 float" style="background-color: #fc9803; width:25%"><b>Sangat direkomendasikan</b></div>
-      <div class="p-2 m-1 float" style="background-color: #fcdb03; width:25%"><b>Direkomendasikan</b></div>
-      <div class="p-2 m-1 float" style="background-color: #fff6bd; width:25%"><b>Tidak direkomendasikan</b></div>
+      <div class="pl-2 pt-2 pb-2 m-1 mt-1 float-left" style="background-color: #fc9803; width:25%"><b>Sangat direkomendasikan (FS = 1)</b></div>
+      <div class="pl-2 pt-2 pb-2 m-1 mt-1 float-left" style="background-color: #fcdb03; width:25%"><b>Direkomendasikan (0 < FS < 1)</b></div>
+      <div class="pl-2 pt-2 pb-2 m-1 mt-1 float-left" style="background-color: #fff6bd; width:25%"><b>Tidak direkomendasikan (FS = 0)</b></div>
     </div>
 
 		<div class="mt-5 mb-5">
@@ -780,7 +804,7 @@ include"functions.php";
           ?>
            
            
-           <?php } ?> 
+           <?php } } ?> 
 						
 						
 
