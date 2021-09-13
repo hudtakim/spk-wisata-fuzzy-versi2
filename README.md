@@ -1,7 +1,7 @@
 # spk-fuzzy-dynamic
 Versi dinamis dari spk fuzzy sebelumnya, kini support setting jumlah sub kriteria
 
-# SPK-Pariwisata-FuzzyTahani
+# SPK-Pariwisata-Fuzzy
 Implementasi Fuzzy Tahani Pada Database MySQL dan Aplikasi Berbasis Web dengan PHP
 
 Instalasi:
