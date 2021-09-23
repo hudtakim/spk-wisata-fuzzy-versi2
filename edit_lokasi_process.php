@@ -4,7 +4,7 @@ include"functions.php";
 include"fungsi_keanggotaan.php";
 
 if($_SESSION['legitUser'] != 'qwerty'){
-    die(header("location: 404.html"));
+    die(header("location: ../pages/404.html"));
 }else{
     if(isset($_POST['submit'])){
         $id_lokasi = $_POST['id_lokasi'];
@@ -14,7 +14,7 @@ if($_SESSION['legitUser'] != 'qwerty'){
         $rowcount = mysqli_num_rows($result);
         if($rowcount > 0){
             $message = "Gagal, nama lokasi sudah tersedia di database.";
-            echo "<script>alert('$message'); window.location.replace('edit_lokasi.php?id=$id_lokasi');</script>";
+            echo "<script>alert('$message'); window.location.replace('../pages/edit_lokasi.php?id=$id_lokasi');</script>";
         }else{
             $arr_kriteria = mysqli_query($conn,"SELECT * from daftar_kriteria_static");
             $jumlah_kriteria = mysqli_num_rows($arr_kriteria);
@@ -71,9 +71,34 @@ if($_SESSION['legitUser'] != 'qwerty'){
                 SET obyek_wisata='$ob_wis', {$list_labelkrit[0]}='$input_kriteria[0]',  {$list_labelkrit[1]}='$input_kriteria[1]', {$list_labelkrit[2]}='$input_kriteria[2]',{$list_labelkrit[3]}='$input_kriteria[3]', {$list_labelkrit[4]}='$input_kriteria[4]'
                 WHERE id = $id_lokasi");
                 $krit_used = 5;
+            }elseif(count($list_labelkrit) == 6){
+                $result = mysqli_query($conn, "UPDATE tempat_wisata_tb 
+                SET obyek_wisata='$ob_wis', {$list_labelkrit[0]}='$input_kriteria[0]',  {$list_labelkrit[1]}='$input_kriteria[1]', {$list_labelkrit[2]}='$input_kriteria[2]',{$list_labelkrit[3]}='$input_kriteria[3]', {$list_labelkrit[4]}='$input_kriteria[4]', {$list_labelkrit[5]}='$input_kriteria[5]'
+                WHERE id = $id_lokasi");
+                $krit_used = 6;
+            }elseif(count($list_labelkrit) == 7){
+                $result = mysqli_query($conn, "UPDATE tempat_wisata_tb 
+                SET obyek_wisata='$ob_wis', {$list_labelkrit[0]}='$input_kriteria[0]',  {$list_labelkrit[1]}='$input_kriteria[1]', {$list_labelkrit[2]}='$input_kriteria[2]',{$list_labelkrit[3]}='$input_kriteria[3]', {$list_labelkrit[4]}='$input_kriteria[4]', {$list_labelkrit[5]}='$input_kriteria[5]', {$list_labelkrit[6]}='$input_kriteria[6]'
+                WHERE id = $id_lokasi");
+                $krit_used = 7;
+            }elseif(count($list_labelkrit) == 8){
+                $result = mysqli_query($conn, "UPDATE tempat_wisata_tb 
+                SET obyek_wisata='$ob_wis', {$list_labelkrit[0]}='$input_kriteria[0]',  {$list_labelkrit[1]}='$input_kriteria[1]', {$list_labelkrit[2]}='$input_kriteria[2]',{$list_labelkrit[3]}='$input_kriteria[3]', {$list_labelkrit[4]}='$input_kriteria[4]', {$list_labelkrit[5]}='$input_kriteria[5]', {$list_labelkrit[6]}='$input_kriteria[6]',{$list_labelkrit[7]}='$input_kriteria[7]'
+                WHERE id = $id_lokasi");
+                $krit_used = 8;
+            }elseif(count($list_labelkrit) == 9){
+                $result = mysqli_query($conn, "UPDATE tempat_wisata_tb 
+                SET obyek_wisata='$ob_wis', {$list_labelkrit[0]}='$input_kriteria[0]',  {$list_labelkrit[1]}='$input_kriteria[1]', {$list_labelkrit[2]}='$input_kriteria[2]',{$list_labelkrit[3]}='$input_kriteria[3]', {$list_labelkrit[4]}='$input_kriteria[4]', {$list_labelkrit[5]}='$input_kriteria[5]', {$list_labelkrit[6]}='$input_kriteria[6]',{$list_labelkrit[7]}='$input_kriteria[7]',{$list_labelkrit[8]}='$input_kriteria[8]' 
+                WHERE id = $id_lokasi");
+                $krit_used = 9;
+            }elseif(count($list_labelkrit) == 10){
+                $result = mysqli_query($conn, "UPDATE tempat_wisata_tb 
+                SET obyek_wisata='$ob_wis', {$list_labelkrit[0]}='$input_kriteria[0]',  {$list_labelkrit[1]}='$input_kriteria[1]', {$list_labelkrit[2]}='$input_kriteria[2]',{$list_labelkrit[3]}='$input_kriteria[3]', {$list_labelkrit[4]}='$input_kriteria[4]', {$list_labelkrit[5]}='$input_kriteria[5]', {$list_labelkrit[6]}='$input_kriteria[6]',{$list_labelkrit[7]}='$input_kriteria[7]',{$list_labelkrit[8]}='$input_kriteria[8]',{$list_labelkrit[9]}='$input_kriteria[9]' 
+                WHERE id = $id_lokasi");
+                $krit_used = 10;
             }else{
                 echo "<script>alert('Banyak Kriteria Melebihi Batas (5)')</script>";
-                die(header("location: 404.html"));
+                die(header("location: ../pages/404.html"));
             }
             //Update tabel2 bobotnya
             if($result){
@@ -195,8 +220,8 @@ if($_SESSION['legitUser'] != 'qwerty'){
                 $it++;
             }
 
-                $message = "Edit data lokasi wisata berhasil.";
-                echo "<script>alert('$message'); window.location.replace('data_lokasi_wisata.php');</script>";
+                $message = "Edit data berhasil.";
+                echo "<script>alert('$message'); window.location.replace('../pages/data_lokasi_wisata.php');</script>";
 
         }
     }else{
