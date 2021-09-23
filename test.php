@@ -676,9 +676,9 @@ include"functions.php";
                   $bk7 = $new_arrofarrbot[6][$it];
                   $info = $data['info'];
 
-                  mysqli_query($conn, "INSERT INTO rekomendasi_tb(obyek_wisata, {$newliskrit[0]}, {$newliskrit[1]},{$newliskrit[2]}, {$newliskrit[3]},{$newliskrit[4]}, {$newliskrit[5]}, fire_strength, info) 
+                  mysqli_query($conn, "INSERT INTO rekomendasi_tb(obyek_wisata, {$newliskrit[0]}, {$newliskrit[1]},{$newliskrit[2]}, {$newliskrit[3]},{$newliskrit[4]}, {$newliskrit[5]},  {$newliskrit[6]}, fire_strength, info) 
                   VALUES('$ob_wis', '$krit1', '$krit2', '$krit3', '$krit4','$krit5','$krit6','$krit7', '$fs', '$info')");
-                  mysqli_query($conn, "INSERT INTO penghitungan_bobot_tb(obyek_wisata, {$newliskrit[0]}, {$newliskrit[1]},{$newliskrit[2]}, {$newliskrit[3]},{$newliskrit[4]}, {$newliskrit[5]}, fire_strength) 
+                  mysqli_query($conn, "INSERT INTO penghitungan_bobot_tb(obyek_wisata, {$newliskrit[0]}, {$newliskrit[1]},{$newliskrit[2]}, {$newliskrit[3]},{$newliskrit[4]}, {$newliskrit[5]},  {$newliskrit[6]}, fire_strength) 
                   VALUES('$ob_wis', '$bk1', '$bk2','$bk3','$bk4','$bk5','$bk6', '$bk7','$fs')");
                 }
                 else{
@@ -897,6 +897,7 @@ include"functions.php";
 		var input4 = document.getElementById("krit4");
 		var input5 = document.getElementById("krit5");
     var input6 = document.getElementById("krit6");
+    var input7 = document.getElementById("krit7");
     var sel1 = document.getElementById("sel1");
 		var sel2 = document.getElementById("sel2");
 		var sel3 = document.getElementById("sel3");
@@ -909,6 +910,7 @@ include"functions.php";
     var btn4 = document.getElementById("btn4");
     var btn5 = document.getElementById("btn5");
     var btn6 = document.getElementById("btn6");
+    var btn7 = document.getElementById("btn7");
 
     if(idx == 1){
       sel1.value = "";
@@ -940,6 +942,11 @@ include"functions.php";
       sel6.required = false;
       input6.style.display = "none";
     }
+    if(idx == 7){
+      sel7.value = "";
+      sel7.required = false;
+      input7.style.display = "none";
+    }
     if(penghitung == 1){
         btn1.classList.remove('btn-danger');
         btn1.classList.add('btn-success');
@@ -959,6 +966,9 @@ include"functions.php";
         btn6.classList.remove('btn-danger');
         btn6.classList.add('btn-success');
         btn6.innerHTML = "+";
+        btn7.classList.remove('btn-danger');
+        btn7.classList.add('btn-success');
+        btn7.innerHTML = "+";
       }
     return true;
   }  
